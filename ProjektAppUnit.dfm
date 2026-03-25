@@ -20,4 +20,13 @@ object Form1: TForm1
     TabOrder = 0
     OnClick = LogInClick
   end
+  object Memo1: TMemo
+    Left = 208
+    Top = 304
+    Width = 185
+    Height = 89
+    Lines.Strings = (
+      'Memo1')
+    TabOrder = 1
+  end
 end

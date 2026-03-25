@@ -1,0 +1,89 @@
+unit ProjektAppUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ShellAPI, System.Net.HttpClient,
+  System.NetEncoding, System.JSON;
+
+type
+  TForm1 = class(TForm)
+    LogInButton: TButton;
+    Memo1: TMemo;
+    procedure LogInClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+function GetAccessToken(authCode: string): string;
+var
+  client: THTTPClient;
+  response: IHTTPResponse;
+  body: TStringList;
+begin
+  client := THTTPClient.Create;
+  body := TStringList.Create;
+  try
+    body.Add('client_id=bda3be57-751a-40bb-b623-ab66bd19f2e4');
+    body.Add('scope=openid%20profile%20offline_access%20User.Read');
+    body.Add('code=' + authCode);
+    body.Add('redirect_uri=http://localhost:5000/callback');
+    body.Add('grant_type=authorization_code');
+
+    response := client.Post(
+      'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+      body
+    );
+
+    Result := response.ContentAsString;
+  finally
+    client.Free;
+    body.Free;
+  end;
+end;
+
+function GetMe(accessToken: string): string;
+var
+  client: THTTPClient;
+  response: IHTTPResponse;
+begin
+  client := THTTPClient.Create;
+  try
+    client.CustomHeaders['Authorization'] := 'Bearer ' + accessToken;
+
+    response := client.Get('https://graph.microsoft.com/v1.0/me');
+
+    Result := response.ContentAsString;
+  finally
+    client.Free;
+  end;
+end;
+
+procedure TForm1.LogInClick(Sender: TObject);
+var
+  url: string;
+begin
+  url :=
+  'https://login.microsoftonline.com/common/oauth2/v2.0/authorize' +
+  '?client_id=bda3be57-751a-40bb-b623-ab66bd19f2e4' +
+  '&response_type=code' +
+  '&redirect_uri=http://localhost:5000/callback' +
+  '&response_mode=query' +
+  '&scope=openid%20profile%20offline_access%20User.Read';
+
+  ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
+
+end;
+
+
+end.
