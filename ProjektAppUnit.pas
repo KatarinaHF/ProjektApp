@@ -35,8 +35,8 @@ begin
   body := TStringList.Create;
   try
     body.Add('client_id=bda3be57-751a-40bb-b623-ab66bd19f2e4');
-    body.Add('scope=openid%20profile%20offline_access%20User.Read');
-    body.Add('code=' + 'M.C544_BAY.2.U.Dm4vIh7jT8rJDomiB2yAGLRFYda3yz81F6wn*mP1FTbrQ6f6oS0se1TRC7W7acSKttV*0hJzh5GDDLQvgP!rKLkiNwnrqK9W8QIInjwUNp4aJMQeMVuPZG!ZXQ1B3YDWdqQIN3X2CWhxGH0tjBClYi!duzN6amlDCIYukJndIF7ntdvSmVo076xEbMEnSQmN5Sc!5VaYarqL0HlL3imkVZIrqRJnSAUJIOtvFnHj!upRdsVfYMFstXZesT6cMqaMLmy*yCIo5thrQqOssAThg*SWR1zkKyvhHDxCIHqAvTkRyu5dI!9NuctXKOf!DRYIAEPSGt8f5iEuh5ILtIiRUlL1XvONQK!fDpySyUGEN2JstTSdAy3ruuGjBlEx1bEY7O*01CATGtnuM6de3J6vQPy5eqcEj8WHdFHwyRcE0eKdFMgBhjjJObSCYqZ9pHElXRzlPtLWDEEuTFeDf*HC*eVNtP3ZrElTeWfEX3SMg24h1UeU6x5YvOcjGPiwNQy6l4iAzfBr1Qa42AHnK2JRSZWZd6ZmYW*aH1sLGJaPP8ZrUgPOsOZ1NbGzRRzTDD8tZp6xwvb9u8KrNBCeGyDiaQY%24');
+    body.Add('scope=openid profile offline_access User.Read');
+    body.Add('code=' + authCode);
     body.Add('redirect_uri=http://localhost:5000/callback');
     body.Add('grant_type=authorization_code');
 
@@ -84,6 +84,5 @@ begin
   ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
 
 end;
-
 
 end.
