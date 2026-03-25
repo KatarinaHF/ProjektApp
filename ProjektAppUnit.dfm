@@ -18,5 +18,6 @@ object Form1: TForm1
     Height = 137
     Caption = 'Log In'
     TabOrder = 0
+    OnClick = LogInClick
   end
 end

@@ -9,6 +9,7 @@ uses
 type
   TForm1 = class(TForm)
     LogInButton: TButton;
+    procedure LogInClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -21,5 +22,22 @@ var
 implementation
 
 {$R *.dfm}
+
+uses ShellAPI;
+
+procedure TForm1.LogInClick(Sender: TObject);
+var
+  url: string;
+begin
+  url :=
+  'https://login.microsoftonline.com/common/oauth2/v2.0/authorize' +
+  '?client_id=bda3be57-751a-40bb-b623-ab66bd19f2e4' +
+  '&response_type=code' +
+  '&redirect_uri=http://localhost:5000/callback' +
+  '&response_mode=query' +
+  '&scope=openid%20profile%20offline_access%20User.Read';
+
+  ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
+end;
 
 end.
