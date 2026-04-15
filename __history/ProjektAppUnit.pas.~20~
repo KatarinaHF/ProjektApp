@@ -5,17 +5,15 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ShellAPI, System.Net.HttpClient,
-  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext;
+  System.NetEncoding, System.JSON;
 
 type
   TForm1 = class(TForm)
     LogInButton: TButton;
     Memo1: TMemo;
     procedure LogInClick(Sender: TObject);
-    procedure StartLocalListener;
-    private
-    FHttpServer: TIdHTTPServer;
-    procedure MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
+  private
+    { Private declarations }
   public
     { Public declarations }
   end;
@@ -46,6 +44,7 @@ begin
       'https://login.microsoftonline.com/common/oauth2/v2.0/token',
       body
     );
+
     Result := response.ContentAsString;
   finally
     client.Free;
@@ -61,26 +60,12 @@ begin
   client := THTTPClient.Create;
   try
     client.CustomHeaders['Authorization'] := 'Bearer ' + accessToken;
+
     response := client.Get('https://graph.microsoft.com/v1.0/me');
+
     Result := response.ContentAsString;
   finally
     client.Free;
-  end;
-end;
-
-procedure TForm1.MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
-var
-  AuthCode: string;
-begin
-  AuthCode := ARequestInfo.Params.Values['code'];
-
-  if AuthCode <> '' then
-  begin
-    AResponseInfo.ContentText := '<html><body><h1>Login Successful!</h1><p>You can close this tab now.</p></body></html>';
-    TThread.Queue(nil, procedure
-    begin
-      Memo1.Lines.Add('Code Captured: ' + AuthCode);
-    end);
   end;
 end;
 
@@ -88,15 +73,6 @@ procedure TForm1.LogInClick(Sender: TObject);
 var
   url: string;
 begin
-  if not Assigned(FHttpServer) then
-  begin
-    FHttpServer := TIdHTTPServer.Create(Self);
-    FHttpServer.DefaultPort := 5000;
-    FHttpServer.OnCommandGet := MyGetCommand;
-  end;
-
-  FHttpServer.Active := False;
-  FHttpServer.Active := True;
   url :=
   'https://login.microsoftonline.com/common/oauth2/v2.0/authorize' +
   '?client_id=bda3be57-751a-40bb-b623-ab66bd19f2e4' +
@@ -104,23 +80,9 @@ begin
   '&redirect_uri=http://localhost:5000/callback' +
   '&response_mode=query' +
   '&scope=openid%20profile%20offline_access%20User.Read';
+
   ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
 
-end;
-
-procedure TForm1.StartLocalListener;
-var
-  HttpServer: TIdHTTPServer;
-begin
-  HttpServer := TIdHTTPServer.Create(Self);
-  try
-    HttpServer.DefaultPort := 5000;
-    HttpServer.OnCommandGet := MyGetCommand;
-    HttpServer.Active := True;
-  except
-    on E: Exception do
-      ShowMessage('Could not start listener: ' + E.Message);
-  end;
 end;
 
 end.
