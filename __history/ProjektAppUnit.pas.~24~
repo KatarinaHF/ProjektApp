@@ -116,37 +116,29 @@ procedure TForm1.MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequest
 var
   CapturedCode: string;
   RawResponse: string;
+
+  var
   JsonObj: TJSONObject;
   AccessToken: string;
   UserInfo: string;
 begin
-  CapturedCode := ARequestInfo.Params.Values['code'];
+  JsonObj := TJSONObject.ParseJSONValue(RawResponse) as TJSONObject;
+  try
+    if Assigned(JsonObj) and (JsonObj.Values['access_token'] <> nil) then
+    begin
+      AccessToken := JsonObj.Values['access_token'].Value;
 
-  if CapturedCode <> '' then
-  begin
-    AResponseInfo.ContentText := '<h1>Success</h1><p>You can return to the app.</p>';
+      // Now use that token to call the "GetMe" function
+      UserInfo := GetMe(AccessToken);
 
-    try
-      RawResponse := GetAccessToken(CapturedCode);
-      JsonObj := TJSONObject.ParseJSONValue(RawResponse) as TJSONObject;
-      try
-        if Assigned(JsonObj) and (JsonObj.Values['access_token'] <> nil) then
-        begin
-          AccessToken := JsonObj.Values['access_token'].Value;
-          UserInfo := GetMe(AccessToken);
-          TThread.Queue(nil, procedure
-          begin
-            Memo1.Lines.Add('--- USER PROFILE ---');
-            DisplayPrettyJson(UserInfo);
-          end);
-        end;
-      finally
-        JsonObj.Free;
-      end;
-    except
-      on E: Exception do
-        TThread.Queue(nil, procedure begin Memo1.Lines.Add('Error: ' + E.Message); end);
+      TThread.Queue(nil, procedure
+      begin
+        Memo1.Lines.Add('--- USER PROFILE ---');
+        DisplayPrettyJson(UserInfo); // This will show Name, Email, Job Title, etc.
+      end);
     end;
+  finally
+    JsonObj.Free;
   end;
 end;
 

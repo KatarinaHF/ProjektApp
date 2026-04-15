@@ -116,33 +116,18 @@ procedure TForm1.MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequest
 var
   CapturedCode: string;
   RawResponse: string;
-  JsonObj: TJSONObject;
-  AccessToken: string;
-  UserInfo: string;
 begin
   CapturedCode := ARequestInfo.Params.Values['code'];
 
   if CapturedCode <> '' then
   begin
-    AResponseInfo.ContentText := '<h1>Success</h1><p>You can return to the app.</p>';
-
+    AResponseInfo.ContentText := '<h1>Success!</h1><p>You can close this tab and return to the app.</p>';
     try
       RawResponse := GetAccessToken(CapturedCode);
-      JsonObj := TJSONObject.ParseJSONValue(RawResponse) as TJSONObject;
-      try
-        if Assigned(JsonObj) and (JsonObj.Values['access_token'] <> nil) then
-        begin
-          AccessToken := JsonObj.Values['access_token'].Value;
-          UserInfo := GetMe(AccessToken);
-          TThread.Queue(nil, procedure
-          begin
-            Memo1.Lines.Add('--- USER PROFILE ---');
-            DisplayPrettyJson(UserInfo);
-          end);
-        end;
-      finally
-        JsonObj.Free;
-      end;
+      TThread.Queue(nil, procedure
+      begin
+        DisplayPrettyJson(RawResponse);
+      end);
     except
       on E: Exception do
         TThread.Queue(nil, procedure begin Memo1.Lines.Add('Error: ' + E.Message); end);
@@ -171,6 +156,7 @@ begin
   '&response_mode=query' +
   '&scope=openid%20profile%20offline_access%20User.Read';
   ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
+
 end;
 
 procedure TForm1.StartLocalListener;

@@ -116,33 +116,43 @@ procedure TForm1.MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequest
 var
   CapturedCode: string;
   RawResponse: string;
-  JsonObj: TJSONObject;
-  AccessToken: string;
-  UserInfo: string;
 begin
   CapturedCode := ARequestInfo.Params.Values['code'];
 
   if CapturedCode <> '' then
   begin
-    AResponseInfo.ContentText := '<h1>Success</h1><p>You can return to the app.</p>';
-
+    AResponseInfo.ContentText := '<h1>Success!</h1><p>You can close this tab and return to the app.</p>';
     try
       RawResponse := GetAccessToken(CapturedCode);
-      JsonObj := TJSONObject.ParseJSONValue(RawResponse) as TJSONObject;
-      try
-        if Assigned(JsonObj) and (JsonObj.Values['access_token'] <> nil) then
-        begin
-          AccessToken := JsonObj.Values['access_token'].Value;
-          UserInfo := GetMe(AccessToken);
-          TThread.Queue(nil, procedure
-          begin
-            Memo1.Lines.Add('--- USER PROFILE ---');
-            DisplayPrettyJson(UserInfo);
-          end);
-        end;
-      finally
-        JsonObj.Free;
-      end;
+
+      var
+  JsonObj: TJSONObject;
+  AccessToken: string;
+  UserInfo: string;
+begin
+  JsonObj := TJSONObject.ParseJSONValue(RawResponse) as TJSONObject;
+  try
+    if Assigned(JsonObj) and (JsonObj.Values['access_token'] <> nil) then
+    begin
+      AccessToken := JsonObj.Values['access_token'].Value;
+
+      // Now use that token to call the "GetMe" function
+      UserInfo := GetMe(AccessToken);
+
+      TThread.Queue(nil, procedure
+      begin
+        Memo1.Lines.Add('--- USER PROFILE ---');
+        DisplayPrettyJson(UserInfo); // This will show Name, Email, Job Title, etc.
+      end);
+    end;
+  finally
+    JsonObj.Free;
+  end;
+end;
+      TThread.Queue(nil, procedure
+      begin
+        DisplayPrettyJson(RawResponse);
+      end);
     except
       on E: Exception do
         TThread.Queue(nil, procedure begin Memo1.Lines.Add('Error: ' + E.Message); end);

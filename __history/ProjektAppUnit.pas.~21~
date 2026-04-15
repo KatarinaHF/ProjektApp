@@ -16,7 +16,6 @@ type
     private
     FHttpServer: TIdHTTPServer;
     procedure MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
-    procedure DisplayPrettyJson(RawJson: string);
   public
     { Public declarations }
   end;
@@ -69,84 +68,19 @@ begin
   end;
 end;
 
-procedure TForm1.DisplayPrettyJson(RawJson: string);
-var
-  JsonObj: TJSONObject;
-begin
-  JsonObj := TJSONObject.ParseJSONValue(RawJson) as TJSONObject;
-  try
-    if Assigned(JsonObj) then
-    begin
-      Memo1.Lines.Clear;
-      Memo1.Lines.Add('--- Full Response ---');
-      Memo1.Lines.Add(JsonObj.Format(2));
-      if JsonObj.Values['access_token'] <> nil then
-      begin
-        Memo1.Lines.Add('');
-        Memo1.Lines.Add('--- Clean Access Token ---');
-        Memo1.Lines.Add(JsonObj.Values['access_token'].Value);
-      end;
-    end;
-  finally
-    JsonObj.Free;
-  end;
-end;
-
-function DecodeJWT(const Token: string): string;
-var
-  Parts: TArray<string>;
-  Payload: string;
-begin
-  Parts := Token.Split(['.']);
-  if Length(Parts) > 1 then
-  begin
-    Payload := Parts[1];
-    case Length(Payload) mod 4 of
-      2: Payload := Payload + '==';
-      3: Payload := Payload + '=';
-    end;
-
-    Result := TNetEncoding.Base64.Decode(Payload);
-  end
-  else
-    Result := 'Invalid Token Format';
-end;
-
 procedure TForm1.MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
 var
-  CapturedCode: string;
-  RawResponse: string;
-  JsonObj: TJSONObject;
-  AccessToken: string;
-  UserInfo: string;
+  AuthCode: string;
 begin
-  CapturedCode := ARequestInfo.Params.Values['code'];
+  AuthCode := ARequestInfo.Params.Values['code'];
 
-  if CapturedCode <> '' then
+  if AuthCode <> '' then
   begin
-    AResponseInfo.ContentText := '<h1>Success</h1><p>You can return to the app.</p>';
-
-    try
-      RawResponse := GetAccessToken(CapturedCode);
-      JsonObj := TJSONObject.ParseJSONValue(RawResponse) as TJSONObject;
-      try
-        if Assigned(JsonObj) and (JsonObj.Values['access_token'] <> nil) then
-        begin
-          AccessToken := JsonObj.Values['access_token'].Value;
-          UserInfo := GetMe(AccessToken);
-          TThread.Queue(nil, procedure
-          begin
-            Memo1.Lines.Add('--- USER PROFILE ---');
-            DisplayPrettyJson(UserInfo);
-          end);
-        end;
-      finally
-        JsonObj.Free;
-      end;
-    except
-      on E: Exception do
-        TThread.Queue(nil, procedure begin Memo1.Lines.Add('Error: ' + E.Message); end);
-    end;
+    AResponseInfo.ContentText := '<html><body><h1>Login Successful!</h1><p>You can close this tab now.</p></body></html>';
+    TThread.Queue(nil, procedure
+    begin
+      Memo1.Lines.Add('Code Captured: ' + AuthCode);
+    end);
   end;
 end;
 
@@ -171,6 +105,7 @@ begin
   '&response_mode=query' +
   '&scope=openid%20profile%20offline_access%20User.Read';
   ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
+
 end;
 
 procedure TForm1.StartLocalListener;

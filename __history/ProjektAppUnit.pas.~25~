@@ -116,24 +116,33 @@ procedure TForm1.MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequest
 var
   CapturedCode: string;
   RawResponse: string;
-  JsonObj: TJSONObject;
+  JsonObj: TJSONObject; // Removed the second 'var'
   AccessToken: string;
   UserInfo: string;
 begin
+  // 1. Extract the code from the browser URL
   CapturedCode := ARequestInfo.Params.Values['code'];
 
   if CapturedCode <> '' then
   begin
+    // Tell the browser "Thank you"
     AResponseInfo.ContentText := '<h1>Success</h1><p>You can return to the app.</p>';
 
     try
+      // 2. EXCHANGE the code for the Token JSON
       RawResponse := GetAccessToken(CapturedCode);
+
+      // 3. PARSE the JSON to find the actual Access Token string
       JsonObj := TJSONObject.ParseJSONValue(RawResponse) as TJSONObject;
       try
         if Assigned(JsonObj) and (JsonObj.Values['access_token'] <> nil) then
         begin
           AccessToken := JsonObj.Values['access_token'].Value;
+
+          // 4. FETCH the user information from Microsoft Graph
           UserInfo := GetMe(AccessToken);
+
+          // 5. UPDATE the Memo
           TThread.Queue(nil, procedure
           begin
             Memo1.Lines.Add('--- USER PROFILE ---');
