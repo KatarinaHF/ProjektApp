@@ -1,0 +1,191 @@
+unit ProjektAppUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ShellAPI, System.Net.HttpClient,
+  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext;
+
+type
+  TForm1 = class(TForm)
+    LogInButton: TButton;
+    Memo1: TMemo;
+    procedure LogInClick(Sender: TObject);
+    procedure StartLocalListener;
+    private
+    FHttpServer: TIdHTTPServer;
+    procedure MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
+    procedure DisplayPrettyJson(RawJson: string);
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+function GetAccessToken(authCode: string): string;
+var
+  client: THTTPClient;
+  response: IHTTPResponse;
+  body: TStringList;
+begin
+  client := THTTPClient.Create;
+  body := TStringList.Create;
+  try
+    body.Add('client_id=bda3be57-751a-40bb-b623-ab66bd19f2e4');
+    body.Add('scope=openid profile offline_access User.Read');
+    body.Add('code=' + authCode);
+    body.Add('redirect_uri=https://login.microsoftonline.com/common/oauth2/nativeclient');
+    body.Add('grant_type=authorization_code');
+
+    response := client.Post(
+      'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+      body
+    );
+    Result := response.ContentAsString;
+  finally
+    client.Free;
+    body.Free;
+  end;
+end;
+
+function GetMe(accessToken: string): string;
+var
+  client: THTTPClient;
+  response: IHTTPResponse;
+begin
+  client := THTTPClient.Create;
+  try
+    client.CustomHeaders['Authorization'] := 'Bearer ' + accessToken;
+    response := client.Get('https://graph.microsoft.com/v1.0/me');
+    Result := response.ContentAsString;
+  finally
+    client.Free;
+  end;
+end;
+
+procedure TForm1.DisplayPrettyJson(RawJson: string);
+var
+  JsonObj: TJSONObject;
+begin
+  JsonObj := TJSONObject.ParseJSONValue(RawJson) as TJSONObject;
+  try
+    if Assigned(JsonObj) then
+    begin
+      Memo1.Lines.Clear;
+      Memo1.Lines.Add('--- Full Response ---');
+      Memo1.Lines.Add(JsonObj.Format(2));
+      if JsonObj.Values['access_token'] <> nil then
+      begin
+        Memo1.Lines.Add('');
+        Memo1.Lines.Add('--- Clean Access Token ---');
+        Memo1.Lines.Add(JsonObj.Values['access_token'].Value);
+      end;
+    end;
+  finally
+    JsonObj.Free;
+  end;
+end;
+
+function DecodeJWT(const Token: string): string;
+var
+  Parts: TArray<string>;
+  Payload: string;
+begin
+  Parts := Token.Split(['.']);
+  if Length(Parts) > 1 then
+  begin
+    Payload := Parts[1];
+    case Length(Payload) mod 4 of
+      2: Payload := Payload + '==';
+      3: Payload := Payload + '=';
+    end;
+
+    Result := TNetEncoding.Base64.Decode(Payload);
+  end
+  else
+    Result := 'Invalid Token Format';
+end;
+
+procedure TForm1.MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
+var
+  CapturedCode: string;
+  RawResponse: string;
+  JsonObj: TJSONObject;
+  AccessToken: string;
+  UserInfo: string;
+begin
+  CapturedCode := ARequestInfo.Params.Values['code'];
+
+  if CapturedCode <> '' then
+  begin
+    AResponseInfo.ContentText := '<h1>Success</h1><p>You can return to the app.</p>';
+
+    try
+      RawResponse := GetAccessToken(CapturedCode);
+      JsonObj := TJSONObject.ParseJSONValue(RawResponse) as TJSONObject;
+      try
+        if Assigned(JsonObj) and (JsonObj.Values['access_token'] <> nil) then
+        begin
+          AccessToken := JsonObj.Values['access_token'].Value;
+          UserInfo := GetMe(AccessToken);
+          TThread.Queue(nil, procedure
+          begin
+            Memo1.Lines.Add('--- USER PROFILE ---');
+            DisplayPrettyJson(UserInfo);
+          end);
+        end;
+      finally
+        JsonObj.Free;
+      end;
+    except
+      on E: Exception do
+        TThread.Queue(nil, procedure begin Memo1.Lines.Add('Error: ' + E.Message); end);
+    end;
+  end;
+end;
+
+procedure TForm1.LogInClick(Sender: TObject);
+var
+  url: string;
+begin
+  if not Assigned(FHttpServer) then
+  begin
+    FHttpServer := TIdHTTPServer.Create(Self);
+    FHttpServer.DefaultPort := 5000;
+    FHttpServer.OnCommandGet := MyGetCommand;
+  end;
+
+  FHttpServer.Active := False;
+  FHttpServer.Active := True;
+  url :=
+  'https://login.microsoftonline.com/common/oauth2/v2.0/authorize' +
+  '?client_id=bda3be57-751a-40bb-b623-ab66bd19f2e4' +
+  '&response_type=code' +
+  '&redirect_uri=https://login.microsoftonline.com/common/oauth2/nativeclient' +
+  '&response_mode=query' +
+  '&scope=openid%20profile%20offline_access%20User.Read';
+  ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
+end;
+
+procedure TForm1.StartLocalListener;
+var
+  HttpServer: TIdHTTPServer;
+begin
+  HttpServer := TIdHTTPServer.Create(Self);
+  try
+    HttpServer.DefaultPort := 5000;
+    HttpServer.OnCommandGet := MyGetCommand;
+    HttpServer.Active := True;
+  except
+    on E: Exception do
+      ShowMessage('Could not start listener: ' + E.Message);
+  end;
+end;
+
+end.
