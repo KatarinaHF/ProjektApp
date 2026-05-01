@@ -16,12 +16,6 @@ type
     CheckBox2: TCheckBox;
     CheckBox3: TCheckBox;
     Panel1: TPanel;
-    Monday: TMemo;
-    Tuesday: TMemo;
-    Wednesday: TMemo;
-    Memo5: TMemo;
-    Memo6: TMemo;
-    Memo7: TMemo;
     Memo8: TMemo;
     Memo9: TMemo;
     Memo10: TMemo;
@@ -58,6 +52,13 @@ type
     Memo41: TMemo;
     Memo42: TMemo;
     Panel2: TPanel;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Edit4: TEdit;
+    Edit5: TEdit;
+    Edit6: TEdit;
+    Edit7: TEdit;
   private
     { Private declarations }
   public

@@ -50,70 +50,6 @@ object Form2: TForm2
     Width = 490
     Height = 420
     TabOrder = 4
-    object Monday: TMemo
-      Left = 0
-      Top = 0
-      Width = 70
-      Height = 70
-      Lines.Strings = (
-        'Monday')
-      TabOrder = 0
-    end
-    object Tuesday: TMemo
-      Left = 70
-      Top = 0
-      Width = 70
-      Height = 70
-      Color = 14385888
-      Lines.Strings = (
-        'Memo1')
-      TabOrder = 1
-    end
-    object Wednesday: TMemo
-      Left = 140
-      Top = 0
-      Width = 70
-      Height = 70
-      Lines.Strings = (
-        'Memo1')
-      TabOrder = 2
-    end
-    object Memo4: TMemo
-      Left = 280
-      Top = 0
-      Width = 70
-      Height = 70
-      Lines.Strings = (
-        'Memo1')
-      TabOrder = 3
-    end
-    object Memo5: TMemo
-      Left = 210
-      Top = 0
-      Width = 70
-      Height = 70
-      Lines.Strings = (
-        'Memo1')
-      TabOrder = 4
-    end
-    object Memo6: TMemo
-      Left = 350
-      Top = 0
-      Width = 70
-      Height = 70
-      Lines.Strings = (
-        'Memo1')
-      TabOrder = 5
-    end
-    object Memo7: TMemo
-      Left = 420
-      Top = 0
-      Width = 70
-      Height = 70
-      Lines.Strings = (
-        'Memo1')
-      TabOrder = 6
-    end
     object Memo8: TMemo
       Left = 210
       Top = 70
@@ -121,7 +57,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 7
+      TabOrder = 0
     end
     object Memo9: TMemo
       Left = 140
@@ -130,7 +66,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 8
+      TabOrder = 1
     end
     object Memo10: TMemo
       Left = 70
@@ -139,7 +75,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 9
+      TabOrder = 2
     end
     object Memo11: TMemo
       Left = 0
@@ -148,7 +84,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 10
+      TabOrder = 3
     end
     object Memo12: TMemo
       Left = 420
@@ -157,7 +93,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 11
+      TabOrder = 4
     end
     object Memo13: TMemo
       Left = 350
@@ -166,7 +102,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 12
+      TabOrder = 5
     end
     object Memo14: TMemo
       Left = 280
@@ -175,7 +111,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 13
+      TabOrder = 6
     end
     object Memo15: TMemo
       Left = 350
@@ -184,7 +120,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 14
+      TabOrder = 7
     end
     object Memo16: TMemo
       Left = 420
@@ -193,7 +129,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 15
+      TabOrder = 8
     end
     object Memo17: TMemo
       Left = 280
@@ -202,7 +138,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 16
+      TabOrder = 9
     end
     object Memo18: TMemo
       Left = 210
@@ -211,7 +147,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 17
+      TabOrder = 10
     end
     object Memo19: TMemo
       Left = 140
@@ -220,7 +156,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 18
+      TabOrder = 11
     end
     object Memo20: TMemo
       Left = 70
@@ -229,7 +165,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 19
+      TabOrder = 12
     end
     object Memo21: TMemo
       Left = 0
@@ -238,7 +174,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 20
+      TabOrder = 13
     end
     object Memo22: TMemo
       Left = 0
@@ -247,7 +183,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 21
+      TabOrder = 14
     end
     object Memo23: TMemo
       Left = 70
@@ -256,7 +192,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 22
+      TabOrder = 15
     end
     object Memo24: TMemo
       Left = 140
@@ -265,7 +201,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 23
+      TabOrder = 16
     end
     object Memo25: TMemo
       Left = 210
@@ -274,7 +210,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 24
+      TabOrder = 17
     end
     object Memo26: TMemo
       Left = 280
@@ -283,7 +219,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 25
+      TabOrder = 18
     end
     object Memo27: TMemo
       Left = 350
@@ -292,7 +228,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 26
+      TabOrder = 19
     end
     object Memo28: TMemo
       Left = 420
@@ -301,7 +237,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 27
+      TabOrder = 20
     end
     object Memo29: TMemo
       Left = 420
@@ -310,7 +246,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 28
+      TabOrder = 21
     end
     object Memo30: TMemo
       Left = 350
@@ -319,7 +255,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 29
+      TabOrder = 22
     end
     object Memo31: TMemo
       Left = 210
@@ -328,7 +264,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 30
+      TabOrder = 23
     end
     object Memo32: TMemo
       Left = 140
@@ -337,7 +273,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 31
+      TabOrder = 24
     end
     object Memo33: TMemo
       Left = 70
@@ -346,7 +282,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 32
+      TabOrder = 25
     end
     object Memo34: TMemo
       Left = 0
@@ -355,7 +291,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 33
+      TabOrder = 26
     end
     object Memo35: TMemo
       Left = 0
@@ -364,7 +300,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 34
+      TabOrder = 27
     end
     object Memo36: TMemo
       Left = 280
@@ -373,7 +309,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 35
+      TabOrder = 28
     end
     object Memo37: TMemo
       Left = 420
@@ -382,7 +318,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 36
+      TabOrder = 29
     end
     object Memo38: TMemo
       Left = 350
@@ -391,7 +327,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 37
+      TabOrder = 30
     end
     object Memo39: TMemo
       Left = 280
@@ -400,7 +336,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 38
+      TabOrder = 31
     end
     object Memo40: TMemo
       Left = 210
@@ -409,7 +345,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 39
+      TabOrder = 32
     end
     object Memo41: TMemo
       Left = 140
@@ -418,7 +354,7 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
-      TabOrder = 40
+      TabOrder = 33
     end
     object Memo42: TMemo
       Left = 70
@@ -427,7 +363,63 @@ object Form2: TForm2
       Height = 70
       Lines.Strings = (
         'Memo1')
+      TabOrder = 34
+    end
+    object Edit1: TEdit
+      Left = 0
+      Top = 0
+      Width = 70
+      Height = 70
+      TabOrder = 35
+      Text = 'Monday'
+    end
+    object Edit2: TEdit
+      Left = 70
+      Top = 0
+      Width = 70
+      Height = 70
+      TabOrder = 36
+      Text = 'Tuesday'
+    end
+    object Edit3: TEdit
+      Left = 140
+      Top = 0
+      Width = 70
+      Height = 70
+      TabOrder = 37
+      Text = 'Wednesday'
+    end
+    object Edit4: TEdit
+      Left = 210
+      Top = 0
+      Width = 70
+      Height = 70
+      TabOrder = 38
+      Text = 'Thursday'
+    end
+    object Edit5: TEdit
+      Left = 280
+      Top = 0
+      Width = 70
+      Height = 70
+      TabOrder = 39
+      Text = 'Friday'
+    end
+    object Edit6: TEdit
+      Left = 350
+      Top = 0
+      Width = 70
+      Height = 70
+      TabOrder = 40
+      Text = 'Saturday'
+    end
+    object Edit7: TEdit
+      Left = 420
+      Top = 0
+      Width = 70
+      Height = 70
       TabOrder = 41
+      Text = 'Sunday'
     end
   end
   object Panel2: TPanel

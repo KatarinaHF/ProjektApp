@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899-12-30 00:00:00.000.404,=C:\Users\katar\OneDrive\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.511,C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppUnit.pas=C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppDelphi.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.928,C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppProject.dproj=C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppDelphiProj.dproj</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.671,C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppDelphi.dfm=C:\Users\katar\OneDrive\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.671,C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppDelphi.pas=C:\Users\katar\OneDrive\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.202,C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppDelphiProj.dproj=C:\Users\katar\OneDrive\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.511,C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppUnit.dfm=C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppDelphi.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.671,C:\Users\katar\OneDrive\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppDelphi.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.604,=C:\Users\katar\OneDrive\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2026-04-29 08:08:15.668,=C:\Users\carol\OneDrive\Dokumenter\GitHub\ProjektApp\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.668,=C:\Users\carol\OneDrive\Dokumenter\GitHub\ProjektApp\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.511,C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppDelphi.dfm=C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppUnit.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.404,=C:\Users\katar\OneDrive\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.511,C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppDelphi.pas=C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppUnit.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.928,C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppDelphiProj.dproj=C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppProject.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.202,C:\Users\katar\OneDrive\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppDelphiProj.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.671,C:\Users\katar\OneDrive\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\katar\OneDrive\Documents\GitHub\ProjektApp\ProjektAppDelphi.dfm</Transaction>
   </Transactions>
 </BorlandProject>
