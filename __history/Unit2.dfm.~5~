@@ -54,7 +54,7 @@ object Form2: TForm2
       Left = 0
       Top = 0
       Width = 80
-      Height = 23
+      Height = 25
       TabOrder = 0
       Text = 'Monday'
     end
@@ -62,7 +62,7 @@ object Form2: TForm2
       Left = 80
       Top = 0
       Width = 80
-      Height = 23
+      Height = 25
       TabOrder = 1
       Text = 'Tuesday'
     end
@@ -70,7 +70,7 @@ object Form2: TForm2
       Left = 160
       Top = 0
       Width = 80
-      Height = 23
+      Height = 25
       TabOrder = 2
       Text = 'Wednesday'
     end
@@ -78,7 +78,7 @@ object Form2: TForm2
       Left = 240
       Top = 0
       Width = 80
-      Height = 23
+      Height = 25
       TabOrder = 3
       Text = 'Thursday'
     end
@@ -86,7 +86,7 @@ object Form2: TForm2
       Left = 320
       Top = 0
       Width = 80
-      Height = 23
+      Height = 25
       TabOrder = 4
       Text = 'Friday'
     end
@@ -94,7 +94,7 @@ object Form2: TForm2
       Left = 400
       Top = 0
       Width = 80
-      Height = 23
+      Height = 25
       TabOrder = 5
       Text = 'Saturday'
     end
@@ -102,13 +102,13 @@ object Form2: TForm2
       Left = 480
       Top = 0
       Width = 80
-      Height = 23
+      Height = 25
       TabOrder = 6
       Text = 'Sunday'
     end
     object Memo1: TMemo
       Left = 0
-      Top = 23
+      Top = 25
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -117,7 +117,7 @@ object Form2: TForm2
     end
     object Memo2: TMemo
       Left = 80
-      Top = 23
+      Top = 25
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -126,7 +126,7 @@ object Form2: TForm2
     end
     object Memo3: TMemo
       Left = 160
-      Top = 23
+      Top = 25
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -135,7 +135,7 @@ object Form2: TForm2
     end
     object Memo4: TMemo
       Left = 240
-      Top = 23
+      Top = 25
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -144,7 +144,7 @@ object Form2: TForm2
     end
     object Memo5: TMemo
       Left = 320
-      Top = 23
+      Top = 25
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -153,7 +153,7 @@ object Form2: TForm2
     end
     object Memo6: TMemo
       Left = 400
-      Top = 23
+      Top = 25
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -162,7 +162,7 @@ object Form2: TForm2
     end
     object Memo7: TMemo
       Left = 480
-      Top = 23
+      Top = 25
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -171,7 +171,7 @@ object Form2: TForm2
     end
     object Memo8: TMemo
       Left = 0
-      Top = 103
+      Top = 105
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -180,7 +180,7 @@ object Form2: TForm2
     end
     object Memo9: TMemo
       Left = 80
-      Top = 103
+      Top = 105
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -189,7 +189,7 @@ object Form2: TForm2
     end
     object Memo10: TMemo
       Left = 160
-      Top = 103
+      Top = 105
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -198,7 +198,7 @@ object Form2: TForm2
     end
     object Memo11: TMemo
       Left = 240
-      Top = 103
+      Top = 105
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -207,7 +207,7 @@ object Form2: TForm2
     end
     object Memo12: TMemo
       Left = 320
-      Top = 103
+      Top = 105
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -216,7 +216,7 @@ object Form2: TForm2
     end
     object Memo13: TMemo
       Left = 400
-      Top = 103
+      Top = 105
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -225,7 +225,7 @@ object Form2: TForm2
     end
     object Memo14: TMemo
       Left = 480
-      Top = 103
+      Top = 105
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -234,7 +234,7 @@ object Form2: TForm2
     end
     object Memo15: TMemo
       Left = 0
-      Top = 183
+      Top = 185
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -243,7 +243,7 @@ object Form2: TForm2
     end
     object Memo16: TMemo
       Left = 80
-      Top = 183
+      Top = 185
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -252,7 +252,7 @@ object Form2: TForm2
     end
     object Memo17: TMemo
       Left = 160
-      Top = 183
+      Top = 185
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -261,7 +261,7 @@ object Form2: TForm2
     end
     object Memo18: TMemo
       Left = 240
-      Top = 183
+      Top = 185
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -270,7 +270,7 @@ object Form2: TForm2
     end
     object Memo19: TMemo
       Left = 320
-      Top = 183
+      Top = 185
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -279,7 +279,7 @@ object Form2: TForm2
     end
     object Memo20: TMemo
       Left = 400
-      Top = 183
+      Top = 185
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -288,7 +288,7 @@ object Form2: TForm2
     end
     object Memo21: TMemo
       Left = 480
-      Top = 183
+      Top = 185
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -297,7 +297,7 @@ object Form2: TForm2
     end
     object Memo22: TMemo
       Left = 0
-      Top = 263
+      Top = 265
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -306,7 +306,7 @@ object Form2: TForm2
     end
     object Memo23: TMemo
       Left = 80
-      Top = 263
+      Top = 265
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -315,7 +315,7 @@ object Form2: TForm2
     end
     object Memo24: TMemo
       Left = 160
-      Top = 263
+      Top = 265
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -324,7 +324,7 @@ object Form2: TForm2
     end
     object Memo25: TMemo
       Left = 240
-      Top = 263
+      Top = 265
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -333,7 +333,7 @@ object Form2: TForm2
     end
     object Memo26: TMemo
       Left = 320
-      Top = 263
+      Top = 265
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -342,7 +342,7 @@ object Form2: TForm2
     end
     object Memo27: TMemo
       Left = 400
-      Top = 263
+      Top = 265
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -351,7 +351,7 @@ object Form2: TForm2
     end
     object Memo28: TMemo
       Left = 480
-      Top = 263
+      Top = 265
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -360,7 +360,7 @@ object Form2: TForm2
     end
     object Memo29: TMemo
       Left = 0
-      Top = 343
+      Top = 345
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -369,7 +369,7 @@ object Form2: TForm2
     end
     object Memo30: TMemo
       Left = 80
-      Top = 343
+      Top = 345
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -378,7 +378,7 @@ object Form2: TForm2
     end
     object Memo31: TMemo
       Left = 160
-      Top = 343
+      Top = 345
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -387,7 +387,7 @@ object Form2: TForm2
     end
     object Memo32: TMemo
       Left = 240
-      Top = 343
+      Top = 345
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -396,7 +396,7 @@ object Form2: TForm2
     end
     object Memo33: TMemo
       Left = 320
-      Top = 343
+      Top = 345
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -405,7 +405,7 @@ object Form2: TForm2
     end
     object Memo34: TMemo
       Left = 400
-      Top = 343
+      Top = 345
       Width = 80
       Height = 80
       Lines.Strings = (
@@ -414,7 +414,7 @@ object Form2: TForm2
     end
     object Memo35: TMemo
       Left = 480
-      Top = 343
+      Top = 345
       Width = 80
       Height = 80
       Lines.Strings = (
