@@ -12,7 +12,6 @@ type
     LogInButton: TButton;
     Memo1: TMemo;
     procedure LogInClick(Sender: TObject);
-    procedure StartLocalListener;
     private
     FHttpServer: TIdHTTPServer;
     procedure MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
@@ -28,6 +27,7 @@ implementation
 
 {$R *.dfm}
 
+// Function getting access token
 function GetAccessToken(authCode: string): string;
 var
   client: THTTPClient;
@@ -54,6 +54,7 @@ begin
   end;
 end;
 
+// Create a client and get their information
 function GetMe(accessToken: string): string;
 var
   client: THTTPClient;
@@ -69,6 +70,7 @@ begin
   end;
 end;
 
+// Procedure writes user information in Memo
 procedure TForm1.DisplayPrettyJson(RawJson: string);
 var
   JsonObj: TJSONObject;
@@ -77,10 +79,9 @@ begin
   try
     if Assigned(JsonObj) then
     begin
-      Memo1.Lines.Clear;
       Memo1.Lines.Add('--- Full Response ---');
       Memo1.Lines.Add(JsonObj.Format(2));
-      if JsonObj.Values['access_token'] <> nil then
+      if JsonObj.Values['access_token'] <> nil then    // If access_token != 0
       begin
         Memo1.Lines.Add('');
         Memo1.Lines.Add('--- Clean Access Token ---');
@@ -92,6 +93,7 @@ begin
   end;
 end;
 
+// Function for decoding JWT, finding and translating the payload from the JWT
 function DecodeJWT(const Token: string): string;
 var
   Parts: TArray<string>;
@@ -112,6 +114,7 @@ begin
     Result := 'Invalid Token Format';
 end;
 
+// Procedure for getting user information
 procedure TForm1.MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
 var
   CapturedCode: string;
@@ -136,6 +139,8 @@ begin
           UserInfo := GetMe(AccessToken);
           TThread.Queue(nil, procedure
           begin
+            // Calls procedure DisplayPrettyJson to write user information in Memo
+            Memo1.Lines.Clear; // Clear Memo1 text
             Memo1.Lines.Add('--- USER PROFILE ---');
             DisplayPrettyJson(UserInfo);
           end);
@@ -150,6 +155,7 @@ begin
   end;
 end;
 
+// Procedure for clicking the LogIn button
 procedure TForm1.LogInClick(Sender: TObject);
 var
   url: string;
@@ -171,21 +177,6 @@ begin
   '&response_mode=query' +
   '&scope=openid%20profile%20offline_access%20User.Read';
   ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
-end;
-
-procedure TForm1.StartLocalListener;
-var
-  HttpServer: TIdHTTPServer;
-begin
-  HttpServer := TIdHTTPServer.Create(Self);
-  try
-    HttpServer.DefaultPort := 5000;
-    HttpServer.OnCommandGet := MyGetCommand;
-    HttpServer.Active := True;
-  except
-    on E: Exception do
-      ShowMessage('Could not start listener: ' + E.Message);
-  end;
 end;
 
 end.
