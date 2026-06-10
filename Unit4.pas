@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, DateUtils;
 
 type
   TForm4 = class(TForm)
@@ -40,134 +40,137 @@ type
     PanelDay30: TPanel;
     LabelDay30: TLabel;
     MemoDay30: TMemo;
-    Panel12: TPanel;
-    Label1: TLabel;
+    PanelDay36: TPanel;
+    LabelDay36: TLabel;
     MemoDay36: TMemo;
-    Panel13: TPanel;
-    Label3: TLabel;
+    PanelDay29: TPanel;
+    LabelDay29: TLabel;
     MemoDay29: TMemo;
-    Panel14: TPanel;
-    Label4: TLabel;
+    PanelDay22: TPanel;
+    LabelDay22: TLabel;
     MemoDay22: TMemo;
-    Panel15: TPanel;
-    Label5: TLabel;
+    PanelDay15: TPanel;
+    LabelDay15: TLabel;
     MemoDay15: TMemo;
-    Panel16: TPanel;
-    Label6: TLabel;
+    PanelDay8: TPanel;
+    LabelDay8: TLabel;
     MemoDay8: TMemo;
-    Panel17: TPanel;
-    Label7: TLabel;
+    PanelDay1: TPanel;
+    LabelDay1: TLabel;
     MemoDay1: TMemo;
-    Panel18: TPanel;
-    Label8: TLabel;
+    PanelDay23: TPanel;
+    LabelDay23: TLabel;
     MemoDay23: TMemo;
-    Panel19: TPanel;
-    Label9: TLabel;
+    PanelDay16: TPanel;
+    LabelDay16: TLabel;
     MemoDay16: TMemo;
-    Panel20: TPanel;
-    Label10: TLabel;
+    PanelDay9: TPanel;
+    LabelDay9: TLabel;
     MemoDay9: TMemo;
-    Panel21: TPanel;
-    Label11: TLabel;
+    PanelDay2: TPanel;
+    LabelDay2: TLabel;
     MemoDay2: TMemo;
-    Panel23: TPanel;
-    Label13: TLabel;
+    PanelDay38: TPanel;
+    LabelDay38: TLabel;
     MemoDay38: TMemo;
-    Panel24: TPanel;
-    Label14: TLabel;
+    PanelDay31: TPanel;
+    LabelDay31: TLabel;
     MemoDay31: TMemo;
-    Panel25: TPanel;
-    Label15: TLabel;
+    PanelDay24: TPanel;
+    LabelDay24: TLabel;
     MemoDay24: TMemo;
-    Panel26: TPanel;
-    Label16: TLabel;
+    PanelDay17: TPanel;
+    LabelDay17: TLabel;
     MemoDay17: TMemo;
-    Panel27: TPanel;
-    Label17: TLabel;
+    PanelDay10: TPanel;
+    LabelDay10: TLabel;
     MemoDay10: TMemo;
-    Panel28: TPanel;
-    Label18: TLabel;
+    PanelDay3: TPanel;
+    LabelDay3: TLabel;
     MemoDay3: TMemo;
-    Panel29: TPanel;
-    Label19: TLabel;
+    PanelDay39: TPanel;
+    LabelDay39: TLabel;
     MemoDay39: TMemo;
-    Panel30: TPanel;
-    Label20: TLabel;
+    PanelDay32: TPanel;
+    LabelDay32: TLabel;
     MemoDay32: TMemo;
-    Panel31: TPanel;
-    Label21: TLabel;
+    PanelDay25: TPanel;
+    LabelDay25: TLabel;
     MemoDay25: TMemo;
-    Panel32: TPanel;
-    Label22: TLabel;
+    PanelDay18: TPanel;
+    LabelDay18: TLabel;
     MemoDay18: TMemo;
-    Panel33: TPanel;
-    Label23: TLabel;
+    PanelDay11: TPanel;
+    LabelDay11: TLabel;
     MemoDay11: TMemo;
-    Panel34: TPanel;
-    Label24: TLabel;
+    PanelDay4: TPanel;
+    LabelDay4: TLabel;
     MemoDay4: TMemo;
-    Panel35: TPanel;
-    Label25: TLabel;
+    PanelDay40: TPanel;
+    LabelDay40: TLabel;
     MemoDay40: TMemo;
-    Panel36: TPanel;
-    Label26: TLabel;
+    PanelDay33: TPanel;
+    LabelDay33: TLabel;
     MemoDay33: TMemo;
-    Panel37: TPanel;
-    Label27: TLabel;
+    PanelDay26: TPanel;
+    LabelDay26: TLabel;
     MemoDay26: TMemo;
-    Panel38: TPanel;
-    Label28: TLabel;
+    PanelDay19: TPanel;
+    LabelDay19: TLabel;
     MemoDay19: TMemo;
-    Panel39: TPanel;
-    Label29: TLabel;
+    PanelDay12: TPanel;
+    LabelDay12: TLabel;
     MemoDay12: TMemo;
-    Panel40: TPanel;
-    Label30: TLabel;
+    PanelDay5: TPanel;
+    LabelDay5: TLabel;
     MemoDay5: TMemo;
-    Panel41: TPanel;
-    Label31: TLabel;
+    PanelDay41: TPanel;
+    LabelDay41: TLabel;
     MemoDay41: TMemo;
-    Panel42: TPanel;
-    Label32: TLabel;
+    PanelDay34: TPanel;
+    LabelDay34: TLabel;
     MemoDay34: TMemo;
-    Panel43: TPanel;
-    Label33: TLabel;
+    PanelDay27: TPanel;
+    LabelDay27: TLabel;
     MemoDay27: TMemo;
-    Panel44: TPanel;
-    Label34: TLabel;
+    PanelDay20: TPanel;
+    LabelDay20: TLabel;
     MemoDay20: TMemo;
-    Panel45: TPanel;
-    Label35: TLabel;
+    PanelDay13: TPanel;
+    LabelDay13: TLabel;
     MemoDay13: TMemo;
-    Panel46: TPanel;
-    Label36: TLabel;
+    PanelDay6: TPanel;
+    LabelDay6: TLabel;
     MemoDay6: TMemo;
-    Panel47: TPanel;
-    Label37: TLabel;
+    PanelDay42: TPanel;
+    LabelDay42: TLabel;
     MemoDay42: TMemo;
-    Panel49: TPanel;
-    Label39: TLabel;
+    PanelDay35: TPanel;
+    LabelDay35: TLabel;
     MemoDay35: TMemo;
-    Panel50: TPanel;
-    Label40: TLabel;
+    PanelDay28: TPanel;
+    LabelDay28: TLabel;
     MemoDay28: TMemo;
-    Panel48: TPanel;
-    Label38: TLabel;
+    PanelDay21: TPanel;
+    LabelDay21: TLabel;
     MemoDay21: TMemo;
-    Panel51: TPanel;
-    Label41: TLabel;
+    PanelDay14: TPanel;
+    LabelDay14: TLabel;
     MemoDay14: TMemo;
-    Panel52: TPanel;
-    Label42: TLabel;
+    PanelDay7: TPanel;
+    LabelDay7: TLabel;
     MemoDay7: TMemo;
-    Panel22: TPanel;
-    Label12: TLabel;
+    PanelDay37: TPanel;
+    LabelDay37: TLabel;
     MemoDay37: TMemo;
     procedure Panel2Resize(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
-    { Private declarations }
+    DayPanels: array[1..42] of TPanel;
+    DayMemos: array[1..42] of TMemo;
+    DayLabels: array[1..42] of TLabel;
   public
-    { Public declarations }
+    procedure BuildCalendar(AYear, AMonth: Integer);
   end;
 
 var
@@ -202,7 +205,42 @@ begin
 
 end;
 
+procedure TForm4.FormCreate(Sender: TObject);
+var
+  I: Integer;
+begin
+  for I := 1 to 42 do
+  begin
+    DayPanels[I] := FindComponent('PanelDay' + IntToStr(I)) as TPanel;
+    DayMemos[I]  := FindComponent('MemoDay'  + IntToStr(I)) as TMemo;
+    DayLabels[I] := FindComponent('LabelDay' + IntToStr(I)) as TLabel;
+  end;
+end;
 
+procedure TForm4.BuildCalendar(AYear, AMonth: Integer);
+
+var
+  FirstDay: TDate;
+  DaysInMonth: Integer;
+
+  I: Integer;
+
+begin
+  FirstDay := EncodeDate(AYear, AMonth, 1);
+
+  DaysInMonth := DaysInAMonth(AYear, AMonth);
+
+  for I := 1 to 31 do
+
+  begin
+
+    DayPanels[I].Visible := I <= DaysInMonth;
+
+    DayMemos[I].Clear;
+
+  end;
+
+end;
 
 
 end.

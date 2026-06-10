@@ -21,8 +21,8 @@
     Caption = 'Panel2'
     TabOrder = 0
     OnResize = Panel2Resize
-    ExplicitTop = 105
-    ExplicitHeight = 672
+    ExplicitWidth = 914
+    ExplicitHeight = 609
     object PanelSøndag: TPanel
       Left = 792
       Top = 0
@@ -33,9 +33,7 @@
       Caption = 'PanelS'#248'ndag'
       ShowCaption = False
       TabOrder = 0
-      ExplicitLeft = 786
-      ExplicitTop = 1
-      ExplicitHeight = 687
+      ExplicitHeight = 609
       object Panel8: TPanel
         Left = 0
         Top = 0
@@ -47,7 +45,6 @@
         Caption = 'Panel4'
         ShowCaption = False
         TabOrder = 0
-        ExplicitTop = 8
         object LabelSunday: TLabel
           Left = 1
           Top = 1
@@ -66,7 +63,7 @@
           ExplicitHeight = 32
         end
       end
-      object Panel47: TPanel
+      object PanelDay42: TPanel
         Left = 0
         Top = 541
         Width = 132
@@ -78,8 +75,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 1
-        ExplicitTop = 49
-        object Label37: TLabel
+        object LabelDay42: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -107,10 +103,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel49: TPanel
+      object PanelDay35: TPanel
         Left = 0
         Top = 441
         Width = 132
@@ -122,8 +117,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 2
-        ExplicitTop = 49
-        object Label39: TLabel
+        object LabelDay35: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -151,10 +145,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel50: TPanel
+      object PanelDay28: TPanel
         Left = 0
         Top = 341
         Width = 132
@@ -166,8 +159,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 3
-        ExplicitTop = 49
-        object Label40: TLabel
+        object LabelDay28: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -195,10 +187,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel48: TPanel
+      object PanelDay21: TPanel
         Left = 0
         Top = 241
         Width = 132
@@ -210,8 +201,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 4
-        ExplicitTop = 49
-        object Label38: TLabel
+        object LabelDay21: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -239,10 +229,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel51: TPanel
+      object PanelDay14: TPanel
         Left = 0
         Top = 141
         Width = 132
@@ -254,8 +243,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 5
-        ExplicitTop = 49
-        object Label41: TLabel
+        object LabelDay14: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -283,10 +271,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel52: TPanel
+      object PanelDay7: TPanel
         Left = 0
         Top = 41
         Width = 132
@@ -298,8 +285,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 6
-        ExplicitTop = 49
-        object Label42: TLabel
+        object LabelDay7: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -327,7 +313,6 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
     end
@@ -341,9 +326,7 @@
       Caption = 'Panel4'
       ShowCaption = False
       TabOrder = 1
-      ExplicitLeft = 617
-      ExplicitTop = 1
-      ExplicitHeight = 687
+      ExplicitHeight = 609
       object Panel5: TPanel
         Left = 0
         Top = 0
@@ -355,7 +338,6 @@
         Caption = 'Panel4'
         ShowCaption = False
         TabOrder = 0
-        ExplicitTop = 8
         object LabelSaturday: TLabel
           Left = 1
           Top = 1
@@ -374,7 +356,7 @@
           ExplicitHeight = 32
         end
       end
-      object Panel41: TPanel
+      object PanelDay41: TPanel
         Left = 0
         Top = 541
         Width = 132
@@ -386,8 +368,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 1
-        ExplicitTop = 49
-        object Label31: TLabel
+        object LabelDay41: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -415,10 +396,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel42: TPanel
+      object PanelDay34: TPanel
         Left = 0
         Top = 441
         Width = 132
@@ -430,8 +410,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 2
-        ExplicitTop = 49
-        object Label32: TLabel
+        object LabelDay34: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -459,10 +438,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel43: TPanel
+      object PanelDay27: TPanel
         Left = 0
         Top = 341
         Width = 132
@@ -474,8 +452,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 3
-        ExplicitTop = 49
-        object Label33: TLabel
+        object LabelDay27: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -503,10 +480,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel44: TPanel
+      object PanelDay20: TPanel
         Left = 0
         Top = 241
         Width = 132
@@ -518,8 +494,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 4
-        ExplicitTop = 49
-        object Label34: TLabel
+        object LabelDay20: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -547,10 +522,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel45: TPanel
+      object PanelDay13: TPanel
         Left = 0
         Top = 141
         Width = 132
@@ -562,8 +536,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 5
-        ExplicitTop = 49
-        object Label35: TLabel
+        object LabelDay13: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -591,10 +564,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel46: TPanel
+      object PanelDay6: TPanel
         Left = 0
         Top = 41
         Width = 132
@@ -606,8 +578,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 6
-        ExplicitTop = 49
-        object Label36: TLabel
+        object LabelDay6: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -635,7 +606,6 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
     end
@@ -649,9 +619,7 @@
       Caption = 'Panel4'
       ShowCaption = False
       TabOrder = 2
-      ExplicitLeft = 485
-      ExplicitTop = 1
-      ExplicitHeight = 687
+      ExplicitHeight = 609
       object Panel6: TPanel
         Left = 0
         Top = 0
@@ -663,7 +631,6 @@
         Caption = 'Panel4'
         ShowCaption = False
         TabOrder = 0
-        ExplicitTop = 8
         object LabelFriday: TLabel
           Left = 1
           Top = 1
@@ -682,7 +649,7 @@
           ExplicitHeight = 32
         end
       end
-      object Panel35: TPanel
+      object PanelDay40: TPanel
         Left = 0
         Top = 541
         Width = 132
@@ -694,8 +661,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 1
-        ExplicitTop = 49
-        object Label25: TLabel
+        object LabelDay40: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -723,10 +689,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel36: TPanel
+      object PanelDay33: TPanel
         Left = 0
         Top = 441
         Width = 132
@@ -738,8 +703,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 2
-        ExplicitTop = 49
-        object Label26: TLabel
+        object LabelDay33: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -767,10 +731,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel37: TPanel
+      object PanelDay26: TPanel
         Left = 0
         Top = 341
         Width = 132
@@ -782,8 +745,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 3
-        ExplicitTop = 49
-        object Label27: TLabel
+        object LabelDay26: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -811,10 +773,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel38: TPanel
+      object PanelDay19: TPanel
         Left = 0
         Top = 241
         Width = 132
@@ -826,8 +787,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 4
-        ExplicitTop = 49
-        object Label28: TLabel
+        object LabelDay19: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -855,10 +815,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel39: TPanel
+      object PanelDay12: TPanel
         Left = 0
         Top = 141
         Width = 132
@@ -870,8 +829,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 5
-        ExplicitTop = 49
-        object Label29: TLabel
+        object LabelDay12: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -899,10 +857,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel40: TPanel
+      object PanelDay5: TPanel
         Left = 0
         Top = 41
         Width = 132
@@ -914,8 +871,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 6
-        ExplicitTop = 49
-        object Label30: TLabel
+        object LabelDay5: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -943,7 +899,6 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
     end
@@ -957,9 +912,7 @@
       Caption = 'Panel4'
       ShowCaption = False
       TabOrder = 3
-      ExplicitLeft = 397
-      ExplicitTop = 1
-      ExplicitHeight = 687
+      ExplicitHeight = 609
       object Panel10: TPanel
         Left = 0
         Top = 0
@@ -971,7 +924,6 @@
         Caption = 'Panel4'
         ShowCaption = False
         TabOrder = 0
-        ExplicitTop = 8
         object LabelThursday: TLabel
           Left = 1
           Top = 1
@@ -990,7 +942,7 @@
           ExplicitHeight = 32
         end
       end
-      object Panel29: TPanel
+      object PanelDay39: TPanel
         Left = 0
         Top = 541
         Width = 132
@@ -1002,8 +954,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 1
-        ExplicitTop = 49
-        object Label19: TLabel
+        object LabelDay39: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1031,10 +982,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel30: TPanel
+      object PanelDay32: TPanel
         Left = 0
         Top = 441
         Width = 132
@@ -1046,8 +996,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 2
-        ExplicitTop = 49
-        object Label20: TLabel
+        object LabelDay32: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1075,10 +1024,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel31: TPanel
+      object PanelDay25: TPanel
         Left = 0
         Top = 341
         Width = 132
@@ -1090,8 +1038,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 3
-        ExplicitTop = 49
-        object Label21: TLabel
+        object LabelDay25: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1119,10 +1066,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel32: TPanel
+      object PanelDay18: TPanel
         Left = 0
         Top = 241
         Width = 132
@@ -1134,8 +1080,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 4
-        ExplicitTop = 49
-        object Label22: TLabel
+        object LabelDay18: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1163,10 +1108,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel33: TPanel
+      object PanelDay11: TPanel
         Left = 0
         Top = 141
         Width = 132
@@ -1178,8 +1122,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 5
-        ExplicitTop = 49
-        object Label23: TLabel
+        object LabelDay11: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1207,10 +1150,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel34: TPanel
+      object PanelDay4: TPanel
         Left = 0
         Top = 41
         Width = 132
@@ -1222,8 +1164,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 6
-        ExplicitTop = 49
-        object Label24: TLabel
+        object LabelDay4: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1251,7 +1192,6 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
     end
@@ -1265,9 +1205,7 @@
       Caption = 'Panel4'
       ShowCaption = False
       TabOrder = 4
-      ExplicitLeft = 262
-      ExplicitTop = 1
-      ExplicitHeight = 687
+      ExplicitHeight = 609
       object Panel7: TPanel
         Left = 0
         Top = 0
@@ -1279,7 +1217,6 @@
         Caption = 'Panel4'
         ShowCaption = False
         TabOrder = 0
-        ExplicitTop = 8
         object LabelWednesday: TLabel
           Left = 1
           Top = 1
@@ -1298,7 +1235,7 @@
           ExplicitHeight = 32
         end
       end
-      object Panel23: TPanel
+      object PanelDay38: TPanel
         Left = 0
         Top = 541
         Width = 132
@@ -1310,8 +1247,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 1
-        ExplicitTop = 49
-        object Label13: TLabel
+        object LabelDay38: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1339,10 +1275,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel24: TPanel
+      object PanelDay31: TPanel
         Left = 0
         Top = 441
         Width = 132
@@ -1354,8 +1289,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 2
-        ExplicitTop = 49
-        object Label14: TLabel
+        object LabelDay31: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1383,10 +1317,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel25: TPanel
+      object PanelDay24: TPanel
         Left = 0
         Top = 341
         Width = 132
@@ -1398,8 +1331,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 3
-        ExplicitTop = 49
-        object Label15: TLabel
+        object LabelDay24: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1427,10 +1359,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel26: TPanel
+      object PanelDay17: TPanel
         Left = 0
         Top = 241
         Width = 132
@@ -1442,8 +1373,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 4
-        ExplicitTop = 49
-        object Label16: TLabel
+        object LabelDay17: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1471,10 +1401,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel27: TPanel
+      object PanelDay10: TPanel
         Left = 0
         Top = 141
         Width = 132
@@ -1486,8 +1415,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 5
-        ExplicitTop = 49
-        object Label17: TLabel
+        object LabelDay10: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1515,10 +1443,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel28: TPanel
+      object PanelDay3: TPanel
         Left = 0
         Top = 41
         Width = 132
@@ -1530,8 +1457,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 6
-        ExplicitTop = 49
-        object Label18: TLabel
+        object LabelDay3: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1559,8 +1485,6 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitLeft = -4
-          ExplicitTop = 26
         end
       end
     end
@@ -1574,9 +1498,7 @@
       Caption = 'Panel4'
       ShowCaption = False
       TabOrder = 5
-      ExplicitLeft = 133
-      ExplicitTop = 1
-      ExplicitHeight = 687
+      ExplicitHeight = 609
       object Panel9: TPanel
         Left = 0
         Top = 0
@@ -1588,7 +1510,6 @@
         Caption = 'Panel4'
         ShowCaption = False
         TabOrder = 0
-        ExplicitTop = 8
         object LabelTuesday: TLabel
           Left = 1
           Top = 1
@@ -1619,7 +1540,6 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 1
-        ExplicitTop = 41
         object LabelDay30: TLabel
           Left = 0
           Top = 0
@@ -1648,10 +1568,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel18: TPanel
+      object PanelDay23: TPanel
         Left = 0
         Top = 341
         Width = 132
@@ -1663,8 +1582,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 2
-        ExplicitTop = 49
-        object Label8: TLabel
+        object LabelDay23: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1692,10 +1610,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel19: TPanel
+      object PanelDay16: TPanel
         Left = 0
         Top = 241
         Width = 132
@@ -1707,8 +1624,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 3
-        ExplicitTop = 49
-        object Label9: TLabel
+        object LabelDay16: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1736,10 +1652,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel20: TPanel
+      object PanelDay9: TPanel
         Left = 0
         Top = 141
         Width = 132
@@ -1751,8 +1666,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 4
-        ExplicitTop = 49
-        object Label10: TLabel
+        object LabelDay9: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1780,10 +1694,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel21: TPanel
+      object PanelDay2: TPanel
         Left = 0
         Top = 41
         Width = 132
@@ -1795,8 +1708,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 5
-        ExplicitTop = 49
-        object Label11: TLabel
+        object LabelDay2: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1824,11 +1736,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          OnChange = MemoDay9Change
-          ExplicitHeight = 76
         end
       end
-      object Panel22: TPanel
+      object PanelDay37: TPanel
         Left = 0
         Top = 541
         Width = 132
@@ -1840,8 +1750,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 6
-        ExplicitTop = 49
-        object Label12: TLabel
+        object LabelDay37: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1869,8 +1778,6 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitLeft = 4
-          ExplicitTop = 52
         end
       end
     end
@@ -1884,8 +1791,7 @@
       Caption = 'Panel4'
       ShowCaption = False
       TabOrder = 6
-      ExplicitLeft = 16
-      ExplicitTop = 6
+      ExplicitHeight = 609
       object Panel4: TPanel
         Left = 0
         Top = 0
@@ -1915,7 +1821,7 @@
           ExplicitHeight = 32
         end
       end
-      object Panel12: TPanel
+      object PanelDay36: TPanel
         Left = 0
         Top = 541
         Width = 132
@@ -1927,8 +1833,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 1
-        ExplicitTop = 49
-        object Label1: TLabel
+        object LabelDay36: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1956,10 +1861,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel13: TPanel
+      object PanelDay29: TPanel
         Left = 0
         Top = 441
         Width = 132
@@ -1971,8 +1875,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 2
-        ExplicitTop = 49
-        object Label3: TLabel
+        object LabelDay29: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -2000,10 +1903,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel14: TPanel
+      object PanelDay22: TPanel
         Left = 0
         Top = 341
         Width = 132
@@ -2015,8 +1917,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 3
-        ExplicitTop = 49
-        object Label4: TLabel
+        object LabelDay22: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -2044,10 +1945,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel15: TPanel
+      object PanelDay15: TPanel
         Left = 0
         Top = 241
         Width = 132
@@ -2059,8 +1959,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 4
-        ExplicitTop = 49
-        object Label5: TLabel
+        object LabelDay15: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -2088,10 +1987,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel16: TPanel
+      object PanelDay8: TPanel
         Left = 0
         Top = 141
         Width = 132
@@ -2103,8 +2001,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 5
-        ExplicitTop = 49
-        object Label6: TLabel
+        object LabelDay8: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -2132,10 +2029,9 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
-      object Panel17: TPanel
+      object PanelDay1: TPanel
         Left = 0
         Top = 41
         Width = 132
@@ -2147,8 +2043,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 6
-        ExplicitTop = 49
-        object Label7: TLabel
+        object LabelDay1: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -2176,7 +2071,6 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitHeight = 76
         end
       end
     end
@@ -2192,6 +2086,7 @@
     Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 2
+    ExplicitWidth = 1035
     object Label2: TLabel
       Left = 20
       Top = 91
@@ -2220,6 +2115,7 @@
       Caption = 'Panel1'
       ShowCaption = False
       TabOrder = 0
+      ExplicitWidth = 995
       object Button1: TButton
         Left = 845
         Top = 20
@@ -2231,8 +2127,7 @@
         Align = alRight
         Caption = 'Settings'
         TabOrder = 0
-        ExplicitLeft = 885
-        ExplicitHeight = 43
+        ExplicitLeft = 835
       end
       object Button2: TButton
         AlignWithMargins = True
@@ -2247,8 +2142,6 @@
         Align = alLeft
         Caption = 'Change View'
         TabOrder = 1
-        ExplicitTop = 23
-        ExplicitHeight = 37
       end
       object Button3: TButton
         AlignWithMargins = True
@@ -2262,8 +2155,6 @@
         Align = alLeft
         Caption = 'New Event'
         TabOrder = 2
-        ExplicitTop = 23
-        ExplicitHeight = 37
       end
     end
   end
@@ -2277,7 +2168,6 @@
     Caption = 'Panel3'
     ShowCaption = False
     TabOrder = 1
-    ExplicitTop = 105
-    ExplicitHeight = 672
+    ExplicitHeight = 609
   end
 end
