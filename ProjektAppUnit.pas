@@ -5,12 +5,11 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ShellAPI, System.Net.HttpClient,
-  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext;
+  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, Unit2, Unit3;
 
 type
   TForm1 = class(TForm)
     LogInButton: TButton;
-    Memo1: TMemo;
     procedure LogInClick(Sender: TObject);
     private
     FHttpServer: TIdHTTPServer;
@@ -79,13 +78,13 @@ begin
   try
     if Assigned(JsonObj) then
     begin
-      Memo1.Lines.Add('--- Full Response ---');
-      Memo1.Lines.Add(JsonObj.Format(2));
+      Form3.Memo1.Lines.Add('--- Full Response ---');
+      Form3.Memo1.Lines.Add(JsonObj.Format(2));
       if JsonObj.Values['access_token'] <> nil then    // If access_token != 0
       begin
-        Memo1.Lines.Add('');
-        Memo1.Lines.Add('--- Clean Access Token ---');
-        Memo1.Lines.Add(JsonObj.Values['access_token'].Value);
+        Form3.Memo1.Lines.Add('');
+        Form3.Memo1.Lines.Add('--- Clean Access Token ---');
+        Form3.Memo1.Lines.Add(JsonObj.Values['access_token'].Value);
       end;
     end;
   finally
@@ -140,8 +139,8 @@ begin
           TThread.Queue(nil, procedure
           begin
             // Calls procedure DisplayPrettyJson to write user information in Memo
-            Memo1.Lines.Clear; // Clear Memo1 text
-            Memo1.Lines.Add('--- USER PROFILE ---');
+            Form3.Memo1.Lines.Clear; // Clear Memo1 text
+            Form3.Memo1.Lines.Add('--- USER PROFILE ---');
             DisplayPrettyJson(UserInfo);
           end);
         end;
@@ -150,7 +149,7 @@ begin
       end;
     except
       on E: Exception do
-        TThread.Queue(nil, procedure begin Memo1.Lines.Add('Error: ' + E.Message); end);
+        TThread.Queue(nil, procedure begin Form3.Memo1.Lines.Add('Error: ' + E.Message); end);
     end;
   end;
 end;
@@ -177,6 +176,11 @@ begin
   '&response_mode=query' +
   '&scope=openid%20profile%20offline_access%20User.Read';
   ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
+
+  begin
+    Form3.Show;
+    Form2.Show;
+  end;
 end;
 
 end.

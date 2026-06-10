@@ -1,0 +1,61 @@
+unit Unit4;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+
+type
+  TForm4 = class(TForm)
+    Panel1: TPanel;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    PanelSøndag: TPanel;
+    PanelLørdag: TPanel;
+    PanelFredag: TPanel;
+    PanelTorsdag: TPanel;
+    PanelOnsdag: TPanel;
+    PanelTirsdag: TPanel;
+    PanelMandag: TPanel;
+    procedure Panel2Resize(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form4: TForm4;
+
+implementation
+
+{$R *.dfm}
+
+
+
+
+
+procedure TForm4.Panel2Resize(Sender: TObject);
+begin
+
+  PanelMandag.Width := Panel2.Width div 7;
+
+  PanelTirsdag.Width := Panel2.Width div 7;
+
+  PanelOnsdag.Width := Panel2.Width div 7;
+
+  PanelTorsdag.Width := Panel2.Width div 7;
+
+  PanelFredag.Width := Panel2.Width div 7;
+
+  PanelLørdag.Width := Panel2.Width div 7;
+
+  PanelSøndag.Width := Panel2.Width div 7;
+
+end;
+
+end.
