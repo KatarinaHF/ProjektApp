@@ -215,48 +215,31 @@ begin
     DayMemos[I]  := FindComponent('MemoDay'  + IntToStr(I)) as TMemo;
     DayLabels[I] := FindComponent('LabelDay' + IntToStr(I)) as TLabel;
   end;
-
-  begin
-  BuildCalendar(2025, 9);
-  end;
 end;
 
 procedure TForm4.BuildCalendar(AYear, AMonth: Integer);
+
 var
-  FirstDate: TDate;
-  StartPos: Integer;
-  DaysInMonthCount: Integer;
-  DayNum: Integer;
-  GridIndex: Integer;
+  FirstDay: TDate;
+  DaysInMonth: Integer;
+
+  I: Integer;
+
 begin
-  // Ryd kalenderen
-  for GridIndex := 1 to 42 do
+  FirstDay := EncodeDate(AYear, AMonth, 1);
+
+  DaysInMonth := DaysInAMonth(AYear, AMonth);
+
+  for I := 1 to 31 do
+
   begin
-    DayLabels[GridIndex].Caption := '';
-    DayMemos[GridIndex].Clear;
+
+    DayPanels[I].Visible := I <= DaysInMonth;
+
+    DayMemos[I].Clear;
+
   end;
 
-  FirstDate := EncodeDate(AYear, AMonth, 1);
-
-  DaysInMonthCount := DaysInAMonth(AYear, AMonth);
-
-  // Delphi:
-  // 1=Søndag, 2=Mandag, ..., 7=Lørdag
-  StartPos := DayOfWeek(FirstDate);
-
-  // Konverter så Mandag=1 ... Søndag=7
-  if StartPos = 1 then
-    StartPos := 7
-  else
-    Dec(StartPos);
-
-  GridIndex := StartPos;
-
-  for DayNum := 1 to DaysInMonthCount do
-  begin
-    DayLabels[GridIndex].Caption := IntToStr(DayNum);
-    Inc(GridIndex);
-  end;
 end;
 
 
