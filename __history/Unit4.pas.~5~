@@ -37,133 +37,134 @@ type
     LabelThursday: TLabel;
     Panel11: TPanel;
     Label2: TLabel;
-    PanelDay30: TPanel;
-    LabelDay30: TLabel;
-    MemoDay30: TMemo;
+    PanelDay2: TPanel;
+    LabelDay2: TLabel;
+    MemoDay2: TMemo;
     Panel12: TPanel;
     Label1: TLabel;
-    MemoDay36: TMemo;
+    Memo1: TMemo;
     Panel13: TPanel;
     Label3: TLabel;
-    MemoDay29: TMemo;
+    Memo2: TMemo;
     Panel14: TPanel;
     Label4: TLabel;
-    MemoDay22: TMemo;
+    Memo3: TMemo;
     Panel15: TPanel;
     Label5: TLabel;
-    MemoDay15: TMemo;
+    Memo4: TMemo;
     Panel16: TPanel;
     Label6: TLabel;
-    MemoDay8: TMemo;
+    Memo5: TMemo;
     Panel17: TPanel;
     Label7: TLabel;
-    MemoDay1: TMemo;
+    Memo6: TMemo;
     Panel18: TPanel;
     Label8: TLabel;
-    MemoDay23: TMemo;
+    Memo7: TMemo;
     Panel19: TPanel;
     Label9: TLabel;
-    MemoDay16: TMemo;
+    Memo8: TMemo;
     Panel20: TPanel;
     Label10: TLabel;
-    MemoDay9: TMemo;
+    Memo9: TMemo;
     Panel21: TPanel;
     Label11: TLabel;
-    MemoDay2: TMemo;
-    Panel23: TPanel;
-    Label13: TLabel;
-    MemoDay38: TMemo;
-    Panel24: TPanel;
-    Label14: TLabel;
-    MemoDay31: TMemo;
-    Panel25: TPanel;
-    Label15: TLabel;
-    MemoDay24: TMemo;
-    Panel26: TPanel;
-    Label16: TLabel;
-    MemoDay17: TMemo;
-    Panel27: TPanel;
-    Label17: TLabel;
-    MemoDay10: TMemo;
-    Panel28: TPanel;
-    Label18: TLabel;
-    MemoDay3: TMemo;
-    Panel29: TPanel;
-    Label19: TLabel;
-    MemoDay39: TMemo;
-    Panel30: TPanel;
-    Label20: TLabel;
-    MemoDay32: TMemo;
-    Panel31: TPanel;
-    Label21: TLabel;
-    MemoDay25: TMemo;
-    Panel32: TPanel;
-    Label22: TLabel;
-    MemoDay18: TMemo;
-    Panel33: TPanel;
-    Label23: TLabel;
-    MemoDay11: TMemo;
-    Panel34: TPanel;
-    Label24: TLabel;
-    MemoDay4: TMemo;
-    Panel35: TPanel;
-    Label25: TLabel;
-    MemoDay40: TMemo;
-    Panel36: TPanel;
-    Label26: TLabel;
-    MemoDay33: TMemo;
-    Panel37: TPanel;
-    Label27: TLabel;
-    MemoDay26: TMemo;
-    Panel38: TPanel;
-    Label28: TLabel;
-    MemoDay19: TMemo;
-    Panel39: TPanel;
-    Label29: TLabel;
-    MemoDay12: TMemo;
-    Panel40: TPanel;
-    Label30: TLabel;
-    MemoDay5: TMemo;
-    Panel41: TPanel;
-    Label31: TLabel;
-    MemoDay41: TMemo;
-    Panel42: TPanel;
-    Label32: TLabel;
-    MemoDay34: TMemo;
-    Panel43: TPanel;
-    Label33: TLabel;
-    MemoDay27: TMemo;
-    Panel44: TPanel;
-    Label34: TLabel;
-    MemoDay20: TMemo;
-    Panel45: TPanel;
-    Label35: TLabel;
-    MemoDay13: TMemo;
-    Panel46: TPanel;
-    Label36: TLabel;
-    MemoDay6: TMemo;
-    Panel47: TPanel;
-    Label37: TLabel;
-    MemoDay42: TMemo;
-    Panel49: TPanel;
-    Label39: TLabel;
-    MemoDay35: TMemo;
-    Panel50: TPanel;
-    Label40: TLabel;
-    MemoDay28: TMemo;
-    Panel48: TPanel;
-    Label38: TLabel;
-    MemoDay21: TMemo;
-    Panel51: TPanel;
-    Label41: TLabel;
-    MemoDay14: TMemo;
-    Panel52: TPanel;
-    Label42: TLabel;
-    MemoDay7: TMemo;
+    Memo10: TMemo;
     Panel22: TPanel;
     Label12: TLabel;
-    MemoDay37: TMemo;
+    Memo11: TMemo;
+    Panel23: TPanel;
+    Label13: TLabel;
+    Memo12: TMemo;
+    Panel24: TPanel;
+    Label14: TLabel;
+    Memo13: TMemo;
+    Panel25: TPanel;
+    Label15: TLabel;
+    Memo14: TMemo;
+    Panel26: TPanel;
+    Label16: TLabel;
+    Memo15: TMemo;
+    Panel27: TPanel;
+    Label17: TLabel;
+    Memo16: TMemo;
+    Panel28: TPanel;
+    Label18: TLabel;
+    Memo17: TMemo;
+    Panel29: TPanel;
+    Label19: TLabel;
+    Memo18: TMemo;
+    Panel30: TPanel;
+    Label20: TLabel;
+    Memo19: TMemo;
+    Panel31: TPanel;
+    Label21: TLabel;
+    Memo20: TMemo;
+    Panel32: TPanel;
+    Label22: TLabel;
+    Memo21: TMemo;
+    Panel33: TPanel;
+    Label23: TLabel;
+    Memo22: TMemo;
+    Panel34: TPanel;
+    Label24: TLabel;
+    Memo23: TMemo;
+    Panel35: TPanel;
+    Label25: TLabel;
+    Memo24: TMemo;
+    Panel36: TPanel;
+    Label26: TLabel;
+    Memo25: TMemo;
+    Panel37: TPanel;
+    Label27: TLabel;
+    Memo26: TMemo;
+    Panel38: TPanel;
+    Label28: TLabel;
+    Memo27: TMemo;
+    Panel39: TPanel;
+    Label29: TLabel;
+    Memo28: TMemo;
+    Panel40: TPanel;
+    Label30: TLabel;
+    Memo29: TMemo;
+    Panel41: TPanel;
+    Label31: TLabel;
+    Memo30: TMemo;
+    Panel42: TPanel;
+    Label32: TLabel;
+    Memo31: TMemo;
+    Panel43: TPanel;
+    Label33: TLabel;
+    Memo32: TMemo;
+    Panel44: TPanel;
+    Label34: TLabel;
+    Memo33: TMemo;
+    Panel45: TPanel;
+    Label35: TLabel;
+    Memo34: TMemo;
+    Panel46: TPanel;
+    Label36: TLabel;
+    Memo35: TMemo;
+    Panel47: TPanel;
+    Label37: TLabel;
+    Memo36: TMemo;
+    Panel49: TPanel;
+    Label39: TLabel;
+    Memo38: TMemo;
+    Panel50: TPanel;
+    Label40: TLabel;
+    Memo39: TMemo;
+    Panel48: TPanel;
+    Label38: TLabel;
+    Memo37: TMemo;
+    Panel51: TPanel;
+    Label41: TLabel;
+    Memo40: TMemo;
+    Panel52: TPanel;
+    Label42: TLabel;
+    Memo41: TMemo;
     procedure Panel2Resize(Sender: TObject);
+    procedure PanelSøndagClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -176,6 +177,8 @@ var
 implementation
 
 {$R *.dfm}
+
+
 
 
 
@@ -204,5 +207,52 @@ end;
 
 
 
+procedure TForm4.PanelSøndagClick(Sender: TObject);
+begin
+object PanelDay2: TPanel
+  Left = 0
+  Top = 41
+  Width = 132
+  Height = 100
+  Align = alTop
+  BevelOuter = bvNone
+  BorderStyle = bsSingle
+  Caption = 'PanelDay1'
+  ParentBackground = False
+  ShowCaption = False
+  TabOrder = 1
+  object LabelDay2: TLabel
+    Left = 0
+    Top = 0
+    Width = 128
+    Height = 28
+    Align = alTop
+    Caption = '2'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    ExplicitWidth = 11
+  end
+  object MemoDay2: TMemo
+    Left = 0
+    Top = 28
+    Width = 128
+    Height = 68
+    Align = alClient
+    BevelInner = bvNone
+    BevelOuter = bvNone
+    BorderStyle = bsNone
+    Lines.Strings = (
+      'Memo1')
+    ParentColor = True
+    TabOrder = 0
+    ExplicitHeight = 76
+  end
+end
+
+end;
 
 end.

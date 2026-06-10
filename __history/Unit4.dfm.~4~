@@ -33,6 +33,7 @@
       Caption = 'PanelS'#248'ndag'
       ShowCaption = False
       TabOrder = 0
+      OnClick = PanelSøndagClick
       ExplicitLeft = 786
       ExplicitTop = 1
       ExplicitHeight = 687
@@ -94,7 +95,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay42: TMemo
+        object Memo36: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -138,7 +139,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay35: TMemo
+        object Memo38: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -182,7 +183,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay28: TMemo
+        object Memo39: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -226,7 +227,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay21: TMemo
+        object Memo37: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -270,7 +271,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay14: TMemo
+        object Memo40: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -314,7 +315,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay7: TMemo
+        object Memo41: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -402,7 +403,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay41: TMemo
+        object Memo30: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -446,7 +447,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay34: TMemo
+        object Memo31: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -490,7 +491,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay27: TMemo
+        object Memo32: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -534,7 +535,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay20: TMemo
+        object Memo33: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -578,7 +579,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay13: TMemo
+        object Memo34: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -622,7 +623,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay6: TMemo
+        object Memo35: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -710,7 +711,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay40: TMemo
+        object Memo24: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -754,7 +755,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay33: TMemo
+        object Memo25: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -798,7 +799,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay26: TMemo
+        object Memo26: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -842,7 +843,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay19: TMemo
+        object Memo27: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -886,7 +887,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay12: TMemo
+        object Memo28: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -930,7 +931,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay5: TMemo
+        object Memo29: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1018,7 +1019,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay39: TMemo
+        object Memo18: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1062,7 +1063,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay32: TMemo
+        object Memo19: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1106,7 +1107,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay25: TMemo
+        object Memo20: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1150,7 +1151,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay18: TMemo
+        object Memo21: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1194,7 +1195,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay11: TMemo
+        object Memo22: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1238,7 +1239,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay4: TMemo
+        object Memo23: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1326,7 +1327,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay38: TMemo
+        object Memo12: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1370,7 +1371,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay31: TMemo
+        object Memo13: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1414,7 +1415,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay24: TMemo
+        object Memo14: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1458,7 +1459,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay17: TMemo
+        object Memo15: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1502,7 +1503,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay10: TMemo
+        object Memo16: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1546,7 +1547,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay3: TMemo
+        object Memo17: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1559,8 +1560,7 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitLeft = -4
-          ExplicitTop = 26
+          ExplicitHeight = 76
         end
       end
     end
@@ -1607,9 +1607,9 @@
           ExplicitHeight = 32
         end
       end
-      object PanelDay30: TPanel
+      object PanelDay2: TPanel
         Left = 0
-        Top = 441
+        Top = 541
         Width = 132
         Height = 100
         Align = alTop
@@ -1620,183 +1620,7 @@
         ShowCaption = False
         TabOrder = 1
         ExplicitTop = 41
-        object LabelDay30: TLabel
-          Left = 0
-          Top = 0
-          Width = 128
-          Height = 28
-          Align = alTop
-          Caption = '2'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -20
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-          ExplicitWidth = 11
-        end
-        object MemoDay30: TMemo
-          Left = 0
-          Top = 28
-          Width = 128
-          Height = 68
-          Align = alClient
-          BevelInner = bvNone
-          BevelOuter = bvNone
-          BorderStyle = bsNone
-          Lines.Strings = (
-            'Memo1')
-          ParentColor = True
-          TabOrder = 0
-          ExplicitHeight = 76
-        end
-      end
-      object Panel18: TPanel
-        Left = 0
-        Top = 341
-        Width = 132
-        Height = 100
-        Align = alTop
-        BevelOuter = bvNone
-        BorderStyle = bsSingle
-        Caption = 'PanelDay1'
-        ParentBackground = False
-        ShowCaption = False
-        TabOrder = 2
-        ExplicitTop = 49
-        object Label8: TLabel
-          Left = 0
-          Top = 0
-          Width = 128
-          Height = 28
-          Align = alTop
-          Caption = '2'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -20
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-          ExplicitWidth = 11
-        end
-        object MemoDay23: TMemo
-          Left = 0
-          Top = 28
-          Width = 128
-          Height = 68
-          Align = alClient
-          BevelInner = bvNone
-          BevelOuter = bvNone
-          BorderStyle = bsNone
-          Lines.Strings = (
-            'Memo1')
-          ParentColor = True
-          TabOrder = 0
-          ExplicitHeight = 76
-        end
-      end
-      object Panel19: TPanel
-        Left = 0
-        Top = 241
-        Width = 132
-        Height = 100
-        Align = alTop
-        BevelOuter = bvNone
-        BorderStyle = bsSingle
-        Caption = 'PanelDay1'
-        ParentBackground = False
-        ShowCaption = False
-        TabOrder = 3
-        ExplicitTop = 49
-        object Label9: TLabel
-          Left = 0
-          Top = 0
-          Width = 128
-          Height = 28
-          Align = alTop
-          Caption = '2'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -20
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-          ExplicitWidth = 11
-        end
-        object MemoDay16: TMemo
-          Left = 0
-          Top = 28
-          Width = 128
-          Height = 68
-          Align = alClient
-          BevelInner = bvNone
-          BevelOuter = bvNone
-          BorderStyle = bsNone
-          Lines.Strings = (
-            'Memo1')
-          ParentColor = True
-          TabOrder = 0
-          ExplicitHeight = 76
-        end
-      end
-      object Panel20: TPanel
-        Left = 0
-        Top = 141
-        Width = 132
-        Height = 100
-        Align = alTop
-        BevelOuter = bvNone
-        BorderStyle = bsSingle
-        Caption = 'PanelDay1'
-        ParentBackground = False
-        ShowCaption = False
-        TabOrder = 4
-        ExplicitTop = 49
-        object Label10: TLabel
-          Left = 0
-          Top = 0
-          Width = 128
-          Height = 28
-          Align = alTop
-          Caption = '2'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -20
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-          ExplicitWidth = 11
-        end
-        object MemoDay9: TMemo
-          Left = 0
-          Top = 28
-          Width = 128
-          Height = 68
-          Align = alClient
-          BevelInner = bvNone
-          BevelOuter = bvNone
-          BorderStyle = bsNone
-          Lines.Strings = (
-            'Memo1')
-          ParentColor = True
-          TabOrder = 0
-          ExplicitHeight = 76
-        end
-      end
-      object Panel21: TPanel
-        Left = 0
-        Top = 41
-        Width = 132
-        Height = 100
-        Align = alTop
-        BevelOuter = bvNone
-        BorderStyle = bsSingle
-        Caption = 'PanelDay1'
-        ParentBackground = False
-        ShowCaption = False
-        TabOrder = 5
-        ExplicitTop = 49
-        object Label11: TLabel
+        object LabelDay2: TLabel
           Left = 0
           Top = 0
           Width = 128
@@ -1824,13 +1648,188 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          OnChange = MemoDay9Change
+          ExplicitHeight = 76
+        end
+      end
+      object Panel18: TPanel
+        Left = 0
+        Top = 441
+        Width = 132
+        Height = 100
+        Align = alTop
+        BevelOuter = bvNone
+        BorderStyle = bsSingle
+        Caption = 'PanelDay1'
+        ParentBackground = False
+        ShowCaption = False
+        TabOrder = 2
+        ExplicitTop = 49
+        object Label8: TLabel
+          Left = 0
+          Top = 0
+          Width = 128
+          Height = 28
+          Align = alTop
+          Caption = '2'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -20
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          ExplicitWidth = 11
+        end
+        object Memo7: TMemo
+          Left = 0
+          Top = 28
+          Width = 128
+          Height = 68
+          Align = alClient
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BorderStyle = bsNone
+          Lines.Strings = (
+            'Memo1')
+          ParentColor = True
+          TabOrder = 0
+          ExplicitHeight = 76
+        end
+      end
+      object Panel19: TPanel
+        Left = 0
+        Top = 341
+        Width = 132
+        Height = 100
+        Align = alTop
+        BevelOuter = bvNone
+        BorderStyle = bsSingle
+        Caption = 'PanelDay1'
+        ParentBackground = False
+        ShowCaption = False
+        TabOrder = 3
+        ExplicitTop = 49
+        object Label9: TLabel
+          Left = 0
+          Top = 0
+          Width = 128
+          Height = 28
+          Align = alTop
+          Caption = '2'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -20
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          ExplicitWidth = 11
+        end
+        object Memo8: TMemo
+          Left = 0
+          Top = 28
+          Width = 128
+          Height = 68
+          Align = alClient
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BorderStyle = bsNone
+          Lines.Strings = (
+            'Memo1')
+          ParentColor = True
+          TabOrder = 0
+          ExplicitHeight = 76
+        end
+      end
+      object Panel20: TPanel
+        Left = 0
+        Top = 241
+        Width = 132
+        Height = 100
+        Align = alTop
+        BevelOuter = bvNone
+        BorderStyle = bsSingle
+        Caption = 'PanelDay1'
+        ParentBackground = False
+        ShowCaption = False
+        TabOrder = 4
+        ExplicitTop = 49
+        object Label10: TLabel
+          Left = 0
+          Top = 0
+          Width = 128
+          Height = 28
+          Align = alTop
+          Caption = '2'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -20
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          ExplicitWidth = 11
+        end
+        object Memo9: TMemo
+          Left = 0
+          Top = 28
+          Width = 128
+          Height = 68
+          Align = alClient
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BorderStyle = bsNone
+          Lines.Strings = (
+            'Memo1')
+          ParentColor = True
+          TabOrder = 0
+          ExplicitHeight = 76
+        end
+      end
+      object Panel21: TPanel
+        Left = 0
+        Top = 141
+        Width = 132
+        Height = 100
+        Align = alTop
+        BevelOuter = bvNone
+        BorderStyle = bsSingle
+        Caption = 'PanelDay1'
+        ParentBackground = False
+        ShowCaption = False
+        TabOrder = 5
+        ExplicitTop = 49
+        object Label11: TLabel
+          Left = 0
+          Top = 0
+          Width = 128
+          Height = 28
+          Align = alTop
+          Caption = '2'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -20
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          ExplicitWidth = 11
+        end
+        object Memo10: TMemo
+          Left = 0
+          Top = 28
+          Width = 128
+          Height = 68
+          Align = alClient
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BorderStyle = bsNone
+          Lines.Strings = (
+            'Memo1')
+          ParentColor = True
+          TabOrder = 0
           ExplicitHeight = 76
         end
       end
       object Panel22: TPanel
         Left = 0
-        Top = 541
+        Top = 41
         Width = 132
         Height = 100
         Align = alTop
@@ -1856,7 +1855,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay37: TMemo
+        object Memo11: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1869,8 +1868,7 @@
             'Memo1')
           ParentColor = True
           TabOrder = 0
-          ExplicitLeft = 4
-          ExplicitTop = 52
+          ExplicitHeight = 76
         end
       end
     end
@@ -1943,7 +1941,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay36: TMemo
+        object Memo1: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -1987,7 +1985,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay29: TMemo
+        object Memo2: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -2031,7 +2029,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay22: TMemo
+        object Memo3: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -2075,7 +2073,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay15: TMemo
+        object Memo4: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -2119,7 +2117,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay8: TMemo
+        object Memo5: TMemo
           Left = 0
           Top = 28
           Width = 128
@@ -2163,7 +2161,7 @@
           ParentFont = False
           ExplicitWidth = 11
         end
-        object MemoDay1: TMemo
+        object Memo6: TMemo
           Left = 0
           Top = 28
           Width = 128

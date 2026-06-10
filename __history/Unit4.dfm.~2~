@@ -1,0 +1,455 @@
+﻿object Form4: TForm4
+  Left = 0
+  Top = 0
+  Caption = 'Form4'
+  ClientHeight = 794
+  ClientWidth = 1045
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 15
+  object Panel2: TPanel
+    Left = 121
+    Top = 169
+    Width = 924
+    Height = 625
+    Align = alClient
+    BevelOuter = bvNone
+    Caption = 'Panel2'
+    TabOrder = 0
+    OnResize = Panel2Resize
+    ExplicitTop = 105
+    ExplicitHeight = 672
+    object PanelSøndag: TPanel
+      Left = 792
+      Top = 0
+      Width = 132
+      Height = 625
+      Align = alLeft
+      BevelOuter = bvNone
+      Caption = 'PanelS'#248'ndag'
+      ShowCaption = False
+      TabOrder = 0
+      ExplicitLeft = 786
+      ExplicitTop = 1
+      ExplicitHeight = 687
+      object Panel8: TPanel
+        Left = 0
+        Top = 0
+        Width = 132
+        Height = 41
+        Align = alTop
+        BevelOuter = bvNone
+        BorderWidth = 1
+        Caption = 'Panel4'
+        ShowCaption = False
+        TabOrder = 0
+        ExplicitTop = 8
+        object LabelSunday: TLabel
+          Left = 1
+          Top = 1
+          Width = 130
+          Height = 39
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'Sunday'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -24
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitWidth = 84
+          ExplicitHeight = 32
+        end
+      end
+    end
+    object PanelLørdag: TPanel
+      Left = 660
+      Top = 0
+      Width = 132
+      Height = 625
+      Align = alLeft
+      BevelOuter = bvNone
+      Caption = 'Panel4'
+      ShowCaption = False
+      TabOrder = 1
+      ExplicitLeft = 617
+      ExplicitTop = 1
+      ExplicitHeight = 687
+      object Panel5: TPanel
+        Left = 0
+        Top = 0
+        Width = 132
+        Height = 41
+        Align = alTop
+        BevelOuter = bvNone
+        BorderWidth = 1
+        Caption = 'Panel4'
+        ShowCaption = False
+        TabOrder = 0
+        ExplicitTop = 8
+        object LabelSaturday: TLabel
+          Left = 1
+          Top = 1
+          Width = 130
+          Height = 39
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'Saturday'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -24
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitWidth = 101
+          ExplicitHeight = 32
+        end
+      end
+    end
+    object PanelFredag: TPanel
+      Left = 528
+      Top = 0
+      Width = 132
+      Height = 625
+      Align = alLeft
+      BevelOuter = bvNone
+      Caption = 'Panel4'
+      ShowCaption = False
+      TabOrder = 2
+      ExplicitLeft = 485
+      ExplicitTop = 1
+      ExplicitHeight = 687
+      object Panel6: TPanel
+        Left = 0
+        Top = 0
+        Width = 132
+        Height = 41
+        Align = alTop
+        BevelOuter = bvNone
+        BorderWidth = 1
+        Caption = 'Panel4'
+        ShowCaption = False
+        TabOrder = 0
+        ExplicitTop = 8
+        object LabelFriday: TLabel
+          Left = 1
+          Top = 1
+          Width = 130
+          Height = 39
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'Friday'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -24
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitWidth = 70
+          ExplicitHeight = 32
+        end
+      end
+    end
+    object PanelTorsdag: TPanel
+      Left = 396
+      Top = 0
+      Width = 132
+      Height = 625
+      Align = alLeft
+      BevelOuter = bvNone
+      Caption = 'Panel4'
+      ShowCaption = False
+      TabOrder = 3
+      ExplicitLeft = 397
+      ExplicitTop = 1
+      ExplicitHeight = 687
+      object Panel10: TPanel
+        Left = 0
+        Top = 0
+        Width = 132
+        Height = 41
+        Align = alTop
+        BevelOuter = bvNone
+        BorderWidth = 1
+        Caption = 'Panel4'
+        ShowCaption = False
+        TabOrder = 0
+        ExplicitTop = 8
+        object LabelThursday: TLabel
+          Left = 1
+          Top = 1
+          Width = 130
+          Height = 39
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'Thursday'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -24
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitWidth = 105
+          ExplicitHeight = 32
+        end
+      end
+    end
+    object PanelOnsdag: TPanel
+      Left = 264
+      Top = 0
+      Width = 132
+      Height = 625
+      Align = alLeft
+      BevelOuter = bvNone
+      Caption = 'Panel4'
+      ShowCaption = False
+      TabOrder = 4
+      ExplicitLeft = 262
+      ExplicitTop = 1
+      ExplicitHeight = 687
+      object Panel7: TPanel
+        Left = 0
+        Top = 0
+        Width = 132
+        Height = 41
+        Align = alTop
+        BevelOuter = bvNone
+        BorderWidth = 1
+        Caption = 'Panel4'
+        ShowCaption = False
+        TabOrder = 0
+        ExplicitTop = 8
+        object LabelWednesday: TLabel
+          Left = 1
+          Top = 1
+          Width = 130
+          Height = 39
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'Wednesday'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -24
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitWidth = 131
+          ExplicitHeight = 32
+        end
+      end
+    end
+    object PanelTirsdag: TPanel
+      Left = 132
+      Top = 0
+      Width = 132
+      Height = 625
+      Align = alLeft
+      BevelOuter = bvNone
+      Caption = 'Panel4'
+      ShowCaption = False
+      TabOrder = 5
+      ExplicitLeft = 133
+      ExplicitTop = 1
+      ExplicitHeight = 687
+      object Panel9: TPanel
+        Left = 0
+        Top = 0
+        Width = 132
+        Height = 41
+        Align = alTop
+        BevelOuter = bvNone
+        BorderWidth = 1
+        Caption = 'Panel4'
+        ShowCaption = False
+        TabOrder = 0
+        ExplicitTop = 8
+        object LabelTuesday: TLabel
+          Left = 1
+          Top = 1
+          Width = 130
+          Height = 39
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'Tuesday'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -24
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitWidth = 92
+          ExplicitHeight = 32
+        end
+      end
+    end
+    object PanelMandag: TPanel
+      Left = 0
+      Top = 0
+      Width = 132
+      Height = 625
+      Align = alLeft
+      BevelOuter = bvNone
+      Caption = 'Panel4'
+      ShowCaption = False
+      TabOrder = 6
+      ExplicitHeight = 681
+      object Panel4: TPanel
+        Left = 0
+        Top = 0
+        Width = 132
+        Height = 41
+        Align = alTop
+        BevelOuter = bvNone
+        BorderWidth = 1
+        Caption = 'Panel4'
+        ShowCaption = False
+        TabOrder = 0
+        object LabelMonday: TLabel
+          Left = 1
+          Top = 1
+          Width = 130
+          Height = 39
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'Monday'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -24
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitLeft = -4
+          ExplicitTop = 89
+          ExplicitHeight = 32
+        end
+      end
+      object PanelDay1: TPanel
+        Left = 0
+        Top = 41
+        Width = 132
+        Height = 108
+        Align = alTop
+        BevelOuter = bvNone
+        Caption = 'PanelDay1'
+        ParentBackground = False
+        ShowCaption = False
+        TabOrder = 1
+        object Label1: TLabel
+          Left = 0
+          Top = 0
+          Width = 132
+          Height = 21
+          Align = alTop
+          Alignment = taCenter
+          Caption = 'Dato'
+          Color = clSilver
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentColor = False
+          ParentFont = False
+          Transparent = False
+          ExplicitLeft = 1
+          ExplicitTop = 1
+          ExplicitWidth = 33
+        end
+      end
+    end
+  end
+  object Panel11: TPanel
+    Left = 0
+    Top = 0
+    Width = 1045
+    Height = 169
+    Align = alTop
+    BevelOuter = bvNone
+    BorderWidth = 20
+    Caption = 'Panel1'
+    ShowCaption = False
+    TabOrder = 2
+    OnClick = Panel1Click
+    object Label2: TLabel
+      Left = 20
+      Top = 103
+      Width = 1005
+      Height = 46
+      Align = alClient
+      Alignment = taCenter
+      Caption = 'Month'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -40
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      ExplicitTop = 89
+      ExplicitHeight = 84
+    end
+    object Panel1: TPanel
+      Left = 20
+      Top = 20
+      Width = 1005
+      Height = 83
+      Align = alTop
+      BevelOuter = bvNone
+      BorderWidth = 20
+      Caption = 'Panel1'
+      ShowCaption = False
+      TabOrder = 0
+      OnClick = Panel1Click
+      ExplicitTop = 6
+      object Button1: TButton
+        Left = 845
+        Top = 20
+        Width = 140
+        Height = 43
+        Align = alRight
+        Caption = 'Settings'
+        TabOrder = 0
+        ExplicitLeft = 885
+      end
+      object Button2: TButton
+        AlignWithMargins = True
+        Left = 183
+        Top = 23
+        Width = 140
+        Height = 37
+        Margins.Left = 10
+        Align = alLeft
+        Caption = 'Change View'
+        TabOrder = 1
+      end
+      object Button3: TButton
+        AlignWithMargins = True
+        Left = 23
+        Top = 23
+        Width = 140
+        Height = 37
+        Margins.Right = 10
+        Align = alLeft
+        Caption = 'New Event'
+        TabOrder = 2
+      end
+    end
+  end
+  object Panel3: TPanel
+    Left = 0
+    Top = 169
+    Width = 121
+    Height = 625
+    Align = alLeft
+    BevelOuter = bvNone
+    Caption = 'Panel3'
+    ShowCaption = False
+    TabOrder = 1
+    ExplicitTop = 105
+    ExplicitHeight = 672
+  end
+end

@@ -37,9 +37,9 @@ type
     LabelThursday: TLabel;
     Panel11: TPanel;
     Label2: TLabel;
-    PanelDay30: TPanel;
-    LabelDay30: TLabel;
-    MemoDay30: TMemo;
+    PanelDay37: TPanel;
+    LabelDay37: TLabel;
+    MemoDay37: TMemo;
     Panel12: TPanel;
     Label1: TLabel;
     MemoDay36: TMemo;
@@ -60,15 +60,16 @@ type
     MemoDay1: TMemo;
     Panel18: TPanel;
     Label8: TLabel;
-    MemoDay23: TMemo;
+    MemoDay30: TMemo;
     Panel19: TPanel;
     Label9: TLabel;
-    MemoDay16: TMemo;
+    MemoDay23: TMemo;
     Panel20: TPanel;
     Label10: TLabel;
-    MemoDay9: TMemo;
+    MemoDay16: TMemo;
     Panel21: TPanel;
     Label11: TLabel;
+    MemoDay9: TMemo;
     MemoDay2: TMemo;
     Panel23: TPanel;
     Label13: TLabel;
@@ -160,9 +161,6 @@ type
     Panel52: TPanel;
     Label42: TLabel;
     MemoDay7: TMemo;
-    Panel22: TPanel;
-    Label12: TLabel;
-    MemoDay37: TMemo;
     procedure Panel2Resize(Sender: TObject);
   private
     { Private declarations }
@@ -176,6 +174,10 @@ var
 implementation
 
 {$R *.dfm}
+
+
+
+
 
 
 
