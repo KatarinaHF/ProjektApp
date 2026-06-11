@@ -163,6 +163,10 @@ type
     PanelDay37: TPanel;
     LabelDay37: TLabel;
     MemoDay37: TMemo;
+    LabelCalendars: TLabel;
+    CheckBoxHolidays: TCheckBox;
+    CheckBoxPrivate: TCheckBox;
+    CheckBoxWork: TCheckBox;
     procedure Panel2Resize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -205,6 +209,7 @@ begin
 
 end;
 
+
 procedure TForm4.FormCreate(Sender: TObject);
 var
   I: Integer;
@@ -212,13 +217,20 @@ begin
   for I := 1 to 42 do
   begin
     DayPanels[I] := FindComponent('PanelDay' + IntToStr(I)) as TPanel;
-    DayMemos[I]  := FindComponent('MemoDay'  + IntToStr(I)) as TMemo;
+    DayMemos[I]  := FindComponent('MemoDay' + IntToStr(I)) as TMemo;
     DayLabels[I] := FindComponent('LabelDay' + IntToStr(I)) as TLabel;
+
+    if DayPanels[I] = nil then
+      ShowMessage('Mangler PanelDay' + IntToStr(I));
+
+    if DayMemos[I] = nil then
+      ShowMessage('Mangler MemoDay' + IntToStr(I));
+
+    if DayLabels[I] = nil then
+      ShowMessage('Mangler LabelDay' + IntToStr(I));
   end;
 
-  begin
-  BuildCalendar(2025, 9);
-  end;
+  BuildCalendar(2025, 10);
 end;
 
 procedure TForm4.BuildCalendar(AYear, AMonth: Integer);
