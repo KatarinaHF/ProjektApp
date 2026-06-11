@@ -213,7 +213,6 @@ end;
 procedure TForm4.FormCreate(Sender: TObject);
 var
   I: Integer;
-  Year, Month, Day: Word;
 begin
   for I := 1 to 42 do
   begin
@@ -231,9 +230,7 @@ begin
       ShowMessage('Mangler LabelDay' + IntToStr(I));
   end;
 
-  DecodeDate(Date, Year, Month, Day);
-
-  BuildCalendar(Year, Month);
+  BuildCalendar(2025, 10);
 end;
 
 procedure TForm4.BuildCalendar(AYear, AMonth: Integer);

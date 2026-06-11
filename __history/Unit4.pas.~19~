@@ -213,7 +213,6 @@ end;
 procedure TForm4.FormCreate(Sender: TObject);
 var
   I: Integer;
-  Year, Month, Day: Word;
 begin
   for I := 1 to 42 do
   begin
