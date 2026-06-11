@@ -8,12 +8,12 @@ uses
 
 type
   TForm4 = class(TForm)
-    Panel1: TPanel;
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    Panel2: TPanel;
-    Panel3: TPanel;
+    PanelTopButtons: TPanel;
+    ButtonSettings: TButton;
+    ButtonChangeView: TButton;
+    ButtonNewEvent: TButton;
+    PanelCalendar: TPanel;
+    PanelCalendartypes: TPanel;
     PanelSøndag: TPanel;
     PanelLørdag: TPanel;
     PanelFredag: TPanel;
@@ -22,21 +22,21 @@ type
     PanelTirsdag: TPanel;
     PanelMandag: TPanel;
     LabelMonday: TLabel;
-    Panel4: TPanel;
-    Panel5: TPanel;
+    PanelMondayName: TPanel;
+    PanelSaturdayName: TPanel;
     LabelSaturday: TLabel;
-    Panel6: TPanel;
+    PanelFridayName: TPanel;
     LabelFriday: TLabel;
-    Panel7: TPanel;
+    PanelWednesdayName: TPanel;
     LabelWednesday: TLabel;
-    Panel8: TPanel;
+    PanelSundayName: TPanel;
     LabelSunday: TLabel;
-    Panel9: TPanel;
+    PanelTuesdayName: TPanel;
     LabelTuesday: TLabel;
-    Panel10: TPanel;
+    PanelThursdayName: TPanel;
     LabelThursday: TLabel;
-    Panel11: TPanel;
-    Label2: TLabel;
+    PanelTop: TPanel;
+    LabelMonth: TLabel;
     PanelDay30: TPanel;
     LabelDay30: TLabel;
     MemoDay30: TMemo;
@@ -169,11 +169,11 @@ type
     CheckBoxWork: TCheckBox;
     PreviousMonth: TButton;
     NextMonth: TButton;
-    Shape1: TShape;
-    Panel12: TPanel;
-    Panel13: TPanel;
-    Panel14: TPanel;
-    procedure Panel2Resize(Sender: TObject);
+    ShapeCalendarLine: TShape;
+    PanelMonth: TPanel;
+    PanelArrowButtons: TPanel;
+    PanelFiller: TPanel;
+    procedure PanelCalendarResize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
     procedure NextMonthClick(Sender: TObject);
@@ -200,32 +200,32 @@ implementation
 
 
 
-procedure TForm4.Panel2Resize(Sender: TObject);
+procedure TForm4.PanelCalendarResize(Sender: TObject);
 var
   I: Integer;
   DayHeight: Integer;
 
 begin
 
-  DayHeight := (PanelFredag.ClientHeight - Panel6.Height) div 6;
+  DayHeight := (PanelFredag.ClientHeight - PanelFridayName.Height) div 6;
 
   for I := 1 to 42 do
     if Assigned(DayPanels[I]) then
       DayPanels[I].Height := DayHeight;
 
-  PanelMandag.Width := Panel2.Width div 7;
+  PanelMandag.Width := PanelCalendar.Width div 7;
 
-  PanelTirsdag.Width := Panel2.Width div 7;
+  PanelTirsdag.Width := PanelCalendar.Width div 7;
 
-  PanelOnsdag.Width := Panel2.Width div 7;
+  PanelOnsdag.Width := PanelCalendar.Width div 7;
 
-  PanelTorsdag.Width := Panel2.Width div 7;
+  PanelTorsdag.Width := PanelCalendar.Width div 7;
 
-  PanelFredag.Width := Panel2.Width div 7;
+  PanelFredag.Width := PanelCalendar.Width div 7;
 
-  PanelLørdag.Width := Panel2.Width div 7;
+  PanelLørdag.Width := PanelCalendar.Width div 7;
 
-  PanelSøndag.Width := Panel2.Width div 7;
+  PanelSøndag.Width := PanelCalendar.Width div 7;
 
 end;
 
@@ -299,7 +299,7 @@ var
   GridIndex: Integer;
 
 begin
-  Label2.Caption := MonthNames[AMonth] + ' ' + IntToStr(AYear);
+  LabelMonth.Caption := MonthNames[AMonth] + ' ' + IntToStr(AYear);
 
   // Ryd kalenderen
   for GridIndex := 1 to 42 do
