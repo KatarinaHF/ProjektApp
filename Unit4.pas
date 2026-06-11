@@ -207,10 +207,11 @@ var
 
 begin
 
-  DayHeight := ((PanelFredag.Height-35) div 6);
+  DayHeight := (PanelFredag.ClientHeight - Panel6.Height) div 6;
 
   for I := 1 to 42 do
-    DayPanels[I].Height := DayHeight;
+    if Assigned(DayPanels[I]) then
+      DayPanels[I].Height := DayHeight;
 
   PanelMandag.Width := Panel2.Width div 7;
 

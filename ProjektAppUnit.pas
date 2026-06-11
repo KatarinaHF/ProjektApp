@@ -179,7 +179,6 @@ begin
 
   begin
     Form4.Show;
-    Form2.Show;
   end;
 end;
 
