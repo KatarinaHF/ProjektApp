@@ -28,13 +28,14 @@
       Left = 792
       Top = 0
       Width = 132
-      Height = 641
+      Height = 635
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'PanelS'#248'ndag'
       ParentColor = True
       ShowCaption = False
       TabOrder = 0
+      ExplicitHeight = 641
       object Panel8: TPanel
         Left = 0
         Top = 0
@@ -330,13 +331,14 @@
       Left = 660
       Top = 0
       Width = 132
-      Height = 641
+      Height = 635
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'Panel4'
       ParentColor = True
       ShowCaption = False
       TabOrder = 1
+      ExplicitHeight = 641
       object Panel5: TPanel
         Left = 0
         Top = 0
@@ -632,13 +634,14 @@
       Left = 528
       Top = 0
       Width = 132
-      Height = 641
+      Height = 635
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'Panel4'
       ParentColor = True
       ShowCaption = False
       TabOrder = 2
+      ExplicitHeight = 641
       object Panel6: TPanel
         Left = 0
         Top = 0
@@ -934,13 +937,14 @@
       Left = 396
       Top = 0
       Width = 132
-      Height = 641
+      Height = 635
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'Panel4'
       ParentColor = True
       ShowCaption = False
       TabOrder = 3
+      ExplicitHeight = 641
       object Panel10: TPanel
         Left = 0
         Top = 0
@@ -1237,13 +1241,14 @@
       Left = 264
       Top = 0
       Width = 132
-      Height = 641
+      Height = 635
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'Panel4'
       Color = clWhite
       ShowCaption = False
       TabOrder = 4
+      ExplicitHeight = 641
       object Panel7: TPanel
         Left = 0
         Top = 0
@@ -1539,13 +1544,14 @@
       Left = 132
       Top = 0
       Width = 132
-      Height = 641
+      Height = 635
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'Panel4'
       ParentColor = True
       ShowCaption = False
       TabOrder = 5
+      ExplicitHeight = 641
       object Panel9: TPanel
         Left = 0
         Top = 0
@@ -1843,7 +1849,7 @@
       Left = 0
       Top = 0
       Width = 132
-      Height = 641
+      Height = 635
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'Panel4'
@@ -1851,6 +1857,7 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 6
+      ExplicitHeight = 641
       object Panel4: TPanel
         Left = 0
         Top = 0
@@ -2267,25 +2274,6 @@
     ParentBackground = False
     ShowCaption = False
     TabOrder = 2
-    object Label2: TLabel
-      Left = 12
-      Top = 83
-      Width = 1021
-      Height = 58
-      Align = alClient
-      Alignment = taCenter
-      Caption = 'Month'
-      Color = clWhite
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -39
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-      ExplicitLeft = 10
-      ExplicitWidth = 1023
-    end
     object Panel1: TPanel
       Left = 12
       Top = 12
@@ -2299,6 +2287,7 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 0
+      ExplicitLeft = 0
       object Button1: TButton
         Left = 861
         Top = 20
@@ -2341,23 +2330,103 @@
         TabOrder = 2
       end
     end
-    object PreviousMonth: TButton
-      Left = 953
-      Top = 104
-      Width = 25
-      Height = 25
-      Caption = '<'
+    object Panel12: TPanel
+      Left = 12
+      Top = 83
+      Width = 1021
+      Height = 70
+      Align = alTop
+      BevelOuter = bvNone
+      BorderWidth = 5
+      Caption = 'Panel1'
+      Color = clWhite
+      ParentBackground = False
+      ShowCaption = False
       TabOrder = 1
-      OnClick = PreviousMonthClick
-    end
-    object NextMonth: TButton
-      Left = 988
-      Top = 104
-      Width = 25
-      Height = 25
-      Caption = '>'
-      TabOrder = 2
-      OnClick = NextMonthClick
+      object Label2: TLabel
+        Left = 95
+        Top = 5
+        Width = 831
+        Height = 60
+        Align = alClient
+        Alignment = taCenter
+        Caption = 'Month'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -39
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        ExplicitLeft = 115
+        ExplicitWidth = 811
+      end
+      object Panel13: TPanel
+        Left = 926
+        Top = 5
+        Width = 90
+        Height = 60
+        Align = alRight
+        BevelOuter = bvNone
+        BorderWidth = 15
+        Caption = 'Panel1'
+        Color = clWhite
+        ParentBackground = False
+        ShowCaption = False
+        TabOrder = 0
+        object NextMonth: TButton
+          AlignWithMargins = True
+          Left = 45
+          Top = 25
+          Width = 25
+          Height = 10
+          Margins.Left = 1
+          Margins.Top = 10
+          Margins.Right = 5
+          Margins.Bottom = 10
+          Align = alRight
+          Caption = '>'
+          TabOrder = 0
+          OnClick = NextMonthClick
+          ExplicitLeft = 991
+          ExplicitTop = 76
+          ExplicitHeight = 60
+        end
+        object PreviousMonth: TButton
+          AlignWithMargins = True
+          Left = 20
+          Top = 25
+          Width = 25
+          Height = 10
+          Margins.Left = 5
+          Margins.Top = 10
+          Margins.Right = 1
+          Margins.Bottom = 10
+          Align = alLeft
+          Caption = '<'
+          TabOrder = 1
+          OnClick = PreviousMonthClick
+          ExplicitLeft = 991
+          ExplicitTop = 76
+          ExplicitHeight = 60
+        end
+      end
+      object Panel14: TPanel
+        Left = 5
+        Top = 5
+        Width = 90
+        Height = 60
+        Align = alLeft
+        BevelOuter = bvNone
+        BorderWidth = 15
+        Caption = 'Panel1'
+        Color = clWhite
+        ParentBackground = False
+        ShowCaption = False
+        TabOrder = 1
+        ExplicitLeft = 926
+      end
     end
   end
 end

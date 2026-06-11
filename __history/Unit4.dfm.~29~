@@ -4,7 +4,7 @@
   Caption = 'Form4'
   ClientHeight = 794
   ClientWidth = 1045
-  Color = clBtnFace
+  Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
@@ -20,21 +20,22 @@
     Align = alClient
     BevelOuter = bvNone
     Caption = 'Panel2'
+    Color = clWhite
+    ParentBackground = False
     TabOrder = 0
     OnResize = Panel2Resize
-    ExplicitWidth = 918
-    ExplicitHeight = 624
     object PanelSøndag: TPanel
       Left = 792
       Top = 0
       Width = 132
-      Height = 641
+      Height = 635
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'PanelS'#248'ndag'
+      ParentColor = True
       ShowCaption = False
       TabOrder = 0
-      ExplicitHeight = 624
+      ExplicitHeight = 641
       object Panel8: TPanel
         Left = 0
         Top = 0
@@ -45,6 +46,8 @@
         BorderWidth = 1
         BorderStyle = bsSingle
         Caption = 'Panel4'
+        Color = clHoneydew
+        ParentBackground = False
         ShowCaption = False
         TabOrder = 0
         object LabelSunday: TLabel
@@ -57,12 +60,12 @@
           Caption = 'Sunday'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -24
+          Font.Height = -21
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
-          ExplicitWidth = 84
-          ExplicitHeight = 32
+          ExplicitWidth = 73
+          ExplicitHeight = 30
         end
       end
       object PanelDay42: TPanel
@@ -75,6 +78,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 1
         object LabelDay42: TLabel
@@ -117,6 +121,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 2
         object LabelDay35: TLabel
@@ -159,6 +164,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 3
         object LabelDay28: TLabel
@@ -201,6 +207,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 4
         object LabelDay21: TLabel
@@ -243,6 +250,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 5
         object LabelDay14: TLabel
@@ -285,6 +293,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 6
         object LabelDay7: TLabel
@@ -322,13 +331,14 @@
       Left = 660
       Top = 0
       Width = 132
-      Height = 641
+      Height = 635
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'Panel4'
+      ParentColor = True
       ShowCaption = False
       TabOrder = 1
-      ExplicitHeight = 624
+      ExplicitHeight = 641
       object Panel5: TPanel
         Left = 0
         Top = 0
@@ -339,6 +349,8 @@
         BorderWidth = 1
         BorderStyle = bsSingle
         Caption = 'Panel4'
+        Color = clHoneydew
+        ParentBackground = False
         ShowCaption = False
         TabOrder = 0
         object LabelSaturday: TLabel
@@ -351,12 +363,12 @@
           Caption = 'Saturday'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -24
+          Font.Height = -21
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
-          ExplicitWidth = 101
-          ExplicitHeight = 32
+          ExplicitWidth = 87
+          ExplicitHeight = 30
         end
       end
       object PanelDay41: TPanel
@@ -369,6 +381,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 1
         object LabelDay41: TLabel
@@ -411,6 +424,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 2
         object LabelDay34: TLabel
@@ -453,6 +467,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 3
         object LabelDay27: TLabel
@@ -495,6 +510,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 4
         object LabelDay20: TLabel
@@ -537,6 +553,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 5
         object LabelDay13: TLabel
@@ -579,6 +596,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 6
         object LabelDay6: TLabel
@@ -616,13 +634,14 @@
       Left = 528
       Top = 0
       Width = 132
-      Height = 641
+      Height = 635
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'Panel4'
+      ParentColor = True
       ShowCaption = False
       TabOrder = 2
-      ExplicitHeight = 624
+      ExplicitHeight = 641
       object Panel6: TPanel
         Left = 0
         Top = 0
@@ -633,6 +652,8 @@
         BorderWidth = 1
         BorderStyle = bsSingle
         Caption = 'Panel4'
+        Color = clHoneydew
+        ParentBackground = False
         ShowCaption = False
         TabOrder = 0
         object LabelFriday: TLabel
@@ -645,12 +666,12 @@
           Caption = 'Friday'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -24
+          Font.Height = -21
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
-          ExplicitWidth = 70
-          ExplicitHeight = 32
+          ExplicitWidth = 60
+          ExplicitHeight = 30
         end
       end
       object PanelDay40: TPanel
@@ -663,6 +684,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 1
         object LabelDay40: TLabel
@@ -705,6 +727,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 2
         object LabelDay33: TLabel
@@ -747,6 +770,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 3
         object LabelDay26: TLabel
@@ -789,6 +813,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 4
         object LabelDay19: TLabel
@@ -831,6 +856,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 5
         object LabelDay12: TLabel
@@ -873,6 +899,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 6
         object LabelDay5: TLabel
@@ -910,13 +937,14 @@
       Left = 396
       Top = 0
       Width = 132
-      Height = 641
+      Height = 635
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'Panel4'
+      ParentColor = True
       ShowCaption = False
       TabOrder = 3
-      ExplicitHeight = 624
+      ExplicitHeight = 641
       object Panel10: TPanel
         Left = 0
         Top = 0
@@ -927,6 +955,8 @@
         BorderWidth = 1
         BorderStyle = bsSingle
         Caption = 'Panel4'
+        Color = clHoneydew
+        ParentBackground = False
         ShowCaption = False
         TabOrder = 0
         object LabelThursday: TLabel
@@ -939,12 +969,12 @@
           Caption = 'Thursday'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -24
+          Font.Height = -21
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
-          ExplicitWidth = 105
-          ExplicitHeight = 32
+          ExplicitWidth = 90
+          ExplicitHeight = 30
         end
       end
       object PanelDay39: TPanel
@@ -957,6 +987,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 1
         object LabelDay39: TLabel
@@ -999,6 +1030,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 2
         object LabelDay32: TLabel
@@ -1041,6 +1073,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 3
         object LabelDay25: TLabel
@@ -1083,6 +1116,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 4
         object LabelDay18: TLabel
@@ -1098,7 +1132,8 @@
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
-          ExplicitWidth = 11
+          ExplicitLeft = -2
+          ExplicitTop = 48
         end
         object MemoDay18: TMemo
           Left = 0
@@ -1125,6 +1160,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 5
         object LabelDay11: TLabel
@@ -1167,6 +1203,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 6
         object LabelDay4: TLabel
@@ -1204,13 +1241,14 @@
       Left = 264
       Top = 0
       Width = 132
-      Height = 641
+      Height = 635
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'Panel4'
+      Color = clWhite
       ShowCaption = False
       TabOrder = 4
-      ExplicitHeight = 624
+      ExplicitHeight = 641
       object Panel7: TPanel
         Left = 0
         Top = 0
@@ -1221,6 +1259,8 @@
         BorderWidth = 1
         BorderStyle = bsSingle
         Caption = 'Panel4'
+        Color = clHoneydew
+        ParentBackground = False
         ShowCaption = False
         TabOrder = 0
         object LabelWednesday: TLabel
@@ -1233,12 +1273,12 @@
           Caption = 'Wednesday'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -24
+          Font.Height = -21
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
-          ExplicitWidth = 131
-          ExplicitHeight = 32
+          ExplicitWidth = 112
+          ExplicitHeight = 30
         end
       end
       object PanelDay38: TPanel
@@ -1251,6 +1291,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 1
         object LabelDay38: TLabel
@@ -1293,6 +1334,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 2
         object LabelDay31: TLabel
@@ -1335,6 +1377,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 3
         object LabelDay24: TLabel
@@ -1377,6 +1420,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 4
         object LabelDay17: TLabel
@@ -1419,6 +1463,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 5
         object LabelDay10: TLabel
@@ -1461,6 +1506,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 6
         object LabelDay3: TLabel
@@ -1498,13 +1544,14 @@
       Left = 132
       Top = 0
       Width = 132
-      Height = 641
+      Height = 635
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'Panel4'
+      ParentColor = True
       ShowCaption = False
       TabOrder = 5
-      ExplicitHeight = 624
+      ExplicitHeight = 641
       object Panel9: TPanel
         Left = 0
         Top = 0
@@ -1515,6 +1562,8 @@
         BorderWidth = 1
         BorderStyle = bsSingle
         Caption = 'Panel4'
+        Color = clHoneydew
+        ParentBackground = False
         ShowCaption = False
         TabOrder = 0
         object LabelTuesday: TLabel
@@ -1525,14 +1574,16 @@
           Align = alClient
           Alignment = taCenter
           Caption = 'Tuesday'
+          Color = clHoneydew
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -24
+          Font.Height = -21
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
+          ParentColor = False
           ParentFont = False
-          ExplicitWidth = 92
-          ExplicitHeight = 32
+          ExplicitWidth = 79
+          ExplicitHeight = 30
         end
       end
       object PanelDay30: TPanel
@@ -1545,6 +1596,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 1
         object LabelDay30: TLabel
@@ -1587,6 +1639,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 2
         object LabelDay23: TLabel
@@ -1629,6 +1682,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 3
         object LabelDay16: TLabel
@@ -1671,6 +1725,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 4
         object LabelDay9: TLabel
@@ -1713,6 +1768,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 5
         object LabelDay2: TLabel
@@ -1755,6 +1811,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 6
         object LabelDay37: TLabel
@@ -1792,13 +1849,15 @@
       Left = 0
       Top = 0
       Width = 132
-      Height = 641
+      Height = 635
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'Panel4'
+      Color = clWhite
+      ParentBackground = False
       ShowCaption = False
       TabOrder = 6
-      ExplicitHeight = 624
+      ExplicitHeight = 641
       object Panel4: TPanel
         Left = 0
         Top = 0
@@ -1809,6 +1868,8 @@
         BorderWidth = 1
         BorderStyle = bsSingle
         Caption = 'Panel4'
+        Color = clHoneydew
+        ParentBackground = False
         ShowCaption = False
         TabOrder = 0
         object LabelMonday: TLabel
@@ -1819,14 +1880,17 @@
           Align = alClient
           Alignment = taCenter
           Caption = 'Monday'
+          Color = clHoneydew
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -24
+          Font.Height = -21
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
+          ParentColor = False
           ParentFont = False
-          ExplicitWidth = 94
-          ExplicitHeight = 32
+          Transparent = False
+          ExplicitWidth = 81
+          ExplicitHeight = 30
         end
       end
       object PanelDay36: TPanel
@@ -1839,6 +1903,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 1
         object LabelDay36: TLabel
@@ -1881,6 +1946,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 2
         object LabelDay29: TLabel
@@ -1923,6 +1989,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 3
         object LabelDay22: TLabel
@@ -1965,6 +2032,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 4
         object LabelDay15: TLabel
@@ -2007,6 +2075,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 5
         object LabelDay8: TLabel
@@ -2049,6 +2118,7 @@
         BorderStyle = bsSingle
         Caption = 'PanelDay1'
         ParentBackground = False
+        ParentColor = True
         ShowCaption = False
         TabOrder = 6
         object LabelDay1: TLabel
@@ -2092,11 +2162,13 @@
     BevelOuter = bvNone
     BorderStyle = bsSingle
     Caption = 'Panel3'
+    Color = clHoneydew
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -20
     Font.Name = 'Segoe UI'
     Font.Style = []
+    ParentBackground = False
     ParentFont = False
     ShowCaption = False
     TabOrder = 1
@@ -2114,32 +2186,47 @@
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitWidth = 85
+      ExplicitLeft = -1
+      ExplicitTop = 4
+    end
+    object Shape1: TShape
+      AlignWithMargins = True
+      Left = 5
+      Top = 31
+      Width = 107
+      Height = 1
+      Margins.Left = 5
+      Margins.Right = 5
+      Align = alTop
+      Brush.Color = clDefault
+      ExplicitLeft = 10
+      ExplicitTop = 22
+      ExplicitWidth = 100
     end
     object CheckBoxHolidays: TCheckBox
       AlignWithMargins = True
       Left = 8
-      Top = 149
+      Top = 156
       Width = 106
       Height = 53
       Margins.Left = 8
       Align = alTop
       Caption = 'Holidays'
+      Color = clMoneyGreen
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Segoe UI'
       Font.Style = []
+      ParentColor = False
       ParentFont = False
       TabOrder = 0
-      ExplicitLeft = 0
-      ExplicitTop = 134
-      ExplicitWidth = 117
+      ExplicitTop = 149
     end
     object CheckBoxPrivate: TCheckBox
       AlignWithMargins = True
       Left = 8
-      Top = 90
+      Top = 97
       Width = 106
       Height = 53
       Margins.Left = 8
@@ -2152,14 +2239,12 @@
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      ExplicitLeft = 0
-      ExplicitTop = 81
-      ExplicitWidth = 117
+      ExplicitTop = 90
     end
     object CheckBoxWork: TCheckBox
       AlignWithMargins = True
       Left = 8
-      Top = 31
+      Top = 38
       Width = 106
       Height = 53
       Margins.Left = 8
@@ -2172,9 +2257,8 @@
       Font.Style = []
       ParentFont = False
       TabOrder = 2
-      ExplicitLeft = 0
-      ExplicitTop = 28
-      ExplicitWidth = 117
+      ExplicitLeft = 9
+      ExplicitTop = 90
     end
   end
   object Panel11: TPanel
@@ -2186,6 +2270,8 @@
     BevelOuter = bvNone
     BorderWidth = 12
     Caption = 'Panel1'
+    Color = clWhite
+    ParentBackground = False
     ShowCaption = False
     TabOrder = 2
     object Label2: TLabel
@@ -2196,16 +2282,16 @@
       Align = alClient
       Alignment = taCenter
       Caption = 'Month'
+      Color = clWhite
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -39
       Font.Name = 'Segoe UI'
       Font.Style = []
+      ParentColor = False
       ParentFont = False
-      ExplicitLeft = 20
-      ExplicitTop = 91
-      ExplicitWidth = 1001
-      ExplicitHeight = 56
+      ExplicitLeft = 10
+      ExplicitWidth = 1023
     end
     object Panel1: TPanel
       Left = 12
@@ -2216,6 +2302,8 @@
       BevelOuter = bvNone
       BorderWidth = 20
       Caption = 'Panel1'
+      Color = clWhite
+      ParentBackground = False
       ShowCaption = False
       TabOrder = 0
       object Button1: TButton
@@ -2259,6 +2347,24 @@
         Caption = 'New Event'
         TabOrder = 2
       end
+    end
+    object PreviousMonth: TButton
+      Left = 953
+      Top = 104
+      Width = 25
+      Height = 25
+      Caption = '<'
+      TabOrder = 1
+      OnClick = PreviousMonthClick
+    end
+    object NextMonth: TButton
+      Left = 988
+      Top = 104
+      Width = 25
+      Height = 25
+      Caption = '>'
+      TabOrder = 2
+      OnClick = NextMonthClick
     end
   end
 end

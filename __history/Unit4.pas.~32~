@@ -167,8 +167,13 @@ type
     CheckBoxHolidays: TCheckBox;
     CheckBoxPrivate: TCheckBox;
     CheckBoxWork: TCheckBox;
+    PreviousMonth: TButton;
+    NextMonth: TButton;
+    Shape1: TShape;
     procedure Panel2Resize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure PreviousMonthClick(Sender: TObject);
+    procedure NextMonthClick(Sender: TObject);
   private
     DayPanels: array[1..42] of TPanel;
     DayMemos: array[1..42] of TMemo;
@@ -193,7 +198,16 @@ implementation
 
 
 procedure TForm4.Panel2Resize(Sender: TObject);
+var
+  I: Integer;
+  DayHeight: Integer;
+
 begin
+
+  DayHeight := (Panel3.Height div 6);
+
+  for I := 1 to 42 do
+    DayPanels[I].Height := DayHeight;
 
   PanelMandag.Width := Panel2.Width div 7;
 
@@ -211,6 +225,17 @@ begin
 
 end;
 
+
+procedure TForm4.PreviousMonthClick(Sender: TObject);
+begin
+  Dec(FCurrentMonth);
+  if FCurrentMonth < 1 then
+  begin
+    FCurrentMonth := 12;
+    Dec(FCurrentYear);
+  end;
+  BuildCalendar(FCurrentYear, FCurrentMonth);
+end;
 
 procedure TForm4.FormCreate(Sender: TObject);
 var
@@ -234,18 +259,43 @@ begin
   end;
 
   DecodeDate(Date, Year, Month, Day);
+  FCurrentYear  := Year;
+  FCurrentMonth := Month;
 
-  BuildCalendar(Year, Month);
+  // Set button captions
+  PreviousMonth.Caption := '<';
+  NextMonth.Caption := '>';
+
+  BuildCalendar(FCurrentYear, FCurrentMonth);
+end;
+
+procedure TForm4.NextMonthClick(Sender: TObject);
+begin
+  Inc(FCurrentMonth);
+  if FCurrentMonth > 12 then
+  begin
+    FCurrentMonth := 1;
+    Inc(FCurrentYear);
+  end;
+  BuildCalendar(FCurrentYear, FCurrentMonth);
 end;
 
 procedure TForm4.BuildCalendar(AYear, AMonth: Integer);
+const
+  MonthNames: array[1..12] of string = (
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  );
 var
   FirstDate: TDate;
   StartPos: Integer;
   DaysInMonthCount: Integer;
   DayNum: Integer;
   GridIndex: Integer;
+
 begin
+  Label2.Caption := MonthNames[AMonth] + ' ' + IntToStr(AYear);
+
   // Ryd kalenderen
   for GridIndex := 1 to 42 do
   begin
@@ -271,6 +321,7 @@ begin
 
   for DayNum := 1 to DaysInMonthCount do
   begin
+    DayPanels[GridIndex].Visible := True;
     DayLabels[GridIndex].Caption := IntToStr(DayNum);
     Inc(GridIndex);
   end;

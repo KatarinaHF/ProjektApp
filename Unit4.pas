@@ -170,6 +170,9 @@ type
     PreviousMonth: TButton;
     NextMonth: TButton;
     Shape1: TShape;
+    Panel12: TPanel;
+    Panel13: TPanel;
+    Panel14: TPanel;
     procedure Panel2Resize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
@@ -198,7 +201,16 @@ implementation
 
 
 procedure TForm4.Panel2Resize(Sender: TObject);
+var
+  I: Integer;
+  DayHeight: Integer;
+
 begin
+
+  DayHeight := ((PanelFredag.Height-35) div 6);
+
+  for I := 1 to 42 do
+    DayPanels[I].Height := DayHeight;
 
   PanelMandag.Width := Panel2.Width div 7;
 
@@ -227,6 +239,7 @@ begin
   end;
   BuildCalendar(FCurrentYear, FCurrentMonth);
 end;
+
 
 procedure TForm4.FormCreate(Sender: TObject);
 var
