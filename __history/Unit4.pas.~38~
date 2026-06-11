@@ -169,6 +169,10 @@ type
     CheckBoxWork: TCheckBox;
     PreviousMonth: TButton;
     NextMonth: TButton;
+    Shape1: TShape;
+    Panel12: TPanel;
+    Panel13: TPanel;
+    Panel14: TPanel;
     procedure Panel2Resize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
@@ -197,7 +201,17 @@ implementation
 
 
 procedure TForm4.Panel2Resize(Sender: TObject);
+var
+  I: Integer;
+  DayHeight: Integer;
+
 begin
+
+  DayHeight := (PanelFredag.ClientHeight - Panel6.Height) div 6;
+
+  for I := 1 to 42 do
+    if Assigned(DayPanels[I]) then
+      DayPanels[I].Height := DayHeight;
 
   PanelMandag.Width := Panel2.Width div 7;
 
@@ -227,6 +241,7 @@ begin
   BuildCalendar(FCurrentYear, FCurrentMonth);
 end;
 
+
 procedure TForm4.FormCreate(Sender: TObject);
 var
   I: Integer;
@@ -253,8 +268,8 @@ begin
   FCurrentMonth := Month;
 
   // Set button captions
-  Button1.Caption := '<';
-  Button2.Caption := '>';
+  PreviousMonth.Caption := '<';
+  NextMonth.Caption := '>';
 
   BuildCalendar(FCurrentYear, FCurrentMonth);
 end;
@@ -311,6 +326,7 @@ begin
 
   for DayNum := 1 to DaysInMonthCount do
   begin
+    DayPanels[GridIndex].Visible := True;
     DayLabels[GridIndex].Caption := IntToStr(DayNum);
     Inc(GridIndex);
   end;
