@@ -191,6 +191,7 @@ type
     FAccessToken: string;
   public
     procedure BuildCalendar(AYear, AMonth: Integer);
+    procedure RefreshCalendar; // <-- Add this line
     property AccessToken: string read FAccessToken write FAccessToken;
   end;
 
@@ -250,6 +251,17 @@ begin
   BuildCalendar(FCurrentYear, FCurrentMonth);
 end;
 
+procedure TForm4.NextMonthClick(Sender: TObject);
+begin
+  Inc(FCurrentMonth);
+  if FCurrentMonth > 12 then
+  begin
+    FCurrentMonth := 1;
+    Inc(FCurrentYear);
+  end;
+  BuildCalendar(FCurrentYear, FCurrentMonth);
+end;
+
 
 procedure TForm4.FormCreate(Sender: TObject);
 var
@@ -283,20 +295,6 @@ begin
   BuildCalendar(FCurrentYear, FCurrentMonth);
 end;
 
-procedure TForm4.NextMonthClick(Sender: TObject);
-begin
-  Inc(FCurrentMonth);
-  if FCurrentMonth > 12 then
-  begin
-    FCurrentMonth := 1;
-    Inc(FCurrentYear);
-  end;
-  BuildCalendar(FCurrentYear, FCurrentMonth);
-
-  if FAccessToken <> '' then
-    LoadGraphEvents;
-end;
-
 procedure TForm4.BuildCalendar(AYear, AMonth: Integer);
 const
   MonthNames: array[1..12] of string = (
@@ -314,7 +312,7 @@ var
 begin
   LabelMonth.Caption := MonthNames[AMonth] + ' ' + IntToStr(AYear);
 
-  // Ryd kalenderen
+  // Clear Calendar UI
   for GridIndex := 1 to 42 do
   begin
     DayLabels[GridIndex].Caption := '';
@@ -322,14 +320,9 @@ begin
   end;
 
   FirstDate := EncodeDate(AYear, AMonth, 1);
-
   DaysInMonthCount := DaysInAMonth(AYear, AMonth);
 
-  // Delphi:
-  // 1=Søndag, 2=Mandag, ..., 7=Lørdag
   StartPos := DayOfWeek(FirstDate);
-
-  // Konverter så Mandag=1 ... Søndag=7
   if StartPos = 1 then
     StartPos := 7
   else
@@ -343,6 +336,11 @@ begin
     DayLabels[GridIndex].Caption := IntToStr(DayNum);
     Inc(GridIndex);
   end;
+
+  // --- ADD THIS LINE HERE ---
+  // This automatically pulls down fresh API events every time the grid builds
+  if FAccessToken <> '' then
+    LoadGraphEvents;
 end;
 
 procedure TForm4.AddEvent(ADay: Integer; const AText: string);
@@ -373,16 +371,26 @@ function TForm4.GetCalendarEvents(const AccessToken: string): string;
 var
   Client: THTTPClient;
   Response: IHTTPResponse;
+  StartISO, EndISO: string;
+  DaysCount: Integer;
 begin
   Client := THTTPClient.Create;
   try
-    Client.CustomHeaders['Authorization'] :=
-      'Bearer ' + AccessToken;
+    Client.CustomHeaders['Authorization'] := 'Bearer ' + AccessToken;
+
+    // Tvinger Microsoft til at sende tidszonen med tilbage i headers
+    Client.CustomHeaders['Prefer'] := 'outlook.timezone="Romance Standard Time"';
+
+    DaysCount := DaysInAMonth(FCurrentYear, FCurrentMonth);
+
+    // Vi formaterer datoerne til ISO8601 standarden
+    StartISO := Format('%0.4d-%0.2d-01T00:00:00', [FCurrentYear, FCurrentMonth]);
+    EndISO := Format('%0.4d-%0.2d-%0.2dT23:59:59', [FCurrentYear, FCurrentMonth, DaysCount]);
 
     Response := Client.Get(
       'https://graph.microsoft.com/v1.0/me/calendarView' +
-      '?startDateTime=2025-09-01T00:00:00' +
-      '&endDateTime=2025-09-30T23:59:59'
+      '?startDateTime=' + StartISO +
+      '&endDateTime=' + EndISO
     );
 
     Result := Response.ContentAsString;
@@ -398,44 +406,76 @@ var
   EventObj: TJSONObject;
   I: Integer;
   Subject: string;
+  RawDateStr: string;
   StartDate: TDateTime;
   DayNumber: Integer;
+  RawJson: string;
 begin
-  JsonObj := TJSONObject.ParseJSONValue(
-    GetCalendarEvents(FAccessToken)
-  ) as TJSONObject;
+  if FAccessToken = '' then Exit;
 
   try
-    EventsArray :=
-      JsonObj.GetValue<TJSONArray>('value');
+    RawJson := GetCalendarEvents(FAccessToken);
 
-    for I := 0 to EventsArray.Count - 1 do
+    // Hvis Microsoft sender en fejl (f.eks. pga. manglende rettigheder i Azure / Entra ID)
+    if RawJson.Contains('"error"') then
     begin
-      EventObj :=
-        EventsArray.Items[I] as TJSONObject;
-
-      Subject :=
-        EventObj.GetValue<string>('subject');
-
-      StartDate :=
-        ISO8601ToDate(
-          EventObj.GetValue<TJSONObject>('start')
-                  .GetValue<string>('dateTime')
-        );
-
-      DayNumber := DayOf(StartDate);
-
-      AddEvent(
-        DayNumber,
-        FormatDateTime('hh:nn', StartDate) +
-        ' ' +
-        Subject
-      );
+      ShowMessage('Microsoft Graph returnerede en fejl: ' + #13#10 + RawJson);
+      Exit;
     end;
 
-  finally
-    JsonObj.Free;
+    JsonObj := TJSONObject.ParseJSONValue(RawJson) as TJSONObject;
+    if not Assigned(JsonObj) then
+    begin
+      ShowMessage('Kunne ikke fortolke JSON-data fra Microsoft.');
+      Exit;
+    end;
+
+    try
+      if JsonObj.TryGetValue<TJSONArray>('value', EventsArray) then
+      begin
+        // Hvis vi har forbindelse, men kalenderen er tom i denne måned
+        if EventsArray.Count = 0 then
+        begin
+          // Du kan fjerne denne linje senere, når det virker. Det er ren hjælp til selvhjælp lige nu.
+          ShowMessage('Forbindelse OK! Men der blev fundet 0 begivenheder i denne måned hos Microsoft.');
+          Exit;
+        end;
+
+        for I := 0 to EventsArray.Count - 1 do
+        begin
+          EventObj := EventsArray.Items[I] as TJSONObject;
+          Subject := EventObj.GetValue<string>('subject');
+
+          // Hent dato-strengen
+          RawDateStr := EventObj.GetValue<TJSONObject>('start').GetValue<string>('dateTime');
+
+          // Konverter sikkert fra ISO8601 til Delphi TDateTime
+          StartDate := ISO8601ToDate(RawDateStr);
+
+          // Da vi nu har tvunget lokal tid i GetCalendarEvents, tjekker vi måned og år stabilt
+          if (YearOf(StartDate) = FCurrentYear) and (MonthOf(StartDate) = FCurrentMonth) then
+          begin
+            DayNumber := DayOf(StartDate);
+            AddEvent(
+              DayNumber,
+              FormatDateTime('hh:nn', StartDate) + ' ' + Subject
+            );
+          end;
+        end;
+      end;
+    finally
+      JsonObj.Free;
+    end;
+  except
+    on E: Exception do
+      ShowMessage('Fejl under indlæsning af Microsoft Graph Events: ' + E.Message);
   end;
+end;
+
+procedure TForm4.RefreshCalendar;
+begin
+  // Ryd kalenderen og byg den forfra med de private FCurrentYear og FCurrentMonth variabler
+  BuildCalendar(FCurrentYear, FCurrentMonth);
 end;
 
 end.

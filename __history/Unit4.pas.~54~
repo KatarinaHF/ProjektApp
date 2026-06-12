@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, DateUtils;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, DateUtils, System.JSON, System.Net.HttpClient,
+  System.Net.URLClient;
 
 type
   TForm4 = class(TForm)
@@ -177,15 +178,20 @@ type
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
     procedure NextMonthClick(Sender: TObject);
-    procedure AddTestEvents;
+    procedure AddEvent(ADay: Integer; const AText: string);
+    procedure LoadGraphEvents;
+    function FindGridCell(DayNumber: Integer): Integer;
+    function GetCalendarEvents(const AccessToken: string): string;
   private
     DayPanels: array[1..42] of TPanel;
     DayMemos: array[1..42] of TMemo;
     DayLabels: array[1..42] of TLabel;
     FCurrentYear  : Integer;
     FCurrentMonth : Integer;
+    FAccessToken: string;
   public
     procedure BuildCalendar(AYear, AMonth: Integer);
+    property AccessToken: string read FAccessToken write FAccessToken;
   end;
 
 var
@@ -201,8 +207,6 @@ implementation
     EventDate : TDateTime;
     Subject   : string;
   end;
-
-
 
 
 procedure TForm4.PanelCalendarResize(Sender: TObject);
@@ -277,7 +281,6 @@ begin
   NextMonth.Caption := '>';
 
   BuildCalendar(FCurrentYear, FCurrentMonth);
-  AddTestEvents;
 end;
 
 procedure TForm4.NextMonthClick(Sender: TObject);
@@ -289,6 +292,9 @@ begin
     Inc(FCurrentYear);
   end;
   BuildCalendar(FCurrentYear, FCurrentMonth);
+
+  if FAccessToken <> '' then
+    LoadGraphEvents;
 end;
 
 procedure TForm4.BuildCalendar(AYear, AMonth: Integer);
@@ -303,6 +309,7 @@ var
   DaysInMonthCount: Integer;
   DayNum: Integer;
   GridIndex: Integer;
+  I: Integer;
 
 begin
   LabelMonth.Caption := MonthNames[AMonth] + ' ' + IntToStr(AYear);
@@ -336,17 +343,107 @@ begin
     DayLabels[GridIndex].Caption := IntToStr(DayNum);
     Inc(GridIndex);
   end;
-  AddTestEvents;
 end;
 
-procedure TForm4.AddTestEvents;
+procedure TForm4.AddEvent(ADay: Integer; const AText: string);
+var
+  Cell: Integer;
 begin
-  MemoDay12.Lines.Add('09:00 Team Meeting');
-  MemoDay12.Lines.Add('14:00 Project Review');
+  Cell := FindGridCell(ADay);
 
-  MemoDay20.Lines.Add('10:00 Customer Call');
+  if Cell > 0 then
+    DayMemos[Cell].Lines.Add(AText);
+end;
 
-  MemoDay25.Lines.Add('Birthday');
+function TForm4.FindGridCell(DayNumber: Integer): Integer;
+var
+  I: Integer;
+begin
+  Result := -1;
+
+  for I := 1 to 42 do
+    if DayLabels[I].Caption = IntToStr(DayNumber) then
+    begin
+      Result := I;
+      Exit;
+    end;
+end;
+
+function TForm4.GetCalendarEvents(const AccessToken: string): string;
+var
+  Client: THTTPClient;
+  Response: IHTTPResponse;
+  StartISO, EndISO: string;
+  DaysCount: Integer;
+begin
+  Client := THTTPClient.Create;
+  try
+    Client.CustomHeaders['Authorization'] := 'Bearer ' + AccessToken;
+
+    // Calculate dynamic dates based on the current active calendar month
+    DaysCount := DaysInAMonth(FCurrentYear, FCurrentMonth);
+    StartISO := Format('%0.4d-%0.2d-01T00:00:00Z', [FCurrentYear, FCurrentMonth]);
+    EndISO := Format('%0.4d-%0.2d-%0.2dT23:59:59Z', [FCurrentYear, FCurrentMonth, DaysCount]);
+
+    Response := Client.Get(
+      'https://graph.microsoft.com/v1.0/me/calendarView' +
+      '?startDateTime=' + StartISO +
+      '&endDateTime=' + EndISO
+    );
+
+    Result := Response.ContentAsString;
+  finally
+    Client.Free;
+  end;
+end;
+
+procedure TForm4.LoadGraphEvents;
+var
+  JsonObj: TJSONObject;
+  EventsArray: TJSONArray;
+  EventObj: TJSONObject;
+  I: Integer;
+  Subject: string;
+  StartDate: TDateTime;
+  DayNumber: Integer;
+  RawJson: string;
+begin
+  if FAccessToken = '' then Exit;
+
+  RawJson := GetCalendarEvents(FAccessToken);
+  JsonObj := TJSONObject.ParseJSONValue(RawJson) as TJSONObject;
+
+  if not Assigned(JsonObj) then Exit;
+
+  try
+    // Defensive check to ensure 'value' array exists in response
+    if JsonObj.TryGetValue<TJSONArray>('value', EventsArray) then
+    begin
+      for I := 0 to EventsArray.Count - 1 do
+      begin
+        EventObj := EventsArray.Items[I] as TJSONObject;
+
+        Subject := EventObj.GetValue<string>('subject');
+
+        // Convert ISO string to TDateTime
+        StartDate := ISO8601ToDate(
+          EventObj.GetValue<TJSONObject>('start').GetValue<string>('dateTime')
+        );
+
+        // Make sure the event belongs to the current viewed month/year before rendering
+        if (YearOf(StartDate) = FCurrentYear) and (MonthOf(StartDate) = FCurrentMonth) then
+        begin
+          DayNumber := DayOf(StartDate);
+          AddEvent(
+            DayNumber,
+            FormatDateTime('hh:nn', StartDate) + ' ' + Subject
+          );
+        end;
+      end;
+    end;
+  finally
+    JsonObj.Free;
+  end;
 end;
 
 end.

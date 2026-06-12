@@ -150,7 +150,11 @@ begin
           procedure
           begin
             Form4 := TForm4.Create(nil);
-            Form4.AccessToken := FAccessToken;
+            Form4.AccessToken := FAccessToken; // 1. Assign token
+
+            // 2. Force a rebuild now that Form4 has the token context
+            Form4.RefreshCalendar;
+
             Form4.Show;
           end
         );
@@ -184,7 +188,7 @@ begin
   '&response_type=code' +
   '&redirect_uri=http://localhost:5000/callback' +
   '&response_mode=query' +
-  '&scope=openid%20profile%20offline_access%20User.Read';
+  '&scope=openid%20profile%20offline_access%20User.Read%20Calendars.Read';
   ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
 
   end;

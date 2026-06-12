@@ -5,13 +5,14 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ShellAPI, System.Net.HttpClient,
-  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, Unit3;
+  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, Unit2, Unit3, Unit4;
 
 type
   TForm1 = class(TForm)
     LogInButton: TButton;
     procedure LogInClick(Sender: TObject);
     private
+    FAccessToken: string;
     FHttpServer: TIdHTTPServer;
     procedure MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
     procedure DisplayPrettyJson(RawJson: string);
@@ -134,8 +135,8 @@ begin
       try
         if Assigned(JsonObj) and (JsonObj.Values['access_token'] <> nil) then
         begin
-          AccessToken := JsonObj.Values['access_token'].Value;
-          UserInfo := GetMe(AccessToken);
+          FAccessToken := JsonObj.Values['access_token'].Value;
+          UserInfo := GetMe(FAccessToken);
           TThread.Queue(nil, procedure
           begin
             // Calls procedure DisplayPrettyJson to write user information in Memo
@@ -144,6 +145,19 @@ begin
             DisplayPrettyJson(UserInfo);
           end);
         end;
+
+        TThread.Queue(nil,
+          procedure
+          begin
+            Form4 := TForm4.Create(nil);
+            Form4.AccessToken := FAccessToken; // 1. Assign token
+
+            // 2. Force a rebuild now that Form4 has the token context
+            Form4.RefreshCalendar;
+
+            Form4.Show;
+          end
+        );
       finally
         JsonObj.Free;
       end;
@@ -174,13 +188,9 @@ begin
   '&response_type=code' +
   '&redirect_uri=http://localhost:5000/callback' +
   '&response_mode=query' +
-  '&scope=openid%20profile%20offline_access%20User.Read';
+  '&scope=openid%20profile%20offline_access%20User.Read%20Calendar.Read';
   ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
 
-  begin
-    Form3.Show;
-    Form2.Show;
   end;
-end;
 
 end.
