@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ShellAPI, System.Net.HttpClient,
-  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, Unit3;
+  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, Unit2, Unit3, Unit4;
 
 type
   TForm1 = class(TForm)
@@ -178,7 +178,7 @@ begin
   ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
 
   begin
-    Form3.show;
+    Form4.Show;
   end;
 end;
 

@@ -8,12 +8,12 @@ uses
 
 type
   TForm4 = class(TForm)
-    Panel1: TPanel;
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    Panel2: TPanel;
-    Panel3: TPanel;
+    PanelTopButtons: TPanel;
+    ButtonSettings: TButton;
+    ButtonChangeView: TButton;
+    ButtonNewEvent: TButton;
+    PanelCalendar: TPanel;
+    PanelCalendartypes: TPanel;
     PanelSøndag: TPanel;
     PanelLørdag: TPanel;
     PanelFredag: TPanel;
@@ -22,21 +22,21 @@ type
     PanelTirsdag: TPanel;
     PanelMandag: TPanel;
     LabelMonday: TLabel;
-    Panel4: TPanel;
-    Panel5: TPanel;
+    PanelMondayName: TPanel;
+    PanelSaturdayName: TPanel;
     LabelSaturday: TLabel;
-    Panel6: TPanel;
+    PanelFridayName: TPanel;
     LabelFriday: TLabel;
-    Panel7: TPanel;
+    PanelWednesdayName: TPanel;
     LabelWednesday: TLabel;
-    Panel8: TPanel;
+    PanelSundayName: TPanel;
     LabelSunday: TLabel;
-    Panel9: TPanel;
+    PanelTuesdayName: TPanel;
     LabelTuesday: TLabel;
-    Panel10: TPanel;
+    PanelThursdayName: TPanel;
     LabelThursday: TLabel;
-    Panel11: TPanel;
-    Label2: TLabel;
+    PanelTop: TPanel;
+    LabelMonth: TLabel;
     PanelDay30: TPanel;
     LabelDay30: TLabel;
     MemoDay30: TMemo;
@@ -169,19 +169,27 @@ type
     CheckBoxWork: TCheckBox;
     PreviousMonth: TButton;
     NextMonth: TButton;
-    Shape1: TShape;
-    procedure Panel2Resize(Sender: TObject);
+    ShapeCalendarLine: TShape;
+    PanelMonth: TPanel;
+    PanelArrowButtons: TPanel;
+    PanelFiller: TPanel;
+    procedure PanelCalendarResize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
     procedure NextMonthClick(Sender: TObject);
+    procedure AddEvent(ADay: Integer; const AText: string);
+    function FindGridCell(DayNumber: Integer): Integer;
+    function GetCalendarEvents(const AccessToken: string): string;
   private
     DayPanels: array[1..42] of TPanel;
     DayMemos: array[1..42] of TMemo;
     DayLabels: array[1..42] of TLabel;
     FCurrentYear  : Integer;
     FCurrentMonth : Integer;
+    FAccessToken: string;
   public
     procedure BuildCalendar(AYear, AMonth: Integer);
+    property AccessToken: string read FAccessToken write FAccessToken;
   end;
 
 var
@@ -192,36 +200,39 @@ implementation
 {$R *.dfm}
 
 
+ type
+  TCalendarEvent = record
+    EventDate : TDateTime;
+    Subject   : string;
+  end;
 
 
-
-
-
-procedure TForm4.Panel2Resize(Sender: TObject);
+procedure TForm4.PanelCalendarResize(Sender: TObject);
 var
   I: Integer;
   DayHeight: Integer;
 
 begin
 
-  DayHeight := ((Panel3.Height-35) div 6);
+  DayHeight := (PanelFredag.ClientHeight - PanelFridayName.Height) div 6;
 
   for I := 1 to 42 do
-    DayPanels[I].Height := DayHeight;
+    if Assigned(DayPanels[I]) then
+      DayPanels[I].Height := DayHeight;
 
-  PanelMandag.Width := Panel2.Width div 7;
+  PanelMandag.Width := PanelCalendar.Width div 7;
 
-  PanelTirsdag.Width := Panel2.Width div 7;
+  PanelTirsdag.Width := PanelCalendar.Width div 7;
 
-  PanelOnsdag.Width := Panel2.Width div 7;
+  PanelOnsdag.Width := PanelCalendar.Width div 7;
 
-  PanelTorsdag.Width := Panel2.Width div 7;
+  PanelTorsdag.Width := PanelCalendar.Width div 7;
 
-  PanelFredag.Width := Panel2.Width div 7;
+  PanelFredag.Width := PanelCalendar.Width div 7;
 
-  PanelLørdag.Width := Panel2.Width div 7;
+  PanelLørdag.Width := PanelCalendar.Width div 7;
 
-  PanelSøndag.Width := Panel2.Width div 7;
+  PanelSøndag.Width := PanelCalendar.Width div 7;
 
 end;
 
@@ -236,6 +247,7 @@ begin
   end;
   BuildCalendar(FCurrentYear, FCurrentMonth);
 end;
+
 
 procedure TForm4.FormCreate(Sender: TObject);
 var
@@ -292,9 +304,10 @@ var
   DaysInMonthCount: Integer;
   DayNum: Integer;
   GridIndex: Integer;
+  I: Integer;
 
 begin
-  Label2.Caption := MonthNames[AMonth] + ' ' + IntToStr(AYear);
+  LabelMonth.Caption := MonthNames[AMonth] + ' ' + IntToStr(AYear);
 
   // Ryd kalenderen
   for GridIndex := 1 to 42 do
@@ -327,5 +340,97 @@ begin
   end;
 end;
 
+procedure TForm4.AddEvent(ADay: Integer; const AText: string);
+var
+  Cell: Integer;
+begin
+  Cell := FindGridCell(ADay);
+
+  if Cell > 0 then
+    DayMemos[Cell].Lines.Add(AText);
+end;
+
+function TForm4.FindGridCell(DayNumber: Integer): Integer;
+var
+  I: Integer;
+begin
+  Result := -1;
+
+  for I := 1 to 42 do
+    if DayLabels[I].Caption = IntToStr(DayNumber) then
+    begin
+      Result := I;
+      Exit;
+    end;
+end;
+
+function TForm4.GetCalendarEvents(const AccessToken: string): string;
+var
+  Client: THTTPClient;
+  Response: IHTTPResponse;
+begin
+  Client := THTTPClient.Create;
+  try
+    Client.CustomHeaders['Authorization'] :=
+      'Bearer ' + AccessToken;
+
+    Response := Client.Get(
+      'https://graph.microsoft.com/v1.0/me/calendarView' +
+      '?startDateTime=2025-09-01T00:00:00' +
+      '&endDateTime=2025-09-30T23:59:59'
+    );
+
+    Result := Response.ContentAsString;
+  finally
+    Client.Free;
+  end;
+end;
+
+procedure TForm4.LoadGraphEvents;
+var
+  JsonObj: TJSONObject;
+  EventsArray: TJSONArray;
+  EventObj: TJSONObject;
+  I: Integer;
+  Subject: string;
+  StartDate: TDateTime;
+  DayNumber: Integer;
+begin
+  JsonObj := TJSONObject.ParseJSONValue(
+    GetCalendarEvents(FAccessToken)
+  ) as TJSONObject;
+
+  try
+    EventsArray :=
+      JsonObj.GetValue<TJSONArray>('value');
+
+    for I := 0 to EventsArray.Count - 1 do
+    begin
+      EventObj :=
+        EventsArray.Items[I] as TJSONObject;
+
+      Subject :=
+        EventObj.GetValue<string>('subject');
+
+      StartDate :=
+        ISO8601ToDate(
+          EventObj.GetValue<TJSONObject>('start')
+                  .GetValue<string>('dateTime')
+        );
+
+      DayNumber := DayOf(StartDate);
+
+      AddEvent(
+        DayNumber,
+        FormatDateTime('hh:nn', StartDate) +
+        ' ' +
+        Subject
+      );
+    end;
+
+  finally
+    JsonObj.Free;
+  end;
+end;
 
 end.

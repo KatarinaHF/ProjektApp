@@ -12,6 +12,7 @@ type
     LogInButton: TButton;
     procedure LogInClick(Sender: TObject);
     private
+    FAccessToken: string;
     FHttpServer: TIdHTTPServer;
     procedure MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
     procedure DisplayPrettyJson(RawJson: string);
@@ -134,8 +135,8 @@ begin
       try
         if Assigned(JsonObj) and (JsonObj.Values['access_token'] <> nil) then
         begin
-          AccessToken := JsonObj.Values['access_token'].Value;
-          UserInfo := GetMe(AccessToken);
+          FAccessToken := JsonObj.Values['access_token'].Value;
+          UserInfo := GetMe(FAccessToken);
           TThread.Queue(nil, procedure
           begin
             // Calls procedure DisplayPrettyJson to write user information in Memo
@@ -144,6 +145,15 @@ begin
             DisplayPrettyJson(UserInfo);
           end);
         end;
+
+        TThread.Queue(nil,
+          procedure
+          begin
+            Form4 := TForm4.Create(nil);
+            Form4.AccessToken := FAccessToken;
+            Form4.Show;
+          end
+        );
       finally
         JsonObj.Free;
       end;
@@ -177,9 +187,6 @@ begin
   '&scope=openid%20profile%20offline_access%20User.Read';
   ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
 
-  begin
-    Form4.Show;
   end;
-end;
 
 end.

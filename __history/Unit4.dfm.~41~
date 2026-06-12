@@ -12,18 +12,18 @@
   Font.Style = []
   OnCreate = FormCreate
   TextHeight = 15
-  object Panel2: TPanel
+  object PanelCalendar: TPanel
     Left = 121
     Top = 153
     Width = 924
     Height = 641
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'Panel2'
+    Caption = 'PanelCalendar'
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
-    OnResize = Panel2Resize
+    OnResize = PanelCalendarResize
     object PanelSøndag: TPanel
       Left = 792
       Top = 0
@@ -35,7 +35,7 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 0
-      object Panel8: TPanel
+      object PanelSundayName: TPanel
         Left = 0
         Top = 0
         Width = 132
@@ -337,7 +337,7 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 1
-      object Panel5: TPanel
+      object PanelSaturdayName: TPanel
         Left = 0
         Top = 0
         Width = 132
@@ -634,13 +634,12 @@
       Width = 132
       Height = 641
       Align = alLeft
-      AutoSize = True
       BevelOuter = bvNone
       Caption = 'Panel4'
       ParentColor = True
       ShowCaption = False
       TabOrder = 2
-      object Panel6: TPanel
+      object PanelFridayName: TPanel
         Left = 0
         Top = 0
         Width = 132
@@ -942,7 +941,7 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 3
-      object Panel10: TPanel
+      object PanelThursdayName: TPanel
         Left = 0
         Top = 0
         Width = 132
@@ -1129,8 +1128,7 @@
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
-          ExplicitLeft = -2
-          ExplicitTop = 48
+          ExplicitWidth = 11
         end
         object MemoDay18: TMemo
           Left = 0
@@ -1245,7 +1243,7 @@
       Color = clWhite
       ShowCaption = False
       TabOrder = 4
-      object Panel7: TPanel
+      object PanelWednesdayName: TPanel
         Left = 0
         Top = 0
         Width = 132
@@ -1547,7 +1545,7 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 5
-      object Panel9: TPanel
+      object PanelTuesdayName: TPanel
         Left = 0
         Top = 0
         Width = 132
@@ -1852,7 +1850,7 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 6
-      object Panel4: TPanel
+      object PanelMondayName: TPanel
         Left = 0
         Top = 0
         Width = 132
@@ -1861,7 +1859,7 @@
         BevelOuter = bvNone
         BorderWidth = 1
         BorderStyle = bsSingle
-        Caption = 'Panel4'
+        Caption = 'PanelMondayName'
         Color = clHoneydew
         ParentBackground = False
         ShowCaption = False
@@ -2147,7 +2145,7 @@
       end
     end
   end
-  object Panel3: TPanel
+  object PanelCalendartypes: TPanel
     Left = 0
     Top = 153
     Width = 121
@@ -2155,7 +2153,7 @@
     Align = alLeft
     BevelOuter = bvNone
     BorderStyle = bsSingle
-    Caption = 'Panel3'
+    Caption = 'PanelCalendartypes'
     Color = clHoneydew
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -2180,10 +2178,9 @@
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitLeft = -1
-      ExplicitTop = 4
+      ExplicitWidth = 85
     end
-    object Shape1: TShape
+    object ShapeCalendarLine: TShape
       AlignWithMargins = True
       Left = 5
       Top = 31
@@ -2215,7 +2212,6 @@
       ParentColor = False
       ParentFont = False
       TabOrder = 0
-      ExplicitTop = 149
     end
     object CheckBoxPrivate: TCheckBox
       AlignWithMargins = True
@@ -2233,7 +2229,6 @@
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      ExplicitTop = 90
     end
     object CheckBoxWork: TCheckBox
       AlignWithMargins = True
@@ -2251,11 +2246,9 @@
       Font.Style = []
       ParentFont = False
       TabOrder = 2
-      ExplicitLeft = 9
-      ExplicitTop = 90
     end
   end
-  object Panel11: TPanel
+  object PanelTop: TPanel
     Left = 0
     Top = 0
     Width = 1045
@@ -2268,26 +2261,7 @@
     ParentBackground = False
     ShowCaption = False
     TabOrder = 2
-    object Label2: TLabel
-      Left = 12
-      Top = 83
-      Width = 1021
-      Height = 58
-      Align = alClient
-      Alignment = taCenter
-      Caption = 'Month'
-      Color = clWhite
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -39
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-      ExplicitLeft = 10
-      ExplicitWidth = 1023
-    end
-    object Panel1: TPanel
+    object PanelTopButtons: TPanel
       Left = 12
       Top = 12
       Width = 1021
@@ -2295,12 +2269,12 @@
       Align = alTop
       BevelOuter = bvNone
       BorderWidth = 20
-      Caption = 'Panel1'
+      Caption = 'PanelTopButtons'
       Color = clWhite
       ParentBackground = False
       ShowCaption = False
       TabOrder = 0
-      object Button1: TButton
+      object ButtonSettings: TButton
         Left = 861
         Top = 20
         Width = 140
@@ -2313,7 +2287,7 @@
         Caption = 'Settings'
         TabOrder = 0
       end
-      object Button2: TButton
+      object ButtonChangeView: TButton
         AlignWithMargins = True
         Left = 180
         Top = 20
@@ -2327,7 +2301,7 @@
         Caption = 'Change View'
         TabOrder = 1
       end
-      object Button3: TButton
+      object ButtonNewEvent: TButton
         AlignWithMargins = True
         Left = 20
         Top = 20
@@ -2342,23 +2316,96 @@
         TabOrder = 2
       end
     end
-    object PreviousMonth: TButton
-      Left = 953
-      Top = 104
-      Width = 25
-      Height = 25
-      Caption = '<'
+    object PanelMonth: TPanel
+      Left = 12
+      Top = 83
+      Width = 1021
+      Height = 70
+      Align = alTop
+      BevelOuter = bvNone
+      BorderWidth = 5
+      Caption = 'Panel1'
+      Color = clWhite
+      ParentBackground = False
+      ShowCaption = False
       TabOrder = 1
-      OnClick = PreviousMonthClick
-    end
-    object NextMonth: TButton
-      Left = 988
-      Top = 104
-      Width = 25
-      Height = 25
-      Caption = '>'
-      TabOrder = 2
-      OnClick = NextMonthClick
+      object LabelMonth: TLabel
+        Left = 95
+        Top = 5
+        Width = 831
+        Height = 60
+        Align = alClient
+        Alignment = taCenter
+        Caption = 'Month'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -39
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        ExplicitWidth = 115
+        ExplicitHeight = 52
+      end
+      object PanelArrowButtons: TPanel
+        Left = 926
+        Top = 5
+        Width = 90
+        Height = 60
+        Align = alRight
+        BevelOuter = bvNone
+        BorderWidth = 15
+        Caption = 'Panel1'
+        Color = clWhite
+        ParentBackground = False
+        ShowCaption = False
+        TabOrder = 0
+        object NextMonth: TButton
+          AlignWithMargins = True
+          Left = 45
+          Top = 25
+          Width = 25
+          Height = 10
+          Margins.Left = 1
+          Margins.Top = 10
+          Margins.Right = 5
+          Margins.Bottom = 10
+          Align = alRight
+          Caption = '>'
+          TabOrder = 0
+          OnClick = NextMonthClick
+        end
+        object PreviousMonth: TButton
+          AlignWithMargins = True
+          Left = 20
+          Top = 25
+          Width = 25
+          Height = 10
+          Margins.Left = 5
+          Margins.Top = 10
+          Margins.Right = 1
+          Margins.Bottom = 10
+          Align = alLeft
+          Caption = '<'
+          TabOrder = 1
+          OnClick = PreviousMonthClick
+        end
+      end
+      object PanelFiller: TPanel
+        Left = 5
+        Top = 5
+        Width = 90
+        Height = 60
+        Align = alLeft
+        BevelOuter = bvNone
+        BorderWidth = 15
+        Caption = 'Panel1'
+        Color = clWhite
+        ParentBackground = False
+        ShowCaption = False
+        TabOrder = 1
+      end
     end
   end
 end

@@ -5,13 +5,14 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ShellAPI, System.Net.HttpClient,
-  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, Unit3;
+  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, Unit2, Unit3, Unit4;
 
 type
   TForm1 = class(TForm)
     LogInButton: TButton;
     procedure LogInClick(Sender: TObject);
     private
+    FAccessToken: string;
     FHttpServer: TIdHTTPServer;
     procedure MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
     procedure DisplayPrettyJson(RawJson: string);
@@ -134,7 +135,7 @@ begin
       try
         if Assigned(JsonObj) and (JsonObj.Values['access_token'] <> nil) then
         begin
-          AccessToken := JsonObj.Values['access_token'].Value;
+          FAccessToken := JsonObj.Values['access_token'].Value;
           UserInfo := GetMe(AccessToken);
           TThread.Queue(nil, procedure
           begin
@@ -178,7 +179,9 @@ begin
   ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
 
   begin
-    Form3.show;
+    Form4 := TForm4.Create(nil);
+    Form4.AccessToken := AccessToken;
+    Form4.Show;
   end;
 end;
 

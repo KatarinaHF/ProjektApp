@@ -24,6 +24,8 @@
     ParentBackground = False
     TabOrder = 0
     OnResize = PanelCalendarResize
+    ExplicitWidth = 914
+    ExplicitHeight = 609
     object PanelSøndag: TPanel
       Left = 792
       Top = 0
@@ -35,6 +37,7 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 0
+      ExplicitHeight = 609
       object PanelSundayName: TPanel
         Left = 0
         Top = 0
@@ -337,6 +340,7 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 1
+      ExplicitHeight = 609
       object PanelSaturdayName: TPanel
         Left = 0
         Top = 0
@@ -639,6 +643,7 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 2
+      ExplicitHeight = 609
       object PanelFridayName: TPanel
         Left = 0
         Top = 0
@@ -941,6 +946,7 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 3
+      ExplicitHeight = 609
       object PanelThursdayName: TPanel
         Left = 0
         Top = 0
@@ -1243,6 +1249,7 @@
       Color = clWhite
       ShowCaption = False
       TabOrder = 4
+      ExplicitHeight = 609
       object PanelWednesdayName: TPanel
         Left = 0
         Top = 0
@@ -1545,6 +1552,7 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 5
+      ExplicitHeight = 609
       object PanelTuesdayName: TPanel
         Left = 0
         Top = 0
@@ -1850,6 +1858,7 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 6
+      ExplicitHeight = 609
       object PanelMondayName: TPanel
         Left = 0
         Top = 0
@@ -2164,6 +2173,7 @@
     ParentFont = False
     ShowCaption = False
     TabOrder = 1
+    ExplicitHeight = 609
     object LabelCalendars: TLabel
       Left = 0
       Top = 0
@@ -2261,6 +2271,7 @@
     ParentBackground = False
     ShowCaption = False
     TabOrder = 2
+    ExplicitWidth = 1035
     object PanelTopButtons: TPanel
       Left = 12
       Top = 12
@@ -2274,6 +2285,7 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 0
+      ExplicitWidth = 1011
       object ButtonSettings: TButton
         Left = 861
         Top = 20
@@ -2286,6 +2298,7 @@
         Align = alRight
         Caption = 'Settings'
         TabOrder = 0
+        ExplicitLeft = 851
       end
       object ButtonChangeView: TButton
         AlignWithMargins = True
@@ -2329,6 +2342,7 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 1
+      ExplicitWidth = 1011
       object LabelMonth: TLabel
         Left = 95
         Top = 5
@@ -2361,6 +2375,7 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 0
+        ExplicitLeft = 916
         object NextMonth: TButton
           AlignWithMargins = True
           Left = 45

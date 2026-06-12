@@ -22,10 +22,10 @@ type
     PanelTirsdag: TPanel;
     PanelMandag: TPanel;
     LabelMonday: TLabel;
-    Panel4: TPanel;
-    Panel5: TPanel;
+    PanelMondayName: TPanel;
+    PanelSaturdayName: TPanel;
     LabelSaturday: TLabel;
-    Panel6: TPanel;
+    PanelFridayName: TPanel;
     LabelFriday: TLabel;
     PanelWednesdayName: TPanel;
     LabelWednesday: TLabel;
@@ -177,6 +177,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
     procedure NextMonthClick(Sender: TObject);
+    procedure AddEvent(ADay: Integer; const AText: string);
+    function FindGridCell(DayNumber: Integer): Integer;
   private
     DayPanels: array[1..42] of TPanel;
     DayMemos: array[1..42] of TMemo;
@@ -195,7 +197,11 @@ implementation
 {$R *.dfm}
 
 
-
+ type
+  TCalendarEvent = record
+    EventDate : TDateTime;
+    Subject   : string;
+  end;
 
 
 
@@ -207,7 +213,7 @@ var
 
 begin
 
-  DayHeight := (PanelFredag.ClientHeight - Panel6.Height) div 6;
+  DayHeight := (PanelFredag.ClientHeight - PanelFridayName.Height) div 6;
 
   for I := 1 to 42 do
     if Assigned(DayPanels[I]) then
@@ -297,9 +303,10 @@ var
   DaysInMonthCount: Integer;
   DayNum: Integer;
   GridIndex: Integer;
+  I: Integer;
 
 begin
-  Label2.Caption := MonthNames[AMonth] + ' ' + IntToStr(AYear);
+  LabelMonth.Caption := MonthNames[AMonth] + ' ' + IntToStr(AYear);
 
   // Ryd kalenderen
   for GridIndex := 1 to 42 do
@@ -330,6 +337,32 @@ begin
     DayLabels[GridIndex].Caption := IntToStr(DayNum);
     Inc(GridIndex);
   end;
+
+  AddEvent(12, 'lektier');
+end;
+
+procedure TForm4.AddEvent(ADay: Integer; const AText: string);
+var
+  Cell: Integer;
+begin
+  Cell := FindGridCell(ADay);
+
+  if Cell > 0 then
+    DayMemos[Cell].Lines.Add(AText);
+end;
+
+function TForm4.FindGridCell(DayNumber: Integer): Integer;
+var
+  I: Integer;
+begin
+  Result := -1;
+
+  for I := 1 to 42 do
+    if DayLabels[I].Caption = IntToStr(DayNumber) then
+    begin
+      Result := I;
+      Exit;
+    end;
 end;
 
 end.
