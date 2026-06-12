@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, DateUtils, System.JSON, System.Net.HttpClient,
-  System.Net.URLClient;
+  System.Net.URLClient, NewEventUnit;
 
 type
   TForm4 = class(TForm)
@@ -182,6 +182,7 @@ type
     procedure LoadGraphEvents;
     function FindGridCell(DayNumber: Integer): Integer;
     function GetCalendarEvents(const AccessToken: string): string;
+    procedure ButtonNewEventClick(Sender: TObject);
   private
     DayPanels: array[1..42] of TPanel;
     DayMemos: array[1..42] of TMemo;
@@ -343,6 +344,11 @@ begin
     LoadGraphEvents;
 end;
 
+procedure TForm4.ButtonNewEventClick(Sender: TObject);
+begin
+  Form2.Show;
+end;
+
 procedure TForm4.AddEvent(ADay: Integer; const AText: string);
 var
   Cell: Integer;
@@ -436,8 +442,6 @@ begin
         // Hvis vi har forbindelse, men kalenderen er tom i denne måned
         if EventsArray.Count = 0 then
         begin
-          // Du kan fjerne denne linje senere, når det virker. Det er ren hjælp til selvhjælp lige nu.
-          ShowMessage('Forbindelse OK! Men der blev fundet 0 begivenheder i denne måned hos Microsoft.');
           Exit;
         end;
 

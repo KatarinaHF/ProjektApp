@@ -55,8 +55,8 @@
         object LabelSunday: TLabel
           Left = 1
           Top = 1
-          Width = 73
-          Height = 30
+          Width = 126
+          Height = 35
           Align = alClient
           Alignment = taCenter
           Caption = 'Sunday'
@@ -66,6 +66,8 @@
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitWidth = 73
+          ExplicitHeight = 30
         end
       end
       object PanelDay42: TPanel
@@ -356,8 +358,8 @@
         object LabelSaturday: TLabel
           Left = 1
           Top = 1
-          Width = 87
-          Height = 30
+          Width = 126
+          Height = 35
           Align = alClient
           Alignment = taCenter
           Caption = 'Saturday'
@@ -367,6 +369,8 @@
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitWidth = 87
+          ExplicitHeight = 30
         end
       end
       object PanelDay41: TPanel
@@ -657,8 +661,8 @@
         object LabelFriday: TLabel
           Left = 1
           Top = 1
-          Width = 60
-          Height = 30
+          Width = 126
+          Height = 35
           Align = alClient
           Alignment = taCenter
           Caption = 'Friday'
@@ -668,6 +672,8 @@
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitWidth = 60
+          ExplicitHeight = 30
         end
       end
       object PanelDay40: TPanel
@@ -958,8 +964,8 @@
         object LabelThursday: TLabel
           Left = 1
           Top = 1
-          Width = 90
-          Height = 30
+          Width = 126
+          Height = 35
           Align = alClient
           Alignment = taCenter
           Caption = 'Thursday'
@@ -969,6 +975,8 @@
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitWidth = 90
+          ExplicitHeight = 30
         end
       end
       object PanelDay39: TPanel
@@ -1259,8 +1267,8 @@
         object LabelWednesday: TLabel
           Left = 1
           Top = 1
-          Width = 112
-          Height = 30
+          Width = 126
+          Height = 35
           Align = alClient
           Alignment = taCenter
           Caption = 'Wednesday'
@@ -1270,6 +1278,8 @@
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitWidth = 112
+          ExplicitHeight = 30
         end
       end
       object PanelDay38: TPanel
@@ -1560,8 +1570,8 @@
         object LabelTuesday: TLabel
           Left = 1
           Top = 1
-          Width = 79
-          Height = 30
+          Width = 126
+          Height = 35
           Align = alClient
           Alignment = taCenter
           Caption = 'Tuesday'
@@ -1573,6 +1583,8 @@
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
+          ExplicitWidth = 79
+          ExplicitHeight = 30
         end
       end
       object PanelDay30: TPanel
@@ -1864,8 +1876,8 @@
         object LabelMonday: TLabel
           Left = 1
           Top = 1
-          Width = 81
-          Height = 30
+          Width = 126
+          Height = 35
           Align = alClient
           Alignment = taCenter
           Caption = 'Monday'
@@ -1878,6 +1890,8 @@
           ParentColor = False
           ParentFont = False
           Transparent = False
+          ExplicitWidth = 81
+          ExplicitHeight = 30
         end
       end
       object PanelDay36: TPanel
@@ -2163,7 +2177,7 @@
     object LabelCalendars: TLabel
       Left = 0
       Top = 0
-      Width = 85
+      Width = 117
       Height = 28
       Align = alTop
       Alignment = taCenter
@@ -2174,6 +2188,7 @@
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
+      ExplicitWidth = 85
     end
     object ShapeCalendarLine: TShape
       AlignWithMargins = True
@@ -2312,6 +2327,7 @@
         Align = alLeft
         Caption = 'New Event'
         TabOrder = 2
+        OnClick = ButtonNewEventClick
       end
     end
     object PanelMonth: TPanel
@@ -2331,8 +2347,8 @@
       object LabelMonth: TLabel
         Left = 95
         Top = 5
-        Width = 115
-        Height = 52
+        Width = 831
+        Height = 60
         Align = alClient
         Alignment = taCenter
         Caption = 'Month'
@@ -2344,6 +2360,8 @@
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        ExplicitWidth = 115
+        ExplicitHeight = 52
       end
       object PanelArrowButtons: TPanel
         Left = 926
