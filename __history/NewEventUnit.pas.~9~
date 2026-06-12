@@ -1,0 +1,144 @@
+unit NewEventUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
+  System.JSON, System.Net.HttpClient, System.Net.URLClient;
+
+type
+  TForm2 = class(TForm)
+    PanelTitle: TPanel;
+    TitleEdit: TEdit;
+    LabelTitle: TLabel;
+    PanelStartDate: TPanel;
+    LabelStartDate: TLabel;
+    EditStartDate: TEdit;
+    PanelEndDate: TPanel;
+    LabelEndDate: TLabel;
+    EditEndDate: TEdit;
+    EditStartTime: TEdit;
+    EditEndTime: TEdit;
+    // Her må der ikke stå noget endnu, da du ikke har designet komponenterne.
+  private
+    FAccessToken: string;
+
+    // Vi snyder Delphi og opretter felterne her som "virtuelle" variabler indtil videre.
+    // Du kan stadig skrive .Text på dem i koden nedenfor.
+    MemoDescription: TMemo;
+    ButtonSaveEvent: TButton;
+
+    function CreateGraphEventJson: TJSONObject;
+  public
+    procedure OpretEventTest; // Denne kan du kalde for at teste koden af
+    property AccessToken: string read FAccessToken write FAccessToken;
+  end;
+
+var
+  Form2: TForm2;
+
+implementation
+
+{$R *.dfm}
+
+uses Unit4;
+
+function TForm2.CreateGraphEventJson: TJSONObject;
+var
+  StartObj, EndObj, BodyObj: TJSONObject;
+  FullStartIso, FullEndIso: string;
+begin
+  // Nu bygger vi start-tidspunktet ud fra start-komponenterne
+  FullStartIso := EditStartDate.Text + 'T' + EditStartTime.Text + ':00';
+
+  // Og slut-tidspunktet ud fra slut-komponenterne!
+  FullEndIso := EditEndDate.Text + 'T' + EditEndTime.Text + ':00';
+
+  Result := TJSONObject.Create;
+  Result.AddPair('subject', EditSubject.Text);
+
+  // Start-objekt hos Microsoft
+  StartObj := TJSONObject.Create;
+  StartObj.AddPair('dateTime', FullStartIso);
+  StartObj.AddPair('timeZone', 'Romance Standard Time');
+  Result.AddPair('start', StartObj);
+
+  // Slut-objekt hos Microsoft (kan nu være en helt anden dag)
+  EndObj := TJSONObject.Create;
+  EndObj.AddPair('dateTime', FullEndIso);
+  EndObj.AddPair('timeZone', 'Romance Standard Time');
+  Result.AddPair('end', EndObj);
+
+  if (MemoDescription <> nil) and (MemoDescription.Text <> '') then
+  begin
+    BodyObj := TJSONObject.Create;
+    BodyObj.AddPair('contentType', 'text');
+    BodyObj.AddPair('content', MemoDescription.Text);
+    Result.AddPair('body', BodyObj);
+  end;
+end;
+
+
+
+procedure TForm2.OpretEventTest;
+var
+  Client: THTTPClient;
+  Response: IHTTPResponse;
+  JsonPayload: TJSONObject;
+  RequestBody: TStringStream;
+begin
+  if FAccessToken = '' then
+  begin
+    ShowMessage('Fejl: Ingen adgangstoken fundet.');
+    Exit;
+  end;
+
+  // Siden vi ikke har et UI endnu, opretter vi komponenterne i hukommelsen
+  // og giver dem noget testdata, så du kan se om det virker!
+  TitleEdit := TEdit.Create(nil);
+  EditDate := TEdit.Create(nil);
+  EditStartTime := TEdit.Create(nil);
+  EditEndTime := TEdit.Create(nil);
+
+  // HER KAN DU RETTE TEST-DATA:
+  TitleEdit.Text := 'Test Event fra Delphi App';
+  EditDate.Text := '2026-06-15'; // Format: ÅÅÅÅ-MM-DD
+  EditStartTime.Text := '12:00';
+  EditEndTime.Text := '13:00';
+
+  Client := THTTPClient.Create;
+  JsonPayload := CreateGraphEventJson;
+  RequestBody := TStringStream.Create(JsonPayload.ToString, TEncoding.UTF8);
+
+  try
+    Client.CustomHeaders['Authorization'] := 'Bearer ' + FAccessToken;
+    Client.CustomHeaders['Content-Type'] := 'application/json';
+
+    Response := Client.Post('https://graph.microsoft.com/v1.0/me/events', RequestBody);
+
+    if (Response.StatusCode = 201) or (Response.StatusCode = 200) then
+    begin
+      ShowMessage('Succes! Begivenheden blev oprettet hos Microsoft.');
+      if Assigned(Form4) then
+        Form4.RefreshCalendar;
+    end
+    else
+    begin
+      ShowMessage('Fejl (' + IntToStr(Response.StatusCode) + '): ' + Response.ContentAsString);
+    end;
+
+  finally
+    Client.Free;
+    JsonPayload.Free;
+    RequestBody.Free;
+
+    // Ryd op i hukommelsen bagefter
+    TitleEdit.Free;
+    EditDate.Free;
+    EditStartTime.Free;
+    EditEndTime.Free;
+  end;
+end;
+
+end.

@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ShellAPI, System.Net.HttpClient,
-  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, Unit2, Unit3, Unit4;
+  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, NewEventUnit, Unit3, Unit4;
 
 type
   TForm1 = class(TForm)
@@ -188,7 +188,7 @@ begin
   '&response_type=code' +
   '&redirect_uri=http://localhost:5000/callback' +
   '&response_mode=query' +
-  '&scope=openid%20profile%20offline_access%20User.Read%20Calendars.Read';
+  '&scope=openid%20profile%20offline_access%20User.Read%20Calendars.Read%20Calendars.ReadWrite';
   ShellExecute(0, 'open', PChar(url), nil, nil, SW_SHOWNORMAL);
 
   end;

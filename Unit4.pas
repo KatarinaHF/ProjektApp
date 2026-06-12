@@ -346,6 +346,7 @@ end;
 
 procedure TForm4.ButtonNewEventClick(Sender: TObject);
 begin
+  Form2.AccessToken := FAccessToken;
   Form2.Show;
 end;
 
