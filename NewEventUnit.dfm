@@ -11,7 +11,6 @@ object Form2: TForm2
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  ShowHint = False
   TextHeight = 15
   object PanelTitle: TPanel
     Left = 0
@@ -19,17 +18,19 @@ object Form2: TForm2
     Width = 534
     Height = 81
     Align = alTop
+    BevelOuter = bvNone
     Caption = 'PanelTitle'
     Color = clHoneydew
     ParentBackground = False
     ShowCaption = False
     TabOrder = 0
+    ExplicitWidth = 528
     object LabelTitle: TLabel
       AlignWithMargins = True
-      Left = 21
-      Top = 4
+      Left = 20
+      Top = 3
       Width = 112
-      Height = 73
+      Height = 75
       Margins.Left = 20
       Align = alLeft
       Alignment = taCenter
@@ -41,14 +42,16 @@ object Form2: TForm2
       Font.Style = []
       ParentFont = False
       Layout = tlCenter
+      ExplicitLeft = 21
+      ExplicitTop = 4
       ExplicitHeight = 32
     end
     object TitleEdit: TEdit
       AlignWithMargins = True
-      Left = 176
-      Top = 21
+      Left = 177
+      Top = 20
       Width = 337
-      Height = 39
+      Height = 41
       Margins.Top = 20
       Margins.Right = 20
       Margins.Bottom = 20
@@ -57,9 +60,9 @@ object Form2: TForm2
       ShowHint = True
       TabOrder = 0
       TextHint = 'Write title here...'
-      ExplicitLeft = 168
-      ExplicitTop = 16
-      ExplicitHeight = 47
+      ExplicitLeft = 170
+      ExplicitTop = 21
+      ExplicitHeight = 23
     end
   end
   object PanelStartDate: TPanel
@@ -68,18 +71,19 @@ object Form2: TForm2
     Width = 534
     Height = 81
     Align = alTop
+    BevelOuter = bvNone
     Caption = 'PanelTitle'
     Color = clHoneydew
     ParentBackground = False
     ShowCaption = False
     TabOrder = 1
-    ExplicitTop = 8
+    ExplicitWidth = 528
     object LabelStartDate: TLabel
       AlignWithMargins = True
-      Left = 21
-      Top = 4
+      Left = 20
+      Top = 3
       Width = 105
-      Height = 73
+      Height = 75
       Margins.Left = 20
       Align = alLeft
       Alignment = taCenter
@@ -91,20 +95,24 @@ object Form2: TForm2
       Font.Style = []
       ParentFont = False
       Layout = tlCenter
+      ExplicitLeft = 21
+      ExplicitTop = 4
       ExplicitHeight = 32
     end
     object EditStartDate: TEdit
       AlignWithMargins = True
-      Left = 176
-      Top = 21
+      Left = 177
+      Top = 20
       Width = 337
-      Height = 39
+      Height = 41
       Margins.Top = 20
       Margins.Right = 20
       Margins.Bottom = 20
       Align = alRight
       TabOrder = 0
       TextHint = 'YYYY-MM-DD'
+      ExplicitLeft = 170
+      ExplicitTop = 21
       ExplicitHeight = 23
     end
   end
@@ -114,18 +122,19 @@ object Form2: TForm2
     Width = 534
     Height = 81
     Align = alTop
+    BevelOuter = bvNone
     Caption = 'PanelTitle'
     Color = clHoneydew
     ParentBackground = False
     ShowCaption = False
     TabOrder = 2
-    ExplicitTop = 89
+    ExplicitWidth = 528
     object LabelEndDate: TLabel
       AlignWithMargins = True
-      Left = 21
-      Top = 4
+      Left = 20
+      Top = 3
       Width = 97
-      Height = 73
+      Height = 75
       Margins.Left = 20
       Align = alLeft
       Alignment = taCenter
@@ -137,20 +146,24 @@ object Form2: TForm2
       Font.Style = []
       ParentFont = False
       Layout = tlCenter
+      ExplicitLeft = 21
+      ExplicitTop = 4
       ExplicitHeight = 32
     end
     object EditEndDate: TEdit
       AlignWithMargins = True
-      Left = 176
-      Top = 21
+      Left = 177
+      Top = 20
       Width = 337
-      Height = 39
+      Height = 41
       Margins.Top = 20
       Margins.Right = 20
       Margins.Bottom = 20
       Align = alRight
       TabOrder = 0
       TextHint = 'YYYY-MM-DD'
+      ExplicitLeft = 170
+      ExplicitTop = 21
       ExplicitHeight = 23
     end
   end
@@ -160,18 +173,19 @@ object Form2: TForm2
     Width = 534
     Height = 81
     Align = alTop
+    BevelOuter = bvNone
     Caption = 'PanelTitle'
     Color = clHoneydew
     ParentBackground = False
     ShowCaption = False
     TabOrder = 3
-    ExplicitTop = 170
+    ExplicitWidth = 528
     object LabelStartTime: TLabel
       AlignWithMargins = True
-      Left = 21
-      Top = 4
+      Left = 20
+      Top = 3
       Width = 108
-      Height = 73
+      Height = 75
       Margins.Left = 20
       Align = alLeft
       Alignment = taCenter
@@ -183,20 +197,24 @@ object Form2: TForm2
       Font.Style = []
       ParentFont = False
       Layout = tlCenter
+      ExplicitLeft = 21
+      ExplicitTop = 4
       ExplicitHeight = 32
     end
     object EditStartTime: TEdit
       AlignWithMargins = True
-      Left = 176
-      Top = 21
+      Left = 177
+      Top = 20
       Width = 337
-      Height = 39
+      Height = 41
       Margins.Top = 20
       Margins.Right = 20
       Margins.Bottom = 20
       Align = alRight
       TabOrder = 0
       TextHint = 'hh:mm'
+      ExplicitLeft = 170
+      ExplicitTop = 21
       ExplicitHeight = 23
     end
   end
@@ -206,18 +224,19 @@ object Form2: TForm2
     Width = 534
     Height = 81
     Align = alTop
+    BevelOuter = bvNone
     Caption = 'PanelTitle'
     Color = clHoneydew
     ParentBackground = False
     ShowCaption = False
     TabOrder = 4
-    ExplicitTop = 251
+    ExplicitWidth = 528
     object LabelEndTime: TLabel
       AlignWithMargins = True
-      Left = 21
-      Top = 4
+      Left = 20
+      Top = 3
       Width = 100
-      Height = 73
+      Height = 75
       Margins.Left = 20
       Align = alLeft
       Alignment = taCenter
@@ -229,20 +248,24 @@ object Form2: TForm2
       Font.Style = []
       ParentFont = False
       Layout = tlCenter
+      ExplicitLeft = 21
+      ExplicitTop = 4
       ExplicitHeight = 32
     end
     object EditEndTime: TEdit
       AlignWithMargins = True
-      Left = 176
-      Top = 21
+      Left = 177
+      Top = 20
       Width = 337
-      Height = 39
+      Height = 41
       Margins.Top = 20
       Margins.Right = 20
       Margins.Bottom = 20
       Align = alRight
       TabOrder = 0
       TextHint = 'hh:mm'
+      ExplicitLeft = 170
+      ExplicitTop = 21
       ExplicitHeight = 23
     end
   end
@@ -252,18 +275,20 @@ object Form2: TForm2
     Width = 534
     Height = 206
     Align = alClient
+    BevelOuter = bvNone
     Caption = 'PanelTitle'
     Color = clHoneydew
     ParentBackground = False
     ShowCaption = False
     TabOrder = 5
-    ExplicitHeight = 204
+    ExplicitWidth = 528
+    ExplicitHeight = 189
     object LabelDescription: TLabel
       AlignWithMargins = True
-      Left = 21
-      Top = 21
+      Left = 20
+      Top = 20
       Width = 121
-      Height = 181
+      Height = 183
       Margins.Left = 20
       Margins.Top = 20
       Align = alLeft
@@ -275,22 +300,9 @@ object Form2: TForm2
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitTop = 4
+      ExplicitLeft = 21
+      ExplicitTop = 21
       ExplicitHeight = 32
-    end
-    object EditDescription: TEdit
-      AlignWithMargins = True
-      Left = 176
-      Top = 21
-      Width = 337
-      Height = 164
-      Margins.Top = 20
-      Margins.Right = 20
-      Margins.Bottom = 20
-      Align = alRight
-      TabOrder = 0
-      TextHint = 'Write description here...'
-      ExplicitHeight = 23
     end
     object ButtonSave: TButton
       Left = 16
@@ -298,8 +310,22 @@ object Form2: TForm2
       Width = 113
       Height = 49
       Caption = 'Save'
-      TabOrder = 1
+      TabOrder = 0
       OnClick = ButtonSaveClick
+    end
+    object MemoDescription: TMemo
+      AlignWithMargins = True
+      Left = 177
+      Top = 20
+      Width = 337
+      Height = 166
+      Margins.Top = 20
+      Margins.Right = 20
+      Margins.Bottom = 20
+      Align = alRight
+      Lines.Strings = (
+        'MemoDescription')
+      TabOrder = 1
     end
   end
 end

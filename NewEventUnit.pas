@@ -26,9 +26,10 @@ type
     EditEndTime: TEdit;
     PanelDescription: TPanel;
     LabelDescription: TLabel;
-    EditDescription: TEdit;
     ButtonSave: TButton;
+    MemoDescription: TMemo;
     procedure ButtonSaveClick(Sender: TObject); // Den rigtige klik-hændelse
+    procedure FormCreate(Sender: TObject);
   private
     FAccessToken: string;
     function CreateGraphEventJson: TJSONObject;
@@ -45,12 +46,16 @@ implementation
 
 uses Unit4;
 
+procedure TForm2.FormCreate(Sender: TObject);
+begin
+  SendMessage(MemoDescription.Handle, $1501, 1, LPARAM(PAnsiChar('Write description here...')));
+end;
+
 function TForm2.CreateGraphEventJson: TJSONObject;
 var
   StartObj, EndObj, BodyObj: TJSONObject;
   FullStartIso, FullEndIso: string;
 begin
-  // Nu trækker vi data direkte ud af skærmens TEdits!
   FullStartIso := EditStartDate.Text + 'T' + EditStartTime.Text + ':00';
   FullEndIso := EditEndDate.Text + 'T' + EditEndTime.Text + ':00';
 
@@ -70,11 +75,11 @@ begin
   Result.AddPair('end', EndObj);
 
   // Beskrivelse
-  if (EditDescription <> nil) and (EditDescription.Text <> '') then
+  if (MemoDescription <> nil) and (MemoDescription.Text <> '') then
   begin
     BodyObj := TJSONObject.Create;
     BodyObj.AddPair('contentType', 'text');
-    BodyObj.AddPair('content', EditDescription.Text);
+    BodyObj.AddPair('content', MemoDescription.Text);
     Result.AddPair('body', BodyObj);
   end;
 end;
@@ -117,7 +122,7 @@ begin
       if Assigned(Form4) then
         Form4.RefreshCalendar; // Opdaterer hovedkalenderen med det samme
 
-      Close; // Lukker Form2 ned automatisk
+      Close;
     end
     else
     begin
@@ -128,7 +133,6 @@ begin
     Client.Free;
     JsonPayload.Free;
     RequestBody.Free;
-    // Ingen .Free af TEdits her! Delphi styrer dem.
   end;
 end;
 

@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, DateUtils, System.JSON, System.Net.HttpClient,
-  System.Net.URLClient, NewEventUnit;
+  System.Net.URLClient, NewEventUnit, EventDetailsUnit;
 
 type
   TForm4 = class(TForm)
@@ -183,6 +183,8 @@ type
     function FindGridCell(DayNumber: Integer): Integer;
     function GetCalendarEvents(const AccessToken: string): string;
     procedure ButtonNewEventClick(Sender: TObject);
+    procedure PanelDayMouseEnter(Sender: TObject);
+    procedure PanelDayMouseLeave(Sender: TObject);
   private
     DayPanels: array[1..42] of TPanel;
     DayMemos: array[1..42] of TMemo;
@@ -240,6 +242,17 @@ begin
 
 end;
 
+
+
+procedure TForm4.PanelDayMouseEnter(Sender: TObject);
+begin
+    Form3.Show;
+end;
+
+procedure TForm4.PanelDayMouseLeave(Sender: TObject);
+begin
+    Form3.Visible := false;
+end;
 
 procedure TForm4.PreviousMonthClick(Sender: TObject);
 begin

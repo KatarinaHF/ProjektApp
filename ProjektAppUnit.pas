@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ShellAPI, System.Net.HttpClient,
-  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, NewEventUnit, Unit3, Unit4;
+  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, NewEventUnit, EventDetailsUnit, Unit4;
 
 type
   TForm1 = class(TForm)
@@ -15,7 +15,6 @@ type
     FAccessToken: string;
     FHttpServer: TIdHTTPServer;
     procedure MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
-    procedure DisplayPrettyJson(RawJson: string);
   public
     { Public declarations }
   end;
@@ -70,28 +69,6 @@ begin
   end;
 end;
 
-// Procedure writes user information in Memo
-procedure TForm1.DisplayPrettyJson(RawJson: string);
-var
-  JsonObj: TJSONObject;
-begin
-  JsonObj := TJSONObject.ParseJSONValue(RawJson) as TJSONObject;
-  try
-    if Assigned(JsonObj) then
-    begin
-      Form3.Memo1.Lines.Add('--- Full Response ---');
-      Form3.Memo1.Lines.Add(JsonObj.Format(2));
-      if JsonObj.Values['access_token'] <> nil then    // If access_token != 0
-      begin
-        Form3.Memo1.Lines.Add('');
-        Form3.Memo1.Lines.Add('--- Clean Access Token ---');
-        Form3.Memo1.Lines.Add(JsonObj.Values['access_token'].Value);
-      end;
-    end;
-  finally
-    JsonObj.Free;
-  end;
-end;
 
 // Function for decoding JWT, finding and translating the payload from the JWT
 function DecodeJWT(const Token: string): string;
@@ -114,13 +91,12 @@ begin
     Result := 'Invalid Token Format';
 end;
 
-// Procedure for getting user information
 procedure TForm1.MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
 var
   CapturedCode: string;
   RawResponse: string;
   JsonObj: TJSONObject;
-  AccessToken: string;
+  LocalAccessToken: string; // Midlertidig sikker variabel til tråden
   UserInfo: string;
 begin
   CapturedCode := ARequestInfo.Params.Values['code'];
@@ -132,38 +108,56 @@ begin
     try
       RawResponse := GetAccessToken(CapturedCode);
       JsonObj := TJSONObject.ParseJSONValue(RawResponse) as TJSONObject;
+
+      if not Assigned(JsonObj) then Exit;
+
       try
-        if Assigned(JsonObj) and (JsonObj.Values['access_token'] <> nil) then
+        // Tjek om vi rent faktisk fik en token fra Microsoft
+        if JsonObj.Values['access_token'] <> nil then
         begin
           FAccessToken := JsonObj.Values['access_token'].Value;
-          UserInfo := GetMe(FAccessToken);
-          TThread.Queue(nil, procedure
-          begin
-            // Calls procedure DisplayPrettyJson to write user information in Memo
-            Form3.Memo1.Lines.Clear; // Clear Memo1 text
-            Form3.Memo1.Lines.Add('--- USER PROFILE ---');
-            DisplayPrettyJson(UserInfo);
-          end);
+          LocalAccessToken := FAccessToken; // Gemmer den sikkert til vores TThread
+
+          UserInfo := GetMe(FAccessToken); // Valgfrit: Hent brugerinfo
+
+          // Først NU hvor vi har udtrukket alt tekst, og gemt det i LocalAccessToken,
+          // kan vi trygt sende opgaven videre til hovedtråden.
+          TThread.Queue(nil,
+            procedure
+            begin
+              Form4 := TForm4.Create(nil);
+              Form4.AccessToken := LocalAccessToken; // Bruger den sikre lokale variabel
+              Form4.RefreshCalendar;
+              Form4.Show;
+            end
+          );
+        end
+        else
+        begin
+          // Hvis Microsoft sendte en fejl i stedet for en token
+          TThread.Queue(nil,
+            procedure
+            begin
+              ShowMessage('Kunne ikke logge ind. Microsoft svarede: ' + #13#10 + RawResponse);
+            end
+          );
         end;
 
-        TThread.Queue(nil,
-          procedure
-          begin
-            Form4 := TForm4.Create(nil);
-            Form4.AccessToken := FAccessToken; // 1. Assign token
-
-            // 2. Force a rebuild now that Form4 has the token context
-            Form4.RefreshCalendar;
-
-            Form4.Show;
-          end
-        );
       finally
+        // Nu kan vi roligt frigøre JsonObj, for tråden er ligeglad;
+        // den har fået sin egen uafhængige tekst-kopi i 'LocalAccessToken'.
         JsonObj.Free;
       end;
     except
       on E: Exception do
-        TThread.Queue(nil, procedure begin Form3.Memo1.Lines.Add('Error: ' + E.Message); end);
+      begin
+        TThread.Queue(nil,
+          procedure
+          begin
+            ShowMessage('Fejl under login-håndtering: ' + E.Message);
+          end
+        );
+      end;
     end;
   end;
 end;
