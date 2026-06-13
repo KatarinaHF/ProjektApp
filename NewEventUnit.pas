@@ -33,7 +33,7 @@ type
     ComboBoxCalendar: TComboBox;
     Panel1: TPanel;
     Panel2: TPanel;
-    procedure ButtonSaveClick(Sender: TObject); // Den rigtige klik-hændelse
+    procedure ButtonSaveClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Resize(Sender: TObject);
   private
@@ -55,8 +55,13 @@ uses Unit4;
 procedure TForm2.FormCreate(Sender: TObject);
 begin
   SendMessage(MemoDescription.Handle, $1501, 1, LPARAM(PAnsiChar('Write description here...')));
-end;
 
+  ComboBoxCalendar.Items.Clear;
+  ComboBoxCalendar.Items.Add('Work');
+  ComboBoxCalendar.Items.Add('Private');
+  ComboBoxCalendar.Items.Add('Holiday');
+  ComboBoxCalendar.ItemIndex := 0;
+end;
 
 function TForm2.CreateGraphEventJson: TJSONObject;
 var
@@ -108,11 +113,6 @@ begin
     Result.AddPair('body', BodyObj);
   end;
 
-  // Choose Calendar type
-  ComboBoxCalendar.Items.Add('Work');
-  ComboBoxCalendar.Items.Add('Private');
-  ComboBoxCalendar.Items.Add('Holiday');
-  ComboBoxCalendar.ItemIndex := 0;
 end;
 
 procedure TForm2.ButtonSaveClick(Sender: TObject);

@@ -363,6 +363,7 @@ begin
   begin
     DayLabels[GridIndex].Caption := '';
     DayMemos[GridIndex].Clear;
+    DayDetails[GridIndex] := '';
   end;
 
   FirstDate := EncodeDate(AYear, AMonth, 1);
@@ -381,10 +382,8 @@ begin
     DayPanels[GridIndex].Visible := True;
     DayLabels[GridIndex].Caption := IntToStr(DayNum);
     Inc(GridIndex);
-    DayDetails[GridIndex] := '';
   end;
 
-  // --- ADD THIS LINE HERE ---
   // This automatically pulls down fresh API events every time the grid builds
   if FAccessToken <> '' then
     LoadGraphEvents;
@@ -462,7 +461,7 @@ begin
 
   // Fill Form3 with the hovered day's data — adapt to your controls:
   // e.g. if Form3 has a TMemo called MemoEvents:
-  Form3.MemoInfo.Lines.Text := DayDetails[FHoverCell];
+  Form3.ShowDetails(DayDetails[FHoverCell]);
   // and maybe a caption/label:
   // Form3.LabelDay.Caption := DayLabels[FHoverCell].Caption + '. ' + LabelMonth.Caption;
 
@@ -491,6 +490,8 @@ var
   Description: string;
   Cell: Integer;
   TimeStr: string;
+  Category: string;
+  Cats: TJSONArray;
 begin
   if FAccessToken = '' then Exit;
 
@@ -537,23 +538,25 @@ begin
     DayNumber := DayOf(StartDate);
     TimeStr := FormatDateTime('hh:nn', StartDate);
 
-    // Short line for the small calendar cell (unchanged behaviour)
-    AddEvent(DayNumber, TimeStr + ' ' + Subject);
+    AddEvent(DayNumber, TimeStr + ' ' + Subject);   // small cell, unchanged
 
-    // Get the description (bodyPreview is plain text — clean for a popup)
     Description := '';
     EventObj.TryGetValue<string>('bodyPreview', Description);
 
-    // Build the fuller text for the popup
+    // Read the category (first one in the array)
+    Category := '';
+    if EventObj.TryGetValue<TJSONArray>('categories', Cats) and (Cats.Count > 0) then
+      Category := Cats.Items[0].Value;
+
     Cell := FindGridCell(DayNumber);
     if Cell > 0 then
     begin
-      DayDetails[Cell] := DayDetails[Cell] + TimeStr + ' ' + Subject + sLineBreak;
+      DayDetails[Cell] := DayDetails[Cell] + Category + #1 + TimeStr + ' ' + Subject + sLineBreak;
       if Trim(Description) <> '' then
-      DayDetails[Cell] := DayDetails[Cell] + '    ' + Description + sLineBreak;
-      DayDetails[Cell] := DayDetails[Cell] + sLineBreak;  // blank line between events
-      end;
+        DayDetails[Cell] := DayDetails[Cell] + Category + #1 + '    ' + Description + sLineBreak;
+      DayDetails[Cell] := DayDetails[Cell] + sLineBreak;
     end;
+  end;
   end;
   end;
     finally

@@ -40,17 +40,27 @@ object Form3: TForm3
     ParentBackground = False
     ShowCaption = False
     TabOrder = 1
-    object MemoInfo: TMemo
+    object MemoInfo: TRichEdit
       Left = 1
       Top = 1
       Width = 332
       Height = 360
       Align = alClient
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = []
       Lines.Strings = (
         'MemoInfo')
+      ParentFont = False
       ReadOnly = True
       TabOrder = 0
       OnMouseLeave = MemoInfoMouseLeave
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 334
+      ExplicitHeight = 361
     end
   end
 end
