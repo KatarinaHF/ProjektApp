@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, DateUtils, System.JSON, System.Net.HttpClient,
-  System.Net.URLClient, NewEventUnit;
+  System.Net.URLClient, NewEventUnit, EventDetailsUnit;
 
 type
   TForm4 = class(TForm)
@@ -174,6 +174,7 @@ type
     PanelMonth: TPanel;
     PanelArrowButtons: TPanel;
     PanelFiller: TPanel;
+    HoverTimer: TTimer;
     procedure PanelCalendarResize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
@@ -183,6 +184,9 @@ type
     function FindGridCell(DayNumber: Integer): Integer;
     function GetCalendarEvents(const AccessToken: string): string;
     procedure ButtonNewEventClick(Sender: TObject);
+    procedure PanelDayMouseEnter(Sender: TObject);
+    procedure PanelDayMouseLeave(Sender: TObject);
+    procedure HoverTimerTimer(Sender: TObject);
   private
     DayPanels: array[1..42] of TPanel;
     DayMemos: array[1..42] of TMemo;
@@ -240,6 +244,17 @@ begin
 
 end;
 
+
+
+procedure TForm4.PanelDayMouseEnter(Sender: TObject);
+begin
+    Form3.Show;
+end;
+
+procedure TForm4.PanelDayMouseLeave(Sender: TObject);
+begin
+    Form3.Visible := false;
+end;
 
 procedure TForm4.PreviousMonthClick(Sender: TObject);
 begin
@@ -404,6 +419,39 @@ begin
   finally
     Client.Free;
   end;
+end;
+
+procedure TForm4.HoverTimerTimer(Sender: TObject);
+begin
+  HoverTimer.Enabled := False;
+
+  if (FHoverCell < 1) or (FHoverCell > 42) then Exit;
+  if DayLabels[FHoverCell].Caption = '' then Exit;    // empty cell, skip
+
+  // Fill Form3 with the hovered day's data — adapt to your controls:
+  // e.g. if Form3 has a TMemo called MemoEvents:
+  Form3.MemoEvents.Lines.Assign(DayMemos[FHoverCell].Lines);
+  // and maybe a caption/label:
+  // Form3.LabelDay.Caption := DayLabels[FHoverCell].Caption + '. ' + LabelMonth.Caption;
+
+  // Position next to the mouse (screen coordinates, since Form3 is its own window)
+  Form3.Left := Mouse.CursorPos.X + 12;
+  Form3.Top  := Mouse.CursorPos.Y + 12;
+  if Form3.Left + Form3.Width > Screen.WorkAreaWidth then
+    Form3.Left := Mouse.CursorPos.X - Form3.Width - 12;
+  if Form3.Top + Form3.Height > Screen.WorkAreaHeight then
+    Form3.Top := Mouse.CursorPos.Y - Form3.Height - 12;
+
+  // Show without stealing focus
+  ShowWindow(Form3.Handle, SW_SHOWNOACTIVATE);
+  Form3.Visible := True;
+end;
+
+procedure TForm4.DayMouseLeave(Sender: TObject);
+begin
+  HoverTimer.Enabled := False;
+  if Assigned(Form3) then
+    Form3.Hide;
 end;
 
 procedure TForm4.LoadGraphEvents;

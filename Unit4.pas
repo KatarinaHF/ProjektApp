@@ -185,6 +185,7 @@ type
     procedure ButtonNewEventClick(Sender: TObject);
     procedure PanelDayMouseEnter(Sender: TObject);
     procedure PanelDayMouseLeave(Sender: TObject);
+    procedure HoverTimerTimer(Sender: TObject);
   private
     DayPanels: array[1..42] of TPanel;
     DayMemos: array[1..42] of TMemo;
@@ -192,6 +193,8 @@ type
     FCurrentYear  : Integer;
     FCurrentMonth : Integer;
     FAccessToken: string;
+    HoverTimer: TTimer;
+    FHoverCell: Integer;
   public
     procedure BuildCalendar(AYear, AMonth: Integer);
     procedure RefreshCalendar; // <-- Add this line
@@ -246,12 +249,14 @@ end;
 
 procedure TForm4.PanelDayMouseEnter(Sender: TObject);
 begin
-    Form3.Show;
+  FHoverCell := (Sender as TControl).Tag;
+  HoverTimer.Enabled := True;
 end;
 
 procedure TForm4.PanelDayMouseLeave(Sender: TObject);
 begin
-    Form3.Visible := false;
+  HoverTimer.Enabled := False;
+  Form3.Hide;
 end;
 
 procedure TForm4.PreviousMonthClick(Sender: TObject);
@@ -296,7 +301,19 @@ begin
 
     if DayLabels[I] = nil then
       ShowMessage('Mangler LabelDay' + IntToStr(I));
+
+    DayPanels[I].Tag := I;
+    DayPanels[I].OnMouseEnter := PanelDayMouseEnter;
+    DayPanels[I].OnMouseLeave := PanelDayMouseLeave;
+    DayMemos[I].Tag := I;
+    DayMemos[I].OnMouseEnter := PanelDayMouseEnter;
+    DayMemos[I].OnMouseLeave := PanelDayMouseLeave;
   end;
+
+  HoverTimer := TTimer.Create(Self);
+  HoverTimer.Enabled := False;
+  HoverTimer.Interval := 1500;
+  HoverTimer.OnTimer := HoverTimerTimer;
 
   DecodeDate(Date, Year, Month, Day);
   FCurrentYear  := Year;
@@ -417,6 +434,32 @@ begin
   finally
     Client.Free;
   end;
+end;
+
+procedure TForm4.HoverTimerTimer(Sender: TObject);
+begin
+  HoverTimer.Enabled := False;
+
+  if (FHoverCell < 1) or (FHoverCell > 42) then Exit;
+  if DayLabels[FHoverCell].Caption = '' then Exit;    // empty cell, skip
+
+  // Fill Form3 with the hovered day's data — adapt to your controls:
+  // e.g. if Form3 has a TMemo called MemoEvents:
+  Form3.MemoInfo.Lines.Assign(DayMemos[FHoverCell].Lines);
+  // and maybe a caption/label:
+  // Form3.LabelDay.Caption := DayLabels[FHoverCell].Caption + '. ' + LabelMonth.Caption;
+
+  // Position next to the mouse (screen coordinates, since Form3 is its own window)
+  Form3.Left := Mouse.CursorPos.X + 12;
+  Form3.Top  := Mouse.CursorPos.Y + 12;
+  if Form3.Left + Form3.Width > Screen.WorkAreaWidth then
+    Form3.Left := Mouse.CursorPos.X - Form3.Width - 12;
+  if Form3.Top + Form3.Height > Screen.WorkAreaHeight then
+    Form3.Top := Mouse.CursorPos.Y - Form3.Height - 12;
+
+  // Show without stealing focus
+  ShowWindow(Form3.Handle, SW_SHOWNOACTIVATE);
+  Form3.Visible := True;
 end;
 
 procedure TForm4.LoadGraphEvents;

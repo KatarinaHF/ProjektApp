@@ -27,7 +27,6 @@ object Form3: TForm3
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
-    ExplicitWidth = 328
   end
   object PanelInfo: TPanel
     Left = 0
@@ -40,8 +39,10 @@ object Form3: TForm3
     ParentBackground = False
     ShowCaption = False
     TabOrder = 1
-    ExplicitWidth = 328
-    ExplicitHeight = 345
+    ExplicitLeft = 96
+    ExplicitTop = 168
+    ExplicitWidth = 185
+    ExplicitHeight = 41
     object MemoInfo: TMemo
       Left = 1
       Top = 1
@@ -52,8 +53,10 @@ object Form3: TForm3
         'MemoInfo')
       TabOrder = 0
       OnMouseLeave = MemoInfoMouseLeave
-      ExplicitWidth = 326
-      ExplicitHeight = 343
+      ExplicitLeft = 72
+      ExplicitTop = 120
+      ExplicitWidth = 185
+      ExplicitHeight = 89
     end
   end
 end
