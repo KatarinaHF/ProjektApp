@@ -190,6 +190,7 @@ type
     DayPanels: array[1..42] of TPanel;
     DayMemos: array[1..42] of TMemo;
     DayLabels: array[1..42] of TLabel;
+    DayDetails: array[1..42] of string;
     FCurrentYear  : Integer;
     FCurrentMonth : Integer;
     FAccessToken: string;
@@ -374,6 +375,7 @@ begin
     DayPanels[GridIndex].Visible := True;
     DayLabels[GridIndex].Caption := IntToStr(DayNum);
     Inc(GridIndex);
+    DayDetails[GridIndex] := '';
   end;
 
   // --- ADD THIS LINE HERE ---
@@ -450,10 +452,11 @@ begin
 
   if (FHoverCell < 1) or (FHoverCell > 42) then Exit;
   if DayLabels[FHoverCell].Caption = '' then Exit;    // empty cell, skip
+   if DayMemos[FHoverCell].Lines.Count = 0 then Exit;
 
   // Fill Form3 with the hovered day's data — adapt to your controls:
   // e.g. if Form3 has a TMemo called MemoEvents:
-  Form3.MemoInfo.Lines.Assign(DayMemos[FHoverCell].Lines);
+  Form3.MemoInfo.Lines.Text := DayDetails[FHoverCell];
   // and maybe a caption/label:
   // Form3.LabelDay.Caption := DayLabels[FHoverCell].Caption + '. ' + LabelMonth.Caption;
 
@@ -464,8 +467,6 @@ begin
     Form3.Left := Mouse.CursorPos.X - Form3.Width - 12;
   if Form3.Top + Form3.Height > Screen.WorkAreaHeight then
     Form3.Top := Mouse.CursorPos.Y - Form3.Height - 12;
-
-  // Show without stealing focus
 
   Form3.Visible := True;
 end;
@@ -481,6 +482,9 @@ var
   StartDate: TDateTime;
   DayNumber: Integer;
   RawJson: string;
+  Description: string;
+  Cell: Integer;
+  TimeStr: string;
 begin
   if FAccessToken = '' then Exit;
 
@@ -523,15 +527,29 @@ begin
 
           // Da vi nu har tvunget lokal tid i GetCalendarEvents, tjekker vi måned og år stabilt
           if (YearOf(StartDate) = FCurrentYear) and (MonthOf(StartDate) = FCurrentMonth) then
-          begin
-            DayNumber := DayOf(StartDate);
-            AddEvent(
-              DayNumber,
-              FormatDateTime('hh:nn', StartDate) + ' ' + Subject
-            );
-          end;
-        end;
+  begin
+    DayNumber := DayOf(StartDate);
+    TimeStr := FormatDateTime('hh:nn', StartDate);
+
+    // Short line for the small calendar cell (unchanged behaviour)
+    AddEvent(DayNumber, TimeStr + ' ' + Subject);
+
+    // Get the description (bodyPreview is plain text — clean for a popup)
+    Description := '';
+    EventObj.TryGetValue<string>('bodyPreview', Description);
+
+    // Build the fuller text for the popup
+    Cell := FindGridCell(DayNumber);
+    if Cell > 0 then
+    begin
+      DayDetails[Cell] := DayDetails[Cell] + TimeStr + ' ' + Subject + sLineBreak;
+      if Trim(Description) <> '' then
+      DayDetails[Cell] := DayDetails[Cell] + '    ' + Description + sLineBreak;
+      DayDetails[Cell] := DayDetails[Cell] + sLineBreak;  // blank line between events
       end;
+    end;
+  end;
+  end;
     finally
       JsonObj.Free;
     end;

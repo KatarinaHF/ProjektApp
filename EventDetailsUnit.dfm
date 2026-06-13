@@ -48,6 +48,7 @@ object Form3: TForm3
       Align = alClient
       Lines.Strings = (
         'MemoInfo')
+      ReadOnly = True
       TabOrder = 0
       OnMouseLeave = MemoInfoMouseLeave
     end
