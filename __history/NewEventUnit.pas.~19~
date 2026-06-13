@@ -24,18 +24,16 @@ type
     PanelEndTime: TPanel;
     LabelEndTime: TLabel;
     EditEndTime: TEdit;
-    // Her må der ikke stå noget endnu, da du ikke har designet komponenterne.
+    PanelDescription: TPanel;
+    LabelDescription: TLabel;
+    ButtonSave: TButton;
+    MemoDescription: TMemo;
+    procedure ButtonSaveClick(Sender: TObject); // Den rigtige klik-hændelse
+    procedure FormCreate(Sender: TObject);
   private
     FAccessToken: string;
-
-    // Vi snyder Delphi og opretter felterne her som "virtuelle" variabler indtil videre.
-    // Du kan stadig skrive .Text på dem i koden nedenfor.
-    MemoDescription: TMemo;
-    ButtonSaveEvent: TButton;
-
     function CreateGraphEventJson: TJSONObject;
   public
-    procedure OpretEventTest; // Denne kan du kalde for at teste koden af
     property AccessToken: string read FAccessToken write FAccessToken;
   end;
 
@@ -48,32 +46,35 @@ implementation
 
 uses Unit4;
 
+procedure TForm2.FormCreate(Sender: TObject);
+begin
+  SendMessage(MemoDescription.Handle, $1501, 1, LPARAM(PAnsiChar('Write description here...')));
+end;
+
 function TForm2.CreateGraphEventJson: TJSONObject;
 var
   StartObj, EndObj, BodyObj: TJSONObject;
   FullStartIso, FullEndIso: string;
 begin
-  // Nu bygger vi start-tidspunktet ud fra start-komponenterne
   FullStartIso := EditStartDate.Text + 'T' + EditStartTime.Text + ':00';
-
-  // Og slut-tidspunktet ud fra slut-komponenterne!
   FullEndIso := EditEndDate.Text + 'T' + EditEndTime.Text + ':00';
 
   Result := TJSONObject.Create;
   Result.AddPair('subject', TitleEdit.Text);
 
-  // Start-objekt hos Microsoft
+  // Start-objekt
   StartObj := TJSONObject.Create;
   StartObj.AddPair('dateTime', FullStartIso);
   StartObj.AddPair('timeZone', 'Romance Standard Time');
   Result.AddPair('start', StartObj);
 
-  // Slut-objekt hos Microsoft (kan nu være en helt anden dag)
+  // Slut-objekt
   EndObj := TJSONObject.Create;
   EndObj.AddPair('dateTime', FullEndIso);
   EndObj.AddPair('timeZone', 'Romance Standard Time');
   Result.AddPair('end', EndObj);
 
+  // Beskrivelse
   if (MemoDescription <> nil) and (MemoDescription.Text <> '') then
   begin
     BodyObj := TJSONObject.Create;
@@ -83,9 +84,7 @@ begin
   end;
 end;
 
-
-
-procedure TForm2.OpretEventTest;
+procedure TForm2.ButtonSaveClick(Sender: TObject);
 var
   Client: THTTPClient;
   Response: IHTTPResponse;
@@ -98,20 +97,12 @@ begin
     Exit;
   end;
 
-  // Siden vi ikke har et UI endnu, opretter vi komponenterne i hukommelsen
-  // og giver dem noget testdata, så du kan se om det virker!
-  TitleEdit := TEdit.Create(nil);
-  EditStartDate := TEdit.Create(nil);
-  EditEndDate := TEdit.Create(nil);
-  EditStartTime := TEdit.Create(nil);
-  EditEndTime := TEdit.Create(nil);
-
-  // HER KAN DU RETTE TEST-DATA:
-  TitleEdit.Text := 'Test Event fra Delphi App';
-  EditStartDate.Text := '2026-06-15'; // Format: ÅÅÅÅ-MM-DD
-  EditEndDate.Text := '2026-06-15'; // Format: ÅÅÅÅ-MM-DD
-  EditStartTime.Text := '12:00';
-  EditEndTime.Text := '13:00';
+  // Enkel sikring, så man ikke sender tomme felter afsted
+  if (TitleEdit.Text = '') or (EditStartDate.Text = '') or (EditEndDate.Text = '') then
+  begin
+    ShowMessage('Udfyld venligst som minimum: Titel, Startdato og Slutdato.');
+    Exit;
+  end;
 
   Client := THTTPClient.Create;
   JsonPayload := CreateGraphEventJson;
@@ -121,13 +112,17 @@ begin
     Client.CustomHeaders['Authorization'] := 'Bearer ' + FAccessToken;
     Client.CustomHeaders['Content-Type'] := 'application/json';
 
+    // POST til Microsoft Graph med indholdet fra dine TEdits
     Response := Client.Post('https://graph.microsoft.com/v1.0/me/events', RequestBody);
 
     if (Response.StatusCode = 201) or (Response.StatusCode = 200) then
     begin
       ShowMessage('Succes! Begivenheden blev oprettet hos Microsoft.');
+
       if Assigned(Form4) then
-        Form4.RefreshCalendar;
+        Form4.RefreshCalendar; // Opdaterer hovedkalenderen med det samme
+
+      Close;
     end
     else
     begin
@@ -138,13 +133,6 @@ begin
     Client.Free;
     JsonPayload.Free;
     RequestBody.Free;
-
-    // Ryd op i hukommelsen bagefter
-    TitleEdit.Free;
-    EditStartDate.Free;
-    EditEndDate.Free;
-    EditStartTime.Free;
-    EditEndTime.Free;
   end;
 end;
 

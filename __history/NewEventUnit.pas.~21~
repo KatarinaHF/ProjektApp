@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
-  System.JSON, System.Net.HttpClient, System.Net.URLClient;
+  System.JSON, System.Net.HttpClient, System.Net.URLClient, Vcl.ComCtrls,
+  Vcl.WinXPickers;
 
 type
   TForm2 = class(TForm)
@@ -14,24 +15,23 @@ type
     LabelTitle: TLabel;
     PanelStartDate: TPanel;
     LabelStartDate: TLabel;
-    EditStartDate: TEdit;
     PanelEndDate: TPanel;
     LabelEndDate: TLabel;
-    EditEndDate: TEdit;
-    EditStartTime: TEdit;
-    EditEndTime: TEdit;
-    // Her må der ikke stå noget endnu, da du ikke har designet komponenterne.
+    PanelStartTime: TPanel;
+    LabelStartTime: TLabel;
+    PanelEndTime: TPanel;
+    LabelEndTime: TLabel;
+    PanelDescription: TPanel;
+    LabelDescription: TLabel;
+    ButtonSave: TButton;
+    MemoDescription: TMemo;
+    procedure ButtonSaveClick(Sender: TObject); // Den rigtige klik-hændelse
+    procedure FormCreate(Sender: TObject);
+    procedure Resize(Sender: TObject);
   private
     FAccessToken: string;
-
-    // Vi snyder Delphi og opretter felterne her som "virtuelle" variabler indtil videre.
-    // Du kan stadig skrive .Text på dem i koden nedenfor.
-    MemoDescription: TMemo;
-    ButtonSaveEvent: TButton;
-
     function CreateGraphEventJson: TJSONObject;
   public
-    procedure OpretEventTest; // Denne kan du kalde for at teste koden af
     property AccessToken: string read FAccessToken write FAccessToken;
   end;
 
@@ -44,32 +44,49 @@ implementation
 
 uses Unit4;
 
+procedure TForm2.FormCreate(Sender: TObject);
+begin
+  SendMessage(MemoDescription.Handle, $1501, 1, LPARAM(PAnsiChar('Write description here...')));
+end;
+
 function TForm2.CreateGraphEventJson: TJSONObject;
 var
   StartObj, EndObj, BodyObj: TJSONObject;
   FullStartIso, FullEndIso: string;
+  StartDate: TDate;
+  EndDate: TDate;
+  StartTime: TTime;
+  EndTime: TTime;
+  StartDT, EndDT: TDateTime;
 begin
-  // Nu bygger vi start-tidspunktet ud fra start-komponenterne
-  FullStartIso := EditStartDate.Text + 'T' + EditStartTime.Text + ':00';
+  StartDT :=
+    Trunc(DateTimePickerStart.Date) +
+    Frac(TimePickerStart.Time);
 
-  // Og slut-tidspunktet ud fra slut-komponenterne!
-  FullEndIso := EditEndDate.Text + 'T' + EditEndTime.Text + ':00';
+  EndDT :=
+    Trunc(DateTimePickerEnd.Date) +
+    Frac(TimePickerEnd.Time);
+
+  FullStartIso := FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', StartDT);
+
+  FullEndIso := FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', EndDT);
 
   Result := TJSONObject.Create;
-  Result.AddPair('subject', EditSubject.Text);
+  Result.AddPair('subject', TitleEdit.Text);
 
-  // Start-objekt hos Microsoft
+  // Start-objekt
   StartObj := TJSONObject.Create;
   StartObj.AddPair('dateTime', FullStartIso);
   StartObj.AddPair('timeZone', 'Romance Standard Time');
   Result.AddPair('start', StartObj);
 
-  // Slut-objekt hos Microsoft (kan nu være en helt anden dag)
+  // Slut-objekt
   EndObj := TJSONObject.Create;
   EndObj.AddPair('dateTime', FullEndIso);
   EndObj.AddPair('timeZone', 'Romance Standard Time');
   Result.AddPair('end', EndObj);
 
+  // Beskrivelse
   if (MemoDescription <> nil) and (MemoDescription.Text <> '') then
   begin
     BodyObj := TJSONObject.Create;
@@ -79,9 +96,7 @@ begin
   end;
 end;
 
-
-
-procedure TForm2.OpretEventTest;
+procedure TForm2.ButtonSaveClick(Sender: TObject);
 var
   Client: THTTPClient;
   Response: IHTTPResponse;
@@ -94,18 +109,12 @@ begin
     Exit;
   end;
 
-  // Siden vi ikke har et UI endnu, opretter vi komponenterne i hukommelsen
-  // og giver dem noget testdata, så du kan se om det virker!
-  TitleEdit := TEdit.Create(nil);
-  EditDate := TEdit.Create(nil);
-  EditStartTime := TEdit.Create(nil);
-  EditEndTime := TEdit.Create(nil);
-
-  // HER KAN DU RETTE TEST-DATA:
-  TitleEdit.Text := 'Test Event fra Delphi App';
-  EditDate.Text := '2026-06-15'; // Format: ÅÅÅÅ-MM-DD
-  EditStartTime.Text := '12:00';
-  EditEndTime.Text := '13:00';
+  // Enkel sikring, så man ikke sender tomme felter afsted
+  if (TitleEdit.Text = '') then
+  begin
+    ShowMessage('Udfyld venligst som minimum: Titel');
+    Exit;
+  end;
 
   Client := THTTPClient.Create;
   JsonPayload := CreateGraphEventJson;
@@ -115,13 +124,17 @@ begin
     Client.CustomHeaders['Authorization'] := 'Bearer ' + FAccessToken;
     Client.CustomHeaders['Content-Type'] := 'application/json';
 
+    // POST til Microsoft Graph med indholdet fra dine TEdits
     Response := Client.Post('https://graph.microsoft.com/v1.0/me/events', RequestBody);
 
     if (Response.StatusCode = 201) or (Response.StatusCode = 200) then
     begin
       ShowMessage('Succes! Begivenheden blev oprettet hos Microsoft.');
+
       if Assigned(Form4) then
-        Form4.RefreshCalendar;
+        Form4.RefreshCalendar; // Opdaterer hovedkalenderen med det samme
+
+      Close;
     end
     else
     begin
@@ -132,13 +145,21 @@ begin
     Client.Free;
     JsonPayload.Free;
     RequestBody.Free;
-
-    // Ryd op i hukommelsen bagefter
-    TitleEdit.Free;
-    EditDate.Free;
-    EditStartTime.Free;
-    EditEndTime.Free;
   end;
+end;
+
+procedure TForm2.Resize(Sender: TObject);
+begin
+  TitleEdit.Width := PanelTitle.Width - LabelTitle.Width - 120;
+
+  DateTimePickerStart.Width := PanelStartDate.Width - LabelStartDate.Width - 120;
+  DateTimePickerEnd.Width := PanelEndDate.Width - LabelEndDate.Width - 120;
+
+  TimePickerStart.Width := PanelStartTime.Width - LabelStartTime.Width - 120;
+  TimePickerEnd.Width := PanelEndTime.Width - LabelEndTime.Width - 120;
+
+  MemoDescription.Width := PanelDescription.Width - LabelDescription.Width - 120;
+
 end;
 
 end.

@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
-  System.JSON, System.Net.HttpClient, System.Net.URLClient;
+  System.JSON, System.Net.HttpClient, System.Net.URLClient, Vcl.ComCtrls,
+  Vcl.WinXPickers;
 
 type
   TForm2 = class(TForm)
@@ -14,22 +15,23 @@ type
     LabelTitle: TLabel;
     PanelStartDate: TPanel;
     LabelStartDate: TLabel;
-    EditStartDate: TEdit;
     PanelEndDate: TPanel;
     LabelEndDate: TLabel;
-    EditEndDate: TEdit;
     PanelStartTime: TPanel;
     LabelStartTime: TLabel;
-    EditStartTime: TEdit;
     PanelEndTime: TPanel;
     LabelEndTime: TLabel;
-    EditEndTime: TEdit;
     PanelDescription: TPanel;
     LabelDescription: TLabel;
     ButtonSave: TButton;
     MemoDescription: TMemo;
+    DateTimePickerStart: TDateTimePicker;
+    DateTimePickerEnd: TDateTimePicker;
+    TimePickerStart: TTimePicker;
+    TimePickerEnd: TTimePicker;
     procedure ButtonSaveClick(Sender: TObject); // Den rigtige klik-hændelse
     procedure FormCreate(Sender: TObject);
+    procedure Resize(Sender: TObject);
   private
     FAccessToken: string;
     function CreateGraphEventJson: TJSONObject;
@@ -55,9 +57,23 @@ function TForm2.CreateGraphEventJson: TJSONObject;
 var
   StartObj, EndObj, BodyObj: TJSONObject;
   FullStartIso, FullEndIso: string;
+  StartDate: TDate;
+  EndDate: TDate;
+  StartTime: TTime;
+  EndTime: TTime;
+  StartDT, EndDT: TDateTime;
 begin
-  FullStartIso := EditStartDate.Text + 'T' + EditStartTime.Text + ':00';
-  FullEndIso := EditEndDate.Text + 'T' + EditEndTime.Text + ':00';
+  StartDT :=
+    Trunc(DateTimePickerStart.Date) +
+    Frac(TimePickerStart.Time);
+
+  EndDT :=
+    Trunc(DateTimePickerEnd.Date) +
+    Frac(TimePickerEnd.Time);
+
+  FullStartIso := FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', StartDT);
+
+  FullEndIso := FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', EndDT);
 
   Result := TJSONObject.Create;
   Result.AddPair('subject', TitleEdit.Text);
@@ -98,9 +114,9 @@ begin
   end;
 
   // Enkel sikring, så man ikke sender tomme felter afsted
-  if (TitleEdit.Text = '') or (EditStartDate.Text = '') or (EditEndDate.Text = '') then
+  if (TitleEdit.Text = '') then
   begin
-    ShowMessage('Udfyld venligst som minimum: Titel, Startdato og Slutdato.');
+    ShowMessage('Udfyld venligst som minimum: Titel');
     Exit;
   end;
 
@@ -134,6 +150,20 @@ begin
     JsonPayload.Free;
     RequestBody.Free;
   end;
+end;
+
+procedure TForm2.Resize(Sender: TObject);
+begin
+  TitleEdit.Width := PanelTitle.Width - LabelTitle.Width - 120;
+
+  DateTimePickerStart.Width := PanelStartDate.Width - LabelStartDate.Width - 120;
+  DateTimePickerEnd.Width := PanelEndDate.Width - LabelEndDate.Width - 120;
+
+  TimePickerStart.Width := PanelStartTime.Width - LabelStartTime.Width - 120;
+  TimePickerEnd.Width := PanelEndTime.Width - LabelEndTime.Width - 120;
+
+  MemoDescription.Width := PanelDescription.Width - LabelDescription.Width - 120;
+
 end;
 
 end.

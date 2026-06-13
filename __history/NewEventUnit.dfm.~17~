@@ -91,7 +91,7 @@ object Form2: TForm2
       Layout = tlCenter
       ExplicitHeight = 32
     end
-    object DateTimePickerStart: TDateTimePicker
+    object EditStartDate: TEdit
       AlignWithMargins = True
       Left = 177
       Top = 20
@@ -101,10 +101,18 @@ object Form2: TForm2
       Margins.Right = 20
       Margins.Bottom = 20
       Align = alRight
+      TabOrder = 0
+      TextHint = 'YYYY-MM-DD'
+      ExplicitHeight = 23
+    end
+    object DateTimePicker1: TDateTimePicker
+      Left = 272
+      Top = 32
+      Width = 186
+      Height = 23
       Date = 46186.000000000000000000
       Time = 0.514253101850044900
-      TabOrder = 0
-      ExplicitLeft = 328
+      TabOrder = 1
     end
   end
   object PanelEndDate: TPanel
@@ -138,7 +146,7 @@ object Form2: TForm2
       Layout = tlCenter
       ExplicitHeight = 32
     end
-    object DateTimePickerEnd: TDateTimePicker
+    object EditEndDate: TEdit
       AlignWithMargins = True
       Left = 177
       Top = 20
@@ -148,10 +156,9 @@ object Form2: TForm2
       Margins.Right = 20
       Margins.Bottom = 20
       Align = alRight
-      Date = 46186.000000000000000000
-      Time = 0.514253101850044900
       TabOrder = 0
-      ExplicitLeft = 328
+      TextHint = 'YYYY-MM-DD'
+      ExplicitHeight = 23
     end
   end
   object PanelStartTime: TPanel
@@ -185,25 +192,19 @@ object Form2: TForm2
       Layout = tlCenter
       ExplicitHeight = 32
     end
-    object TimePickerStart: TTimePicker
+    object EditStartTime: TEdit
       AlignWithMargins = True
       Left = 177
       Top = 20
       Width = 337
-      Height = 52
+      Height = 41
       Margins.Top = 20
       Margins.Right = 20
       Margins.Bottom = 20
       Align = alRight
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -32
-      Font.Name = 'Segoe UI'
-      Font.Style = []
       TabOrder = 0
-      Time = 46186.515702118050000000
-      TimeFormat = 'hh:nn'
-      ExplicitLeft = 4
+      TextHint = 'hh:mm'
+      ExplicitHeight = 23
     end
   end
   object PanelEndTime: TPanel
@@ -237,26 +238,19 @@ object Form2: TForm2
       Layout = tlCenter
       ExplicitHeight = 32
     end
-    object TimePickerEnd: TTimePicker
+    object EditEndTime: TEdit
       AlignWithMargins = True
       Left = 177
       Top = 20
       Width = 337
-      Height = 52
+      Height = 41
       Margins.Top = 20
       Margins.Right = 20
       Margins.Bottom = 20
       Align = alRight
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -32
-      Font.Name = 'Segoe UI'
-      Font.Style = []
       TabOrder = 0
-      Time = 46186.515702118050000000
-      TimeFormat = 'hh:nn'
-      ExplicitLeft = 185
-      ExplicitTop = 28
+      TextHint = 'hh:mm'
+      ExplicitHeight = 23
     end
   end
   object PanelDescription: TPanel
@@ -275,11 +269,10 @@ object Form2: TForm2
       AlignWithMargins = True
       Left = 20
       Top = 20
-      Width = 120
-      Height = 166
+      Width = 121
+      Height = 183
       Margins.Left = 20
       Margins.Top = 20
-      Margins.Bottom = 20
       Align = alLeft
       Alignment = taCenter
       Caption = 'Description'
@@ -289,6 +282,7 @@ object Form2: TForm2
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
+      ExplicitHeight = 32
     end
     object ButtonSave: TButton
       Left = 16

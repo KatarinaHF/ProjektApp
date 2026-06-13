@@ -10,7 +10,6 @@ object Form3: TForm3
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  OnMouseLeave = MemoInfoMouseLeave
   TextHeight = 15
   object PanelDate: TPanel
     Left = 0

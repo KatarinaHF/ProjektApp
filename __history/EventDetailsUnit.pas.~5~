@@ -28,13 +28,8 @@ implementation
 
 
 procedure TForm3.MemoInfoMouseLeave(Sender: TObject);
-var
-  Pt: TPoint;
 begin
-  Pt := ScreenToClient(Mouse.CursorPos);
-  // Only hide if the mouse actually left the entire form
-  if not PtInRect(ClientRect, Pt) then
-    Hide;
+  Form3.Visible := false;
 end;
 
 end.

@@ -254,8 +254,16 @@ begin
 end;
 
 procedure TForm4.PanelDayMouseLeave(Sender: TObject);
+var
+  Pt: TPoint;
 begin
   HoverTimer.Enabled := False;
+
+  // Don't hide if the mouse moved onto Form3
+  Pt := Mouse.CursorPos;
+  if Form3.Visible and PtInRect(Form3.BoundsRect, Pt) then
+    Exit;
+
   Form3.Hide;
 end;
 
@@ -458,7 +466,7 @@ begin
     Form3.Top := Mouse.CursorPos.Y - Form3.Height - 12;
 
   // Show without stealing focus
-  ShowWindow(Form3.Handle, SW_SHOWNOACTIVATE);
+
   Form3.Visible := True;
 end;
 

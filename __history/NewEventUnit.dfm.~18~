@@ -237,7 +237,7 @@ object Form2: TForm2
       Layout = tlCenter
       ExplicitHeight = 32
     end
-    object TimePickerEnd: TTimePicker
+    object TimePicker1: TTimePicker
       AlignWithMargins = True
       Left = 177
       Top = 20
