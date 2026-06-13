@@ -45,9 +45,9 @@ object Form2: TForm2
     end
     object TitleEdit: TEdit
       AlignWithMargins = True
-      Left = 177
+      Left = 199
       Top = 20
-      Width = 337
+      Width = 315
       Height = 41
       Margins.Top = 20
       Margins.Right = 20
@@ -57,7 +57,7 @@ object Form2: TForm2
       ShowHint = True
       TabOrder = 0
       TextHint = 'Write title here...'
-      ExplicitHeight = 23
+      ExplicitLeft = 177
     end
   end
   object PanelStartDate: TPanel
@@ -93,9 +93,9 @@ object Form2: TForm2
     end
     object DateTimePickerStart: TDateTimePicker
       AlignWithMargins = True
-      Left = 177
+      Left = 199
       Top = 20
-      Width = 337
+      Width = 315
       Height = 41
       Margins.Top = 20
       Margins.Right = 20
@@ -104,7 +104,7 @@ object Form2: TForm2
       Date = 46186.000000000000000000
       Time = 0.514253101850044900
       TabOrder = 0
-      ExplicitLeft = 328
+      ExplicitLeft = 177
     end
   end
   object PanelEndDate: TPanel
@@ -140,9 +140,9 @@ object Form2: TForm2
     end
     object DateTimePickerEnd: TDateTimePicker
       AlignWithMargins = True
-      Left = 177
+      Left = 199
       Top = 20
-      Width = 337
+      Width = 315
       Height = 41
       Margins.Top = 20
       Margins.Right = 20
@@ -151,14 +151,14 @@ object Form2: TForm2
       Date = 46186.000000000000000000
       Time = 0.514253101850044900
       TabOrder = 0
-      ExplicitLeft = 328
+      ExplicitLeft = 214
     end
   end
-  object PanelStartTime: TPanel
+  object PanelTime: TPanel
     Left = 0
     Top = 243
     Width = 534
-    Height = 81
+    Height = 110
     Align = alTop
     BevelOuter = bvNone
     Caption = 'PanelTitle'
@@ -166,51 +166,126 @@ object Form2: TForm2
     ParentBackground = False
     ShowCaption = False
     TabOrder = 3
-    object LabelStartTime: TLabel
-      AlignWithMargins = True
-      Left = 20
-      Top = 3
-      Width = 108
-      Height = 75
-      Margins.Left = 20
+    object Panel1: TPanel
+      Left = 0
+      Top = 0
+      Width = 193
+      Height = 110
       Align = alLeft
-      Alignment = taCenter
-      Caption = 'Start Time'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -24
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-      Layout = tlCenter
-      ExplicitHeight = 32
-    end
-    object TimePickerStart: TTimePicker
-      AlignWithMargins = True
-      Left = 177
-      Top = 20
-      Width = 337
-      Height = 52
-      Margins.Top = 20
-      Margins.Right = 20
-      Margins.Bottom = 20
-      Align = alRight
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -32
-      Font.Name = 'Segoe UI'
-      Font.Style = []
+      BevelOuter = bvNone
+      Caption = 'Panel1'
+      ParentColor = True
+      ShowCaption = False
       TabOrder = 0
-      Time = 46186.515702118050000000
-      TimeFormat = 'hh:nn'
-      ExplicitLeft = 4
+      ExplicitHeight = 94
+      object LabelStartTime: TLabel
+        AlignWithMargins = True
+        Left = 20
+        Top = 10
+        Width = 170
+        Height = 32
+        Margins.Left = 20
+        Margins.Top = 10
+        Align = alTop
+        Caption = 'Start Time'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -24
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        Layout = tlCenter
+        ExplicitLeft = 3
+        ExplicitTop = 3
+        ExplicitWidth = 129
+      end
+      object LabelEndTime: TLabel
+        AlignWithMargins = True
+        Left = 20
+        Top = 63
+        Width = 170
+        Height = 32
+        Margins.Left = 20
+        Margins.Bottom = 15
+        Align = alBottom
+        Caption = 'End Time'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -24
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        Layout = tlCenter
+        ExplicitLeft = 3
+        ExplicitTop = 3
+        ExplicitWidth = 100
+      end
+    end
+    object Panel2: TPanel
+      Left = 199
+      Top = 0
+      Width = 335
+      Height = 110
+      Align = alRight
+      BevelOuter = bvNone
+      Caption = 'Panel1'
+      ParentColor = True
+      ShowCaption = False
+      TabOrder = 1
+      object TimePickerEnd: TTimePicker
+        AlignWithMargins = True
+        Left = 0
+        Top = 58
+        Width = 149
+        Height = 52
+        Margins.Left = 0
+        Margins.Top = 60
+        Margins.Right = 186
+        Margins.Bottom = 0
+        Align = alBottom
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        TabOrder = 0
+        Time = 46186.515702118050000000
+        TimeFormat = 'hh:nn'
+        ExplicitLeft = 60
+        ExplicitTop = 40
+        ExplicitWidth = 147
+      end
+      object TimePickerStart: TTimePicker
+        AlignWithMargins = True
+        Left = 0
+        Top = 0
+        Width = 149
+        Height = 52
+        Margins.Left = 0
+        Margins.Top = 0
+        Margins.Right = 186
+        Margins.Bottom = 0
+        Align = alTop
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        SelectionColor = clDarkseagreen
+        TabOrder = 1
+        Time = 46186.515702118050000000
+        TimeFormat = 'hh:nn'
+        ExplicitLeft = 20
+        ExplicitTop = 58
+        ExplicitWidth = 113
+      end
     end
   end
-  object PanelEndTime: TPanel
+  object PanelCalendarType: TPanel
     Left = 0
-    Top = 324
+    Top = 353
     Width = 534
-    Height = 81
+    Height = 61
     Align = alTop
     BevelOuter = bvNone
     Caption = 'PanelTitle'
@@ -218,16 +293,17 @@ object Form2: TForm2
     ParentBackground = False
     ShowCaption = False
     TabOrder = 4
-    object LabelEndTime: TLabel
+    ExplicitTop = 344
+    object LabelCalendar: TLabel
       AlignWithMargins = True
       Left = 20
       Top = 3
-      Width = 100
-      Height = 75
+      Width = 152
+      Height = 55
       Margins.Left = 20
       Align = alLeft
       Alignment = taCenter
-      Caption = 'End Time'
+      Caption = 'Calendar Type'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -24
@@ -237,33 +313,36 @@ object Form2: TForm2
       Layout = tlCenter
       ExplicitHeight = 32
     end
-    object TimePickerEnd: TTimePicker
+    object ComboBoxCalendar: TComboBox
       AlignWithMargins = True
-      Left = 177
+      Left = 199
       Top = 20
-      Width = 337
-      Height = 52
+      Width = 315
+      Height = 23
+      Margins.Left = 24
       Margins.Top = 20
       Margins.Right = 20
       Margins.Bottom = 20
-      Align = alRight
+      Align = alClient
+      DropDownCount = 3
+      DropDownWidth = 200
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -32
+      Font.Height = -12
       Font.Name = 'Segoe UI'
       Font.Style = []
+      ParentFont = False
       TabOrder = 0
-      Time = 46186.515702118050000000
-      TimeFormat = 'hh:nn'
-      ExplicitLeft = 185
-      ExplicitTop = 28
+      Text = 'ComboBoxCalendar'
+      ExplicitLeft = 178
+      ExplicitWidth = 300
     end
   end
   object PanelDescription: TPanel
     Left = 0
-    Top = 405
+    Top = 414
     Width = 534
-    Height = 206
+    Height = 197
     Align = alClient
     BevelOuter = bvNone
     Caption = 'PanelTitle'
@@ -271,12 +350,14 @@ object Form2: TForm2
     ParentBackground = False
     ShowCaption = False
     TabOrder = 5
+    ExplicitTop = 405
+    ExplicitHeight = 206
     object LabelDescription: TLabel
       AlignWithMargins = True
       Left = 20
       Top = 20
       Width = 120
-      Height = 166
+      Height = 157
       Margins.Left = 20
       Margins.Top = 20
       Margins.Bottom = 20
@@ -289,6 +370,7 @@ object Form2: TForm2
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
+      ExplicitHeight = 166
     end
     object ButtonSave: TButton
       Left = 16
@@ -301,10 +383,10 @@ object Form2: TForm2
     end
     object MemoDescription: TMemo
       AlignWithMargins = True
-      Left = 177
+      Left = 199
       Top = 20
-      Width = 337
-      Height = 166
+      Width = 315
+      Height = 157
       Margins.Top = 20
       Margins.Right = 20
       Margins.Bottom = 20
@@ -312,6 +394,8 @@ object Form2: TForm2
       Lines.Strings = (
         'MemoDescription')
       TabOrder = 1
+      ExplicitLeft = 177
+      ExplicitHeight = 166
     end
   end
 end

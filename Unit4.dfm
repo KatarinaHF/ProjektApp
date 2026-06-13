@@ -1743,9 +1743,6 @@
           ParentColor = True
           ReadOnly = True
           TabOrder = 0
-          ExplicitTop = 641
-          ExplicitWidth = 132
-          ExplicitHeight = 0
         end
       end
       object PanelDay9: TPanel

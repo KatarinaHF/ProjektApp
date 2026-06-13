@@ -17,9 +17,9 @@ type
     LabelStartDate: TLabel;
     PanelEndDate: TPanel;
     LabelEndDate: TLabel;
-    PanelStartTime: TPanel;
+    PanelTime: TPanel;
     LabelStartTime: TLabel;
-    PanelEndTime: TPanel;
+    PanelCalendarType: TPanel;
     LabelEndTime: TLabel;
     PanelDescription: TPanel;
     LabelDescription: TLabel;
@@ -29,6 +29,10 @@ type
     DateTimePickerEnd: TDateTimePicker;
     TimePickerStart: TTimePicker;
     TimePickerEnd: TTimePicker;
+    LabelCalendar: TLabel;
+    ComboBoxCalendar: TComboBox;
+    Panel1: TPanel;
+    Panel2: TPanel;
     procedure ButtonSaveClick(Sender: TObject); // Den rigtige klik-hændelse
     procedure FormCreate(Sender: TObject);
     procedure Resize(Sender: TObject);
@@ -52,6 +56,7 @@ procedure TForm2.FormCreate(Sender: TObject);
 begin
   SendMessage(MemoDescription.Handle, $1501, 1, LPARAM(PAnsiChar('Write description here...')));
 end;
+
 
 function TForm2.CreateGraphEventJson: TJSONObject;
 var
@@ -77,6 +82,10 @@ begin
 
   Result := TJSONObject.Create;
   Result.AddPair('subject', TitleEdit.Text);
+  Result.AddPair(
+  'categories',
+  TJSONArray.Create.Add(ComboBoxCalendar.Text)
+  );
 
   // Start-objekt
   StartObj := TJSONObject.Create;
@@ -98,6 +107,12 @@ begin
     BodyObj.AddPair('content', MemoDescription.Text);
     Result.AddPair('body', BodyObj);
   end;
+
+  // Choose Calendar type
+  ComboBoxCalendar.Items.Add('Work');
+  ComboBoxCalendar.Items.Add('Private');
+  ComboBoxCalendar.Items.Add('Holiday');
+  ComboBoxCalendar.ItemIndex := 0;
 end;
 
 procedure TForm2.ButtonSaveClick(Sender: TObject);
@@ -159,8 +174,8 @@ begin
   DateTimePickerStart.Width := PanelStartDate.Width - LabelStartDate.Width - 120;
   DateTimePickerEnd.Width := PanelEndDate.Width - LabelEndDate.Width - 120;
 
-  TimePickerStart.Width := PanelStartTime.Width - LabelStartTime.Width - 120;
-  TimePickerEnd.Width := PanelEndTime.Width - LabelEndTime.Width - 120;
+  TimePickerStart.Width := PanelTime.Width - LabelStartTime.Width - 120;
+  ComboBoxCalendar.Width := PanelCalendarType.Width - LabelCalendar.Width - 120;
 
   MemoDescription.Width := PanelDescription.Width - LabelDescription.Width - 120;
 

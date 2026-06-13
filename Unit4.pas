@@ -209,13 +209,19 @@ implementation
 
 {$R *.dfm}
 
-
- type
+  type
   TCalendarEvent = record
-    EventDate : TDateTime;
-    Subject   : string;
+    Subject: string;
+    EventDate: TDateTime;
+    Category: string;
   end;
 
+  type
+  TCalendarType = (
+    ctWork,
+    ctPrivate,
+    ctHoliday
+  );
 
 procedure TForm4.PanelCalendarResize(Sender: TObject);
 var
@@ -563,6 +569,18 @@ procedure TForm4.RefreshCalendar;
 begin
   // Ryd kalenderen og byg den forfra med de private FCurrentYear og FCurrentMonth variabler
   BuildCalendar(FCurrentYear, FCurrentMonth);
+end;
+
+function GetCategoryColor(const Category: string): TColor;
+begin
+  if Category = 'Work' then
+    Result := clSkyBlue
+  else if Category = 'Private' then
+    Result := clMoneyGreen
+  else if Category = 'Holiday' then
+    Result := clYellow
+  else
+    Result := clWhite;
 end;
 
 end.
