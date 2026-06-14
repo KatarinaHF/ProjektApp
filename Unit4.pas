@@ -196,6 +196,8 @@ type
     FAccessToken: string;
     HoverTimer: TTimer;
     FHoverCell: Integer;
+    procedure CategoryFilterClick(Sender: TObject);
+    function IsCategoryVisible(const Category: string): Boolean;
   public
     procedure BuildCalendar(AYear, AMonth: Integer);
     procedure RefreshCalendar; // <-- Add this line
@@ -252,7 +254,22 @@ begin
 
 end;
 
+function TForm4.IsCategoryVisible(const Category: string): Boolean;
+begin
+  if Category = 'Work' then
+    Result := CheckBoxWork.Checked
+  else if Category = 'Private' then
+    Result := CheckBoxPrivate.Checked
+  else if Category = 'Holiday' then
+    Result := CheckBoxHolidays.Checked
+  else
+    Result := True;   // events with no category always show
+end;
 
+procedure TForm4.CategoryFilterClick(Sender: TObject);
+begin
+  RefreshCalendar;   // rebuild so the filter re-applies
+end;
 
 procedure TForm4.PanelDayMouseEnter(Sender: TObject);
 begin
@@ -329,6 +346,10 @@ begin
   HoverTimer.Enabled := False;
   HoverTimer.Interval := 1500;
   HoverTimer.OnTimer := HoverTimerTimer;
+
+  CheckBoxWork.OnClick := CategoryFilterClick;
+  CheckBoxPrivate.OnClick := CategoryFilterClick;
+  CheckBoxHolidays.OnClick := CategoryFilterClick;
 
   DecodeDate(Date, Year, Month, Day);
   FCurrentYear  := Year;
@@ -538,15 +559,19 @@ begin
     DayNumber := DayOf(StartDate);
     TimeStr := FormatDateTime('hh:nn', StartDate);
 
-    AddEvent(DayNumber, TimeStr + ' ' + Subject);   // small cell, unchanged
-
-    Description := '';
-    EventObj.TryGetValue<string>('bodyPreview', Description);
-
-    // Read the category (first one in the array)
+    // Read the category first
     Category := '';
     if EventObj.TryGetValue<TJSONArray>('categories', Cats) and (Cats.Count > 0) then
       Category := Cats.Items[0].Value;
+
+    // Skip this event if its category checkbox is unchecked
+    if not IsCategoryVisible(Category) then
+      Continue;
+
+    AddEvent(DayNumber, TimeStr + ' ' + Subject);
+
+    Description := '';
+    EventObj.TryGetValue<string>('bodyPreview', Description);
 
     Cell := FindGridCell(DayNumber);
     if Cell > 0 then
