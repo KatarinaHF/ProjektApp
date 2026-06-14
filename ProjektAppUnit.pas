@@ -5,12 +5,15 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ShellAPI, System.Net.HttpClient,
-  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, NewEventUnit, EventDetailsUnit, Unit4;
+  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, NewEventUnit, EventDetailsUnit, Unit4,
+  Vcl.ExtCtrls, Vcl.Imaging.pngimage;
 
 type
   TForm1 = class(TForm)
     LogInButton: TButton;
+    Image1: TImage;
     procedure LogInClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
     private
     FAccessToken: string;
     FHttpServer: TIdHTTPServer;
@@ -129,6 +132,8 @@ begin
               Form4.AccessToken := LocalAccessToken; // Bruger den sikre lokale variabel
               Form4.RefreshCalendar;
               Form4.Show;
+              Form1.Width := 1;
+              Form1.Height := 1;
             end
           );
         end
@@ -187,4 +192,16 @@ begin
 
   end;
 
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  Image1.Align := alClient;
+  Image1.Stretch := True;
+  Image1.Proportional := True;
+
+  Image1.Picture.LoadFromFile(
+  ExtractFilePath(Application.ExeName) + 'Loginbackground.png'
+);
+end;
+
 end.
+

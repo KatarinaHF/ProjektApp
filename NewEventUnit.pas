@@ -36,6 +36,7 @@ type
     procedure ButtonSaveClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Resize(Sender: TObject);
+    procedure MemoDescriptionEnter(Sender: TObject);
   private
     FAccessToken: string;
     function CreateGraphEventJson: TJSONObject;
@@ -54,7 +55,7 @@ uses Unit4;
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin
-  SendMessage(MemoDescription.Handle, $1501, 1, LPARAM(PAnsiChar('Write description here...')));
+  MemoDescription.Lines.Text := 'Write description here...';
 
   ComboBoxCalendar.Items.Clear;
   ComboBoxCalendar.Items.Add('Work');
@@ -179,6 +180,12 @@ begin
 
   MemoDescription.Width := PanelDescription.Width - LabelDescription.Width - 120;
 
+end;
+
+procedure TForm2.MemoDescriptionEnter(Sender: TObject);
+begin
+  if MemoDescription.Text = 'Write description here...' then
+    MemoDescription.Clear;
 end;
 
 end.
