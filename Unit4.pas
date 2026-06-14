@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, DateUtils, System.JSON, System.Net.HttpClient,
-  System.Net.URLClient, NewEventUnit, EventDetailsUnit;
+  System.Net.URLClient, System.IniFiles, NewEventUnit, EventDetailsUnit;
 
 type
   TForm4 = class(TForm)
@@ -186,6 +186,7 @@ type
     procedure PanelDayMouseEnter(Sender: TObject);
     procedure PanelDayMouseLeave(Sender: TObject);
     procedure HoverTimerTimer(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     DayPanels: array[1..42] of TPanel;
     DayMemos: array[1..42] of TMemo;
@@ -196,11 +197,16 @@ type
     FAccessToken: string;
     HoverTimer: TTimer;
     FHoverCell: Integer;
+    FRowCount: Integer;     // weeks shown this month (4, 5 or 6)
+    procedure PositionDayCells;
     procedure CategoryFilterClick(Sender: TObject);
     function IsCategoryVisible(const Category: string): Boolean;
+    function IniFileName: string;
+    procedure SaveWindowPos;
+    procedure LoadWindowPos;
   public
     procedure BuildCalendar(AYear, AMonth: Integer);
-    procedure RefreshCalendar; // <-- Add this line
+    procedure RefreshCalendar;
     property AccessToken: string read FAccessToken write FAccessToken;
   end;
 
@@ -225,33 +231,90 @@ implementation
     ctHoliday
   );
 
+function TForm4.IniFileName: string;
+begin
+  Result := ChangeFileExt(Application.ExeName, '.ini');
+end;
+
+procedure TForm4.SaveWindowPos;
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(IniFileName);
+  try
+    Ini.WriteInteger('Window', 'Left',   Left);
+    Ini.WriteInteger('Window', 'Top',    Top);
+    Ini.WriteInteger('Window', 'Width',  Width);
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TForm4.LoadWindowPos;
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(IniFileName);
+  try
+    Left   := Ini.ReadInteger('Window', 'Left',   Left);
+    Top    := Ini.ReadInteger('Window', 'Top',    Top);
+    Width  := Ini.ReadInteger('Window', 'Width',  Width);
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TForm4.PositionDayCells;
+var
+  Cols: array[1..7] of TPanel;
+  r, c, idx, HeaderH, CellH: Integer;
+  Col: TPanel;
+begin
+  if DayPanels[1] = nil then Exit;
+
+  Cols[1] := PanelMandag;
+  Cols[2] := PanelTirsdag;
+  Cols[3] := PanelOnsdag;
+  Cols[4] := PanelTorsdag;
+  Cols[5] := PanelFredag;
+  Cols[6] := PanelLørdag;
+  Cols[7] := PanelSøndag;
+
+  if FRowCount < 1 then FRowCount := 6;
+  HeaderH := PanelMondayName.Height;   // weekday-name header inside each column
+
+  for c := 1 to 7 do
+  begin
+    Col := Cols[c];
+    CellH := (Col.ClientHeight - HeaderH) div FRowCount;
+    for r := 1 to 6 do
+    begin
+      idx := (r - 1) * 7 + c;
+      DayPanels[idx].Align   := alNone;
+      DayPanels[idx].Parent  := Col;
+      DayPanels[idx].Left    := 0;
+      DayPanels[idx].Width   := Col.ClientWidth;
+      DayPanels[idx].Top     := HeaderH + (r - 1) * CellH;
+      DayPanels[idx].Height  := CellH;
+      DayPanels[idx].Visible := (r <= FRowCount);  // hide unused bottom rows
+    end;
+  end;
+end;
+
 procedure TForm4.PanelCalendarResize(Sender: TObject);
 var
-  I: Integer;
-  DayHeight: Integer;
-
+  ColW: Integer;
 begin
+  ColW := PanelCalendar.Width div 7;
+  PanelMandag.Width  := ColW;
+  PanelTirsdag.Width := ColW;
+  PanelOnsdag.Width  := ColW;
+  PanelTorsdag.Width := ColW;
+  PanelFredag.Width  := ColW;
+  PanelLørdag.Width  := ColW;
+  PanelSøndag.Width  := ColW;
 
-  DayHeight := (PanelFredag.ClientHeight - PanelFridayName.Height) div 6;
-
-  for I := 1 to 42 do
-    if Assigned(DayPanels[I]) then
-      DayPanels[I].Height := DayHeight;
-
-  PanelMandag.Width := PanelCalendar.Width div 7;
-
-  PanelTirsdag.Width := PanelCalendar.Width div 7;
-
-  PanelOnsdag.Width := PanelCalendar.Width div 7;
-
-  PanelTorsdag.Width := PanelCalendar.Width div 7;
-
-  PanelFredag.Width := PanelCalendar.Width div 7;
-
-  PanelLørdag.Width := PanelCalendar.Width div 7;
-
-  PanelSøndag.Width := PanelCalendar.Width div 7;
-
+  PositionDayCells;
 end;
 
 function TForm4.IsCategoryVisible(const Category: string): Boolean;
@@ -313,12 +376,17 @@ begin
   BuildCalendar(FCurrentYear, FCurrentMonth);
 end;
 
+procedure TForm4.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveWindowPos;
+end;
 
 procedure TForm4.FormCreate(Sender: TObject);
 var
   I: Integer;
   Year, Month, Day: Word;
 begin
+  LoadWindowPos;
   for I := 1 to 42 do
   begin
     DayPanels[I] := FindComponent('PanelDay' + IntToStr(I)) as TPanel;
@@ -341,6 +409,8 @@ begin
     DayMemos[I].OnMouseEnter := PanelDayMouseEnter;
     DayMemos[I].OnMouseLeave := PanelDayMouseLeave;
   end;
+
+  FRowCount   := 6;
 
   HoverTimer := TTimer.Create(Self);
   HoverTimer.Enabled := False;
@@ -375,6 +445,7 @@ var
   DayNum: Integer;
   GridIndex: Integer;
   I: Integer;
+  LastIndex: Integer;
 
 begin
   LabelMonth.Caption := MonthNames[AMonth] + ' ' + IntToStr(AYear);
@@ -382,6 +453,7 @@ begin
   // Clear Calendar UI
   for GridIndex := 1 to 42 do
   begin
+    DayPanels[GridIndex].Visible := False;
     DayLabels[GridIndex].Caption := '';
     DayMemos[GridIndex].Clear;
     DayDetails[GridIndex] := '';
@@ -395,6 +467,11 @@ begin
     StartPos := 7
   else
     Dec(StartPos);
+
+  LastIndex := StartPos + DaysInMonthCount - 1;   // last filled cell (1..42)
+  FRowCount := (LastIndex + 6) div 7;
+
+  PositionDayCells;
 
   GridIndex := StartPos;
 

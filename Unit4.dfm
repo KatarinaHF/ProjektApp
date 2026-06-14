@@ -10,6 +10,7 @@
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnClose = FormClose
   OnCreate = FormCreate
   TextHeight = 15
   object PanelCalendar: TPanel
