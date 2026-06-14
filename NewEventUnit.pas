@@ -37,6 +37,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure Resize(Sender: TObject);
     procedure MemoDescriptionEnter(Sender: TObject);
+    procedure DateTimePickerStartChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     FAccessToken: string;
     function CreateGraphEventJson: TJSONObject;
@@ -62,6 +64,7 @@ begin
   ComboBoxCalendar.Items.Add('Private');
   ComboBoxCalendar.Items.Add('Holiday');
   ComboBoxCalendar.ItemIndex := 0;
+
 end;
 
 function TForm2.CreateGraphEventJson: TJSONObject;
@@ -116,6 +119,13 @@ begin
 
 end;
 
+procedure TForm2.DateTimePickerStartChange(Sender: TObject);
+begin
+
+  DateTimePickerEnd.Date := DateTimePickerStart.Date;
+
+end;
+
 procedure TForm2.ButtonSaveClick(Sender: TObject);
 var
   Client: THTTPClient;
@@ -133,6 +143,14 @@ begin
   if (TitleEdit.Text = '') then
   begin
     ShowMessage('Udfyld venligst som minimum: Titel');
+    Exit;
+  end;
+
+  // End must not be before start
+  if (Trunc(DateTimePickerEnd.Date) + Frac(TimePickerEnd.Time)) <
+     (Trunc(DateTimePickerStart.Date) + Frac(TimePickerStart.Time)) then
+  begin
+    ShowMessage('Slutdatoen kan ikke være før startdatoen.');
     Exit;
   end;
 
@@ -186,6 +204,12 @@ procedure TForm2.MemoDescriptionEnter(Sender: TObject);
 begin
   if MemoDescription.Text = 'Write description here...' then
     MemoDescription.Clear;
+end;
+
+procedure TForm2.FormShow(Sender: TObject);
+begin
+  DateTimePickerStart.Date := Date;
+  DateTimePickerEnd.Date   := Date;
 end;
 
 end.

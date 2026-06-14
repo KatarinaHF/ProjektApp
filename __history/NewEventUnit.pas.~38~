@@ -31,9 +31,14 @@ type
     TimePickerEnd: TTimePicker;
     LabelCalendar: TLabel;
     ComboBoxCalendar: TComboBox;
-    procedure ButtonSaveClick(Sender: TObject); // Den rigtige klik-hændelse
+    Panel1: TPanel;
+    Panel2: TPanel;
+    procedure ButtonSaveClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Resize(Sender: TObject);
+    procedure MemoDescriptionEnter(Sender: TObject);
+    procedure DateTimePickerStartChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     FAccessToken: string;
     function CreateGraphEventJson: TJSONObject;
@@ -52,7 +57,14 @@ uses Unit4;
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin
-  SendMessage(MemoDescription.Handle, $1501, 1, LPARAM(PAnsiChar('Write description here...')));
+  MemoDescription.Lines.Text := 'Write description here...';
+
+  ComboBoxCalendar.Items.Clear;
+  ComboBoxCalendar.Items.Add('Work');
+  ComboBoxCalendar.Items.Add('Private');
+  ComboBoxCalendar.Items.Add('Holiday');
+  ComboBoxCalendar.ItemIndex := 0;
+
 end;
 
 function TForm2.CreateGraphEventJson: TJSONObject;
@@ -79,6 +91,10 @@ begin
 
   Result := TJSONObject.Create;
   Result.AddPair('subject', TitleEdit.Text);
+  Result.AddPair(
+  'categories',
+  TJSONArray.Create.Add(ComboBoxCalendar.Text)
+  );
 
   // Start-objekt
   StartObj := TJSONObject.Create;
@@ -101,11 +117,13 @@ begin
     Result.AddPair('body', BodyObj);
   end;
 
-  // Choose Calendar type
-  ComboBoxCalendar.Items.Add('Work');
-  ComboBoxCalendar.Items.Add('Private');
-  ComboBoxCalendar.Items.Add('Holiday');
-  ComboBoxCalendar.ItemIndex := 0;
+end;
+
+procedure TForm2.DateTimePickerStartChange(Sender: TObject);
+begin
+
+  DateTimePickerEnd.Date := DateTimePickerStart.Date;
+
 end;
 
 procedure TForm2.ButtonSaveClick(Sender: TObject);
@@ -172,6 +190,18 @@ begin
 
   MemoDescription.Width := PanelDescription.Width - LabelDescription.Width - 120;
 
+end;
+
+procedure TForm2.MemoDescriptionEnter(Sender: TObject);
+begin
+  if MemoDescription.Text = 'Write description here...' then
+    MemoDescription.Clear;
+end;
+
+procedure TForm2.FormShow(Sender: TObject);
+begin
+  DateTimePickerStart.Date := Date;
+  DateTimePickerEnd.Date   := Date;
 end;
 
 end.
