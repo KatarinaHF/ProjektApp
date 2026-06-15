@@ -479,6 +479,17 @@ begin
   begin
     DayPanels[GridIndex].Visible := True;
     DayLabels[GridIndex].Caption := IntToStr(DayNum);
+
+    DayPanels[GridIndex].Color := clWhite;
+
+    // Markér dagens dato
+    if (AYear = YearOf(Date)) and
+     (AMonth = MonthOf(Date)) and
+     (DayNum = DayOf(Date)) then
+    begin
+      DayPanels[GridIndex].Color := $F0FFF0;
+    end;
+
     Inc(GridIndex);
   end;
 
