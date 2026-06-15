@@ -54,7 +54,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit4;
+uses CalendarUnit;
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin

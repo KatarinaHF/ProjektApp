@@ -5,8 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ShellAPI, System.Net.HttpClient,
-  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, NewEventUnit, EventDetailsUnit, Unit4,
-  Vcl.ExtCtrls, Vcl.Imaging.pngimage;
+  System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, NewEventUnit,
+  EventDetailsUnit, CalendarUnit, Vcl.ExtCtrls, Vcl.Imaging.pngimage;
 
 type
   TForm1 = class(TForm)
