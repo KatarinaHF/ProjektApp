@@ -460,6 +460,7 @@ begin
     DayLabels[GridIndex].Caption := '';
     DayMemos[GridIndex].Clear;
     DayDetails[GridIndex] := '';
+    DayPanels[GridIndex].Color := $E5FFE5;
   end;
 
   FirstDate := EncodeDate(AYear, AMonth, 1);
@@ -539,7 +540,7 @@ begin
     begin
       Result := I;
       Exit;
-    end;
+    end
 end;
 
 function TForm4.GetCalendarEvents(const AccessToken: string): string;
