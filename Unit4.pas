@@ -593,12 +593,20 @@ begin
   // Position next to the mouse (screen coordinates, since Form3 is its own window)
   Form3.Left := Mouse.CursorPos.X + 12;
   Form3.Top  := Mouse.CursorPos.Y + 12;
+
+  // Tving den ned, hvis den prøver at gå højere op end hovedvinduets top
+  if Form3.Top < Self.Top then
+    Form3.Top := Self.Top;
+
+  // Tving den op, hvis dens bund ryger længere ned end hovedvinduets bund
+  if Form3.Top + Form3.Height > Self.Top + Self.Height then
+    Form3.Top := (Self.Top + Self.Height) - Form3.Height;
+
+  // Standard tjek for skærmens bredde
   if Form3.Left + Form3.Width > Screen.WorkAreaWidth then
     Form3.Left := Mouse.CursorPos.X - Form3.Width - 12;
-  if Form3.Top + Form3.Height > Screen.WorkAreaHeight then
-    Form3.Top := Mouse.CursorPos.Y - Form3.Height - 12;
 
-  Form3.Visible := True;
+  Form3.Visible := True;;
 end;
 
 procedure TForm4.LoadGraphEvents;
