@@ -39,6 +39,7 @@ type
     procedure MemoDescriptionEnter(Sender: TObject);
     procedure DateTimePickerStartChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure TimePickerStartChange(Sender: TObject);
   private
     FAccessToken: string;
     function CreateGraphEventJson: TJSONObject;
@@ -126,6 +127,13 @@ begin
 
 end;
 
+procedure TForm2.TimePickerStartChange(Sender: TObject);
+begin
+
+  TimePickerEnd.Time := TimePickerStart.Time;
+
+end;
+
 procedure TForm2.ButtonSaveClick(Sender: TObject);
 var
   Client: THTTPClient;
@@ -199,6 +207,7 @@ begin
   MemoDescription.Width := PanelDescription.Width - LabelDescription.Width - 120;
 
 end;
+
 
 procedure TForm2.MemoDescriptionEnter(Sender: TObject);
 begin
