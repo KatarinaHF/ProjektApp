@@ -540,7 +540,8 @@ begin
     Response := Client.Get(
       'https://graph.microsoft.com/v1.0/me/calendarView' +
       '?startDateTime=' + StartISO +
-      '&endDateTime=' + EndISO
+      '&endDateTime=' + EndISO +
+      '&$top=100'
     );
 
     Result := Response.ContentAsString;
@@ -590,6 +591,10 @@ var
   TimeStr: string;
   Category: string;
   Cats: TJSONArray;
+  EndRawStr: string;
+  EndDate: TDateTime;
+  IsAllDay: Boolean;
+  FirstDay, LastDay, D: TDateTime;
 begin
   if FAccessToken = '' then Exit;
 
@@ -631,33 +636,53 @@ begin
           StartDate := ISO8601ToDate(RawDateStr);
 
           // Da vi nu har tvunget lokal tid i GetCalendarEvents, tjekker vi måned og år stabilt
-          if (YearOf(StartDate) = FCurrentYear) and (MonthOf(StartDate) = FCurrentMonth) then
+         // Start and end date/time
+  RawDateStr := EventObj.GetValue<TJSONObject>('start').GetValue<string>('dateTime');
+  StartDate  := ISO8601ToDate(RawDateStr);
+
+  EndRawStr := EventObj.GetValue<TJSONObject>('end').GetValue<string>('dateTime');
+  EndDate   := ISO8601ToDate(EndRawStr);
+
+  IsAllDay := False;
+  EventObj.TryGetValue<Boolean>('isAllDay', IsAllDay);
+
+  // Category + filter
+  Category := '';
+  if EventObj.TryGetValue<TJSONArray>('categories', Cats) and (Cats.Count > 0) then
+    Category := Cats.Items[0].Value;
+  if not IsCategoryVisible(Category) then
+    Continue;
+
+  Description := '';
+  EventObj.TryGetValue<string>('bodyPreview', Description);
+
+  TimeStr := FormatDateTime('hh:nn', StartDate);
+
+  // Work out the span of whole days the event covers
+  FirstDay := DateOf(StartDate);
+  LastDay  := DateOf(EndDate);
+  if IsAllDay and (LastDay > FirstDay) then
+    LastDay := LastDay - 1;            // all-day end is exclusive
+
+  // Add the event to every covered day that falls in the shown month
+  D := FirstDay;
+  while D <= LastDay do
   begin
-    DayNumber := DayOf(StartDate);
-    TimeStr := FormatDateTime('hh:nn', StartDate);
-
-    // Read the category first
-    Category := '';
-    if EventObj.TryGetValue<TJSONArray>('categories', Cats) and (Cats.Count > 0) then
-      Category := Cats.Items[0].Value;
-
-    // Skip this event if its category checkbox is unchecked
-    if not IsCategoryVisible(Category) then
-      Continue;
-
-    AddEvent(DayNumber, TimeStr + ' ' + Subject);
-
-    Description := '';
-    EventObj.TryGetValue<string>('bodyPreview', Description);
-
-    Cell := FindGridCell(DayNumber);
-    if Cell > 0 then
+    if (YearOf(D) = FCurrentYear) and (MonthOf(D) = FCurrentMonth) then
     begin
-      DayDetails[Cell] := DayDetails[Cell] + Category + #1 + TimeStr + ' ' + Subject + sLineBreak;
-      if Trim(Description) <> '' then
-        DayDetails[Cell] := DayDetails[Cell] + Category + #1 + '    ' + Description + sLineBreak;
-      DayDetails[Cell] := DayDetails[Cell] + sLineBreak;
+      DayNumber := DayOf(D);
+      AddEvent(DayNumber, TimeStr + ' ' + Subject);
+
+      Cell := FindGridCell(DayNumber);
+      if Cell > 0 then
+      begin
+        DayDetails[Cell] := DayDetails[Cell] + Category + #1 + TimeStr + ' ' + Subject + sLineBreak;
+        if Trim(Description) <> '' then
+          DayDetails[Cell] := DayDetails[Cell] + Category + #1 + '    ' + Description + sLineBreak;
+        DayDetails[Cell] := DayDetails[Cell] + sLineBreak;
+      end;
     end;
+    D := D + 1;
   end;
   end;
   end;

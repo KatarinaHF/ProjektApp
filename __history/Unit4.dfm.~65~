@@ -10,6 +10,7 @@
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnClose = FormClose
   OnCreate = FormCreate
   TextHeight = 15
   object PanelCalendar: TPanel
@@ -110,6 +111,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -153,6 +155,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -196,6 +199,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -239,6 +243,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -282,6 +287,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -325,6 +331,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -413,6 +420,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -456,6 +464,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -499,6 +508,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -542,6 +552,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -585,6 +596,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -628,6 +640,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -716,6 +729,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -759,6 +773,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -802,6 +817,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -845,6 +861,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -888,6 +905,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -931,6 +949,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1019,6 +1038,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1062,6 +1082,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1105,6 +1126,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1148,6 +1170,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1191,6 +1214,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1234,6 +1258,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1322,6 +1347,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1365,6 +1391,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1408,6 +1435,9 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ParentShowHint = False
+          ReadOnly = True
+          ShowHint = True
           TabOrder = 0
         end
       end
@@ -1451,6 +1481,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1494,6 +1525,9 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ParentShowHint = False
+          ReadOnly = True
+          ShowHint = True
           TabOrder = 0
         end
       end
@@ -1537,6 +1571,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1627,6 +1662,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1670,6 +1706,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1713,6 +1750,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1756,6 +1794,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1799,6 +1838,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
           OnMouseEnter = PanelDayMouseEnter
         end
@@ -1843,6 +1883,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1935,6 +1976,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -1978,6 +2020,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -2021,6 +2064,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -2064,6 +2108,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -2107,6 +2152,7 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
         end
       end
@@ -2150,9 +2196,9 @@
           Lines.Strings = (
             'Memo1')
           ParentColor = True
+          ReadOnly = True
           TabOrder = 0
           OnMouseEnter = PanelDayMouseEnter
-          OnMouseLeave = PanelDayMouseLeave
         end
       end
     end
@@ -2252,12 +2298,14 @@
       Margins.Left = 8
       Align = alTop
       Caption = 'Work'
+      Checked = True
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
+      State = cbChecked
       TabOrder = 2
     end
   end
@@ -2426,9 +2474,5 @@
         TabOrder = 1
       end
     end
-  end
-  object HoverTimer: TTimer
-    Left = 816
-    Top = 16
   end
 end

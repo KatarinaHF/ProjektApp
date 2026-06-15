@@ -198,8 +198,6 @@ type
     HoverTimer: TTimer;
     FHoverCell: Integer;
     FRowCount: Integer;     // weeks shown this month (4, 5 or 6)
-    FRowHeight: Integer;
-    FFullHeight: Integer;
     procedure PositionDayCells;
     procedure CategoryFilterClick(Sender: TObject);
     function IsCategoryVisible(const Category: string): Boolean;
@@ -208,7 +206,7 @@ type
     procedure LoadWindowPos;
   public
     procedure BuildCalendar(AYear, AMonth: Integer);
-    procedure RefreshCalendar; // <-- Add this line
+    procedure RefreshCalendar;
     property AccessToken: string read FAccessToken write FAccessToken;
   end;
 
@@ -247,7 +245,6 @@ begin
     Ini.WriteInteger('Window', 'Left',   Left);
     Ini.WriteInteger('Window', 'Top',    Top);
     Ini.WriteInteger('Window', 'Width',  Width);
-    Ini.WriteInteger('Window', 'Height', Height);
   finally
     Ini.Free;
   end;
@@ -262,21 +259,19 @@ begin
     Left   := Ini.ReadInteger('Window', 'Left',   Left);
     Top    := Ini.ReadInteger('Window', 'Top',    Top);
     Width  := Ini.ReadInteger('Window', 'Width',  Width);
-    Height := Ini.ReadInteger('Window', 'Height', Height);
   finally
     Ini.Free;
   end;
 end;
 
-type
-  TWinControlCracker = class(TWinControl);
-
 procedure TForm4.PositionDayCells;
 var
   Cols: array[1..7] of TPanel;
-  r, c, idx: Integer;
+  r, c, idx, HeaderH, CellH: Integer;
   Col: TPanel;
 begin
+  if DayPanels[1] = nil then Exit;
+
   Cols[1] := PanelMandag;
   Cols[2] := PanelTirsdag;
   Cols[3] := PanelOnsdag;
@@ -285,47 +280,41 @@ begin
   Cols[6] := PanelLørdag;
   Cols[7] := PanelSøndag;
 
+  if FRowCount < 1 then FRowCount := 6;
+  HeaderH := PanelMondayName.Height;   // weekday-name header inside each column
+
   for c := 1 to 7 do
   begin
     Col := Cols[c];
+    CellH := (Col.ClientHeight - HeaderH) div FRowCount;
     for r := 1 to 6 do
     begin
       idx := (r - 1) * 7 + c;
-      DayPanels[idx].Parent := Col;
-      DayPanels[idx].Align  := alTop;
-      TWinControlCracker(Col).SetChildOrder(DayPanels[idx], r);
+      DayPanels[idx].Align   := alNone;
+      DayPanels[idx].Parent  := Col;
+      DayPanels[idx].Left    := 0;
+      DayPanels[idx].Width   := Col.ClientWidth;
+      DayPanels[idx].Top     := HeaderH + (r - 1) * CellH;
+      DayPanels[idx].Height  := CellH;
+      DayPanels[idx].Visible := (r <= FRowCount);  // hide unused bottom rows
     end;
   end;
 end;
 
 procedure TForm4.PanelCalendarResize(Sender: TObject);
 var
-  I: Integer;
-  DayHeight: Integer;
-
+  ColW: Integer;
 begin
+  ColW := PanelCalendar.Width div 7;
+  PanelMandag.Width  := ColW;
+  PanelTirsdag.Width := ColW;
+  PanelOnsdag.Width  := ColW;
+  PanelTorsdag.Width := ColW;
+  PanelFredag.Width  := ColW;
+  PanelLørdag.Width  := ColW;
+  PanelSøndag.Width  := ColW;
 
-  if FRowCount < 1 then FRowCount := 6;
-  DayHeight := (PanelFredag.ClientHeight - PanelFridayName.Height) div FRowCount;
-
-  for I := 1 to 42 do
-    if Assigned(DayPanels[I]) then
-      DayPanels[I].Height := DayHeight;
-
-  PanelMandag.Width := PanelCalendar.Width div 7;
-
-  PanelTirsdag.Width := PanelCalendar.Width div 7;
-
-  PanelOnsdag.Width := PanelCalendar.Width div 7;
-
-  PanelTorsdag.Width := PanelCalendar.Width div 7;
-
-  PanelFredag.Width := PanelCalendar.Width div 7;
-
-  PanelLørdag.Width := PanelCalendar.Width div 7;
-
-  PanelSøndag.Width := PanelCalendar.Width div 7;
-
+  PositionDayCells;
 end;
 
 function TForm4.IsCategoryVisible(const Category: string): Boolean;
@@ -421,8 +410,6 @@ begin
     DayMemos[I].OnMouseLeave := PanelDayMouseLeave;
   end;
 
-  FFullHeight := Height;
-  FRowHeight  := DayPanels[1].Height;
   FRowCount   := 6;
 
   HoverTimer := TTimer.Create(Self);
@@ -484,8 +471,7 @@ begin
   LastIndex := StartPos + DaysInMonthCount - 1;   // last filled cell (1..42)
   FRowCount := (LastIndex + 6) div 7;
 
-  // Shrink the window so empty bottom rows aren't shown
-  Height := FFullHeight - (6 - FRowCount) * FRowHeight;
+  PositionDayCells;
 
   GridIndex := StartPos;
 
@@ -554,7 +540,8 @@ begin
     Response := Client.Get(
       'https://graph.microsoft.com/v1.0/me/calendarView' +
       '?startDateTime=' + StartISO +
-      '&endDateTime=' + EndISO
+      '&endDateTime=' + EndISO +
+      '&$top=100'
     );
 
     Result := Response.ContentAsString;
