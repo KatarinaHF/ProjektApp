@@ -208,6 +208,8 @@ type
     procedure BuildCalendar(AYear, AMonth: Integer);
     procedure RefreshCalendar;
     property AccessToken: string read FAccessToken write FAccessToken;
+    function IsDateHoliday(ADate: TDate): Boolean;
+    function EasterSunday(Year: Integer): TDate;
   end;
 
 var
@@ -446,6 +448,7 @@ var
   GridIndex: Integer;
   I: Integer;
   LastIndex: Integer;
+  CheckDate: TDate;
 
 begin
   LabelMonth.Caption := MonthNames[AMonth] + ' ' + IntToStr(AYear);
@@ -488,6 +491,17 @@ begin
      (DayNum = DayOf(Date)) then
     begin
       DayPanels[GridIndex].Color := $F0FFF0;
+    end;
+
+    CheckDate := EncodeDate(AYear, AMonth, DayNum);
+
+    if IsDateHoliday(CheckDate) then
+    begin
+      DayLabels[GridIndex].Font.Color := clRed;
+    end
+    else
+    begin
+      DayLabels[GridIndex].Font.Color := clBlack;
     end;
 
     Inc(GridIndex);
@@ -706,6 +720,30 @@ begin
   end;
 end;
 
+function TForm4.EasterSunday(Year: Integer): TDate;
+var
+  A, B, C, D, E, F, G, H, I, K, L, M: Integer;
+  Month, Day: Integer;
+begin
+  A := Year mod 19;
+  B := Year div 100;
+  C := Year mod 100;
+  D := B div 4;
+  E := B mod 4;
+  F := (B + 8) div 25;
+  G := (B - F + 1) div 3;
+  H := (19 * A + B - D - G + 15) mod 30;
+  I := C div 4;
+  K := C mod 4;
+  L := (32 + 2 * E + 2 * I - H - K) mod 7;
+  M := (A + 11 * H + 22 * L) div 451;
+
+  Month := (H + L - 7 * M + 114) div 31;
+  Day := ((H + L - 7 * M + 114) mod 31) + 1;
+
+  Result := EncodeDate(Year, Month, Day);
+end;
+
 procedure TForm4.RefreshCalendar;
 begin
   // Ryd kalenderen og byg den forfra med de private FCurrentYear og FCurrentMonth variabler
@@ -724,4 +762,23 @@ begin
     Result := clWhite;
 end;
 
+function TForm4.IsDateHoliday(ADate: TDate): Boolean;
+var
+  Easter: TDate;
+begin
+  Easter := EasterSunday(YearOf(ADate));
+
+  Result :=
+    (Trunc(ADate) = Trunc(EncodeDate(YearOf(ADate),1,1))) or      // Nytår
+    (Trunc(ADate) = Trunc(Easter-3)) or                           // Skærtorsdag
+    (Trunc(ADate) = Trunc(Easter-2)) or                           // Langfredag
+    (Trunc(ADate) = Trunc(Easter)) or                             // Påskedag
+    (Trunc(ADate) = Trunc(Easter+1)) or                           // 2. påskedag
+    (Trunc(ADate) = Trunc(Easter+26)) or                          // Store Bededag
+    (Trunc(ADate) = Trunc(Easter+39)) or                          // Kristi Himmelfart
+    (Trunc(ADate) = Trunc(Easter+49)) or                          // Pinsedag
+    (Trunc(ADate) = Trunc(Easter+50)) or                          // 2. Pinsedag
+    (Trunc(ADate) = Trunc(EncodeDate(YearOf(ADate),12,25))) or   // Jul
+    (Trunc(ADate) = Trunc(EncodeDate(YearOf(ADate),12,26)));     // 2. Juledag
+end;
 end.
