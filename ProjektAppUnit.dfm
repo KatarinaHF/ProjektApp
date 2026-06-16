@@ -11,6 +11,7 @@ object Form1: TForm1
   Font.Name = 'Segoe UI'
   Font.Style = []
   OnCreate = FormCreate
+  OnResize = OnResize
   TextHeight = 15
   object Image1: TImage
     Left = 0
@@ -18,17 +19,51 @@ object Form1: TForm1
     Width = 704
     Height = 501
     Align = alClient
-    ExplicitTop = 8
-    ExplicitWidth = 601
-    ExplicitHeight = 465
+    ExplicitLeft = 8
   end
-  object LogInButton: TButton
-    Left = 244
-    Top = 168
-    Width = 213
+  object LabelSignIn: TLabel
+    AlignWithMargins = True
+    Left = 0
+    Top = 110
+    Width = 704
+    Height = 51
+    Alignment = taCenter
+    Caption = 'Sign in with your Microsoft account'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -29
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    Layout = tlCenter
+  end
+  object PanelLogIn: TPanel
+    Left = 0
+    Top = 208
+    Width = 704
     Height = 124
-    Caption = 'Log In'
+    BevelEdges = []
+    BevelOuter = bvNone
+    Caption = 'PanelLogIn'
+    ParentColor = True
+    ShowCaption = False
     TabOrder = 0
-    OnClick = LogInClick
+    object LogInButton: TButton
+      AlignWithMargins = True
+      Left = 275
+      Top = 3
+      Width = 154
+      Height = 118
+      Margins.Left = 275
+      Margins.Right = 275
+      Align = alClient
+      Caption = 'Log In'
+      TabOrder = 0
+      OnClick = LogInClick
+      ExplicitLeft = 244
+      ExplicitTop = 0
+      ExplicitWidth = 213
+      ExplicitHeight = 124
+    end
   end
 end

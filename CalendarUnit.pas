@@ -5,12 +5,12 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, DateUtils, System.JSON, System.Net.HttpClient,
-  System.Net.URLClient, System.IniFiles, NewEventUnit, EventDetailsUnit;
+  System.Net.URLClient, System.IniFiles, NewEventUnit, EventDetailsUnit, System.StrUtils;
 
 type
   TForm4 = class(TForm)
     PanelTopButtons: TPanel;
-    ButtonSettings: TButton;
+    ButtonSearch: TButton;
     ButtonChangeView: TButton;
     ButtonNewEvent: TButton;
     PanelCalendar: TPanel;
@@ -174,6 +174,7 @@ type
     PanelMonth: TPanel;
     PanelArrowButtons: TPanel;
     PanelFiller: TPanel;
+    EditSearch: TEdit;
     procedure PanelCalendarResize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
@@ -198,12 +199,16 @@ type
     HoverTimer: TTimer;
     FHoverCell: Integer;
     FRowCount: Integer;     // weeks shown this month (4, 5 or 6)
+    FSearchHi: array[1..42] of Boolean;
+    FSearchSaved: array[1..42] of TColor;
     procedure PositionDayCells;
     procedure CategoryFilterClick(Sender: TObject);
     function IsCategoryVisible(const Category: string): Boolean;
     function IniFileName: string;
     procedure SaveWindowPos;
     procedure LoadWindowPos;
+    procedure ClearSearchHighlight;
+    procedure ButtonSearchClick(Sender: TObject);
   public
     procedure BuildCalendar(AYear, AMonth: Integer);
     procedure RefreshCalendar;
@@ -276,6 +281,43 @@ begin
   finally
     Ini.Free;
   end;
+end;
+
+procedure TForm4.ClearSearchHighlight;
+var
+  I: Integer;
+begin
+  for I := 1 to 42 do
+    if FSearchHi[I] then
+    begin
+      DayPanels[I].Color := FSearchSaved[I];   // restore the day's normal colour
+      FSearchHi[I] := False;
+    end;
+end;
+
+procedure TForm4.ButtonSearchClick(Sender: TObject);
+var
+  I, Hits: Integer;
+  Key: string;
+begin
+  ClearSearchHighlight;          // remove any highlights from a previous search
+
+  Key := Trim(EditSearch.Text);
+  if Key = '' then Exit;         // empty search = just clear
+
+  Hits := 0;
+  for I := 1 to 42 do
+    if DayPanels[I].Visible and (DayLabels[I].Caption <> '') and
+       ContainsText(DayDetails[I], Key) then
+    begin
+      FSearchSaved[I] := DayPanels[I].Color;   // remember the original colour
+      DayPanels[I].Color := clSkyBlue;         // highlight
+      FSearchHi[I] := True;
+      Inc(Hits);
+    end;
+
+  if Hits = 0 then
+    ShowMessage('Ingen begivenheder fundet for: ' + Key);
 end;
 
 procedure TForm4.PositionDayCells;
@@ -445,6 +487,8 @@ begin
   FCurrentYear  := Year;
   FCurrentMonth := Month;
 
+  ButtonSearch.OnClick := ButtonSearchClick;
+
   // Set button captions
   PreviousMonth.Caption := '<';
   NextMonth.Caption := '>';
@@ -470,7 +514,6 @@ var
   CheckDate: TDate;
   HolidayName: String;
 
-
 begin
   LabelMonth.Caption := MonthNames[AMonth] + ' ' + IntToStr(AYear);
 
@@ -482,6 +525,7 @@ begin
     DayMemos[GridIndex].Clear;
     DayDetails[GridIndex] := '';
     DayPanels[GridIndex].Color := $F0FFF0;
+    FSearchHi[GridIndex] := False;
   end;
 
   FirstDate := EncodeDate(AYear, AMonth, 1);

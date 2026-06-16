@@ -2335,7 +2335,7 @@
       ShowCaption = False
       TabOrder = 0
       ExplicitWidth = 1015
-      object ButtonSettings: TButton
+      object ButtonSearch: TButton
         Left = 861
         Top = 20
         Width = 140
@@ -2345,7 +2345,7 @@
         Margins.Right = 0
         Margins.Bottom = 0
         Align = alRight
-        Caption = 'Settings'
+        Caption = 'Search'
         TabOrder = 0
         ExplicitLeft = 855
       end
@@ -2377,6 +2377,14 @@
         Caption = 'New Event'
         TabOrder = 2
         OnClick = ButtonNewEventClick
+      end
+      object EditSearch: TEdit
+        Left = 712
+        Top = 24
+        Width = 121
+        Height = 23
+        TabOrder = 3
+        Text = 'EditSearch'
       end
     end
     object PanelMonth: TPanel

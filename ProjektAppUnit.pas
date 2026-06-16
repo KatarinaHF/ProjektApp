@@ -12,14 +12,16 @@ type
   TForm1 = class(TForm)
     LogInButton: TButton;
     Image1: TImage;
+    LabelSignIn: TLabel;
+    PanelLogIn: TPanel;
     procedure LogInClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure OnResize(Sender: TObject);
     private
     FAccessToken: string;
     FHttpServer: TIdHTTPServer;
     procedure MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
   public
-    { Public declarations }
   end;
 
 var
@@ -201,6 +203,14 @@ begin
   Image1.Picture.LoadFromFile(
   ExtractFilePath(Application.ExeName) + 'Loginbackground.png'
 );
+end;
+
+procedure TForm1.OnResize(Sender: TObject);
+begin
+  Image1.Width := Form1.Width;
+  PanelLogIn.Width := Form1.Width;
+  LogInButton.Width := PanelLogIn.Width div 3;
+  LabelSignIn.Width := Form1.Width;
 end;
 
 end.
