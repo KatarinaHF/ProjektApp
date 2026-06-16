@@ -234,6 +234,9 @@ implementation
   );
 
 function TForm4.IniFileName: string;
+var
+  AppIni: TIniFile;
+
 begin
   Result := ChangeFileExt(Application.ExeName, '.ini');
 end;
@@ -247,6 +250,9 @@ begin
     Ini.WriteInteger('Window', 'Left',   Left);
     Ini.WriteInteger('Window', 'Top',    Top);
     Ini.WriteInteger('Window', 'Width',  Width);
+    Ini.WriteBool('Window', 'CheckBoxWork', CheckBoxWork.Checked);
+    Ini.WriteBool('Window', 'CheckBoxPrivate', CheckBoxPrivate.Checked);
+    Ini.WriteBool('Window', 'CheckBoxHolidays', CheckBoxHolidays.Checked);
   finally
     Ini.Free;
   end;
@@ -261,6 +267,9 @@ begin
     Left   := Ini.ReadInteger('Window', 'Left',   Left);
     Top    := Ini.ReadInteger('Window', 'Top',    Top);
     Width  := Ini.ReadInteger('Window', 'Width',  Width);
+    CheckBoxWork.Checked := Ini.ReadBool('Window', 'CheckBoxWork', True);
+    CheckBoxPrivate.Checked := Ini.ReadBool('Window', 'CheckBoxPrivate', True);
+    CheckBoxHolidays.Checked := Ini.ReadBool('Window', 'CheckBoxHolidays', True);
   finally
     Ini.Free;
   end;

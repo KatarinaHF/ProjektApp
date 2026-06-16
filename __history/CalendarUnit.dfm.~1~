@@ -2298,12 +2298,14 @@
       Margins.Left = 8
       Align = alTop
       Caption = 'Work'
+      Checked = True
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
+      State = cbChecked
       TabOrder = 2
     end
   end

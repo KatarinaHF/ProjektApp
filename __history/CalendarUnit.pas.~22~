@@ -178,7 +178,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
     procedure NextMonthClick(Sender: TObject);
-    procedure AddEvent(ADay: Integer; const AText: string);
+    procedure AddEvent(ADay: Integer; const AText: string; const ACategory: string);
     procedure LoadGraphEvents;
     function FindGridCell(DayNumber: Integer): Integer;
     function GetCalendarEvents(const AccessToken: string): string;
@@ -221,8 +221,8 @@ implementation
 
   type
   TCalendarEvent = record
+    EventDate: TDate;
     Subject: string;
-    EventDate: TDateTime;
     Category: string;
   end;
 
@@ -234,8 +234,26 @@ implementation
   );
 
 function TForm4.IniFileName: string;
+var
+  AppIni: TIniFile;
+
 begin
+  AppIni := TIniFile.Create('c:\temp\appini.ini');
+
   Result := ChangeFileExt(Application.ExeName, '.ini');
+
+  form4.CheckBoxWork.Checked := AppIni.ReadBool('AppInit', 'CheckBoxWork', true);
+  form4.CheckBoxPrivate.Checked := AppIni.ReadBool('AppInit', 'CheckBoxPrivate', true);
+  form4.CheckBoxHolidays.Checked := AppIni.ReadBool('AppInit', 'CheckBoxHolidays', true);
+
+  AppIni.WriteBool('AppInit', 'CheckBoxWork', form4.CheckBoxWork.Checked);
+  AppIni.ReadBool('AppInit', 'CheckBoxPrivate', form4.CheckBoxPrivate.Checked);
+  AppIni.ReadBool('AppInit', 'CheckBoxHolidays', form4.CheckBoxHolidays.Checked);
+
+  AppIni.UpdateFile;
+
+  AppIni.Free;
+
 end;
 
 procedure TForm4.SaveWindowPos;
@@ -514,8 +532,16 @@ begin
 
       if HolidayName <> '' then
       begin
-        AddEvent(DayNum, HolidayName);
-        DayLabels[DayNum].Font.Color := clRed;
+        DayLabels[GridIndex].Font.Color := clRed;
+
+        if CheckBoxHolidays.Checked then
+        begin
+          AddEvent(DayNum, HolidayName, 'Holiday');
+
+          DayDetails[GridIndex] :=
+          DayDetails[GridIndex] +
+          'Holiday' + #1 + HolidayName + sLineBreak;
+        end;
       end;
     end;
 
@@ -533,14 +559,16 @@ begin
   Form2.Show;
 end;
 
-procedure TForm4.AddEvent(ADay: Integer; const AText: string);
+procedure TForm4.AddEvent(ADay: Integer; const AText: string; const ACategory: string);
 var
   Cell: Integer;
 begin
   Cell := FindGridCell(ADay);
 
   if Cell > 0 then
-    DayMemos[Cell].Lines.Add(AText);
+  begin
+  DayMemos[Cell].Lines.Add(AText);
+  end;
 end;
 
 function TForm4.FindGridCell(DayNumber: Integer): Integer;
@@ -719,7 +747,7 @@ begin
     if (YearOf(D) = FCurrentYear) and (MonthOf(D) = FCurrentMonth) then
     begin
       DayNumber := DayOf(D);
-      AddEvent(DayNumber, TimeStr + ' ' + Subject);
+      AddEvent(DayNumber, TimeStr + ' ' + Subject, '');
 
       Cell := FindGridCell(DayNumber);
       if Cell > 0 then
