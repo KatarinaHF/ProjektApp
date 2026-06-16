@@ -1,4 +1,4 @@
-unit CalendarUnit;
+ï»¿unit CalendarUnit;
 
 interface
 
@@ -15,8 +15,8 @@ type
     ButtonNewEvent: TButton;
     PanelCalendar: TPanel;
     PanelCalendartypes: TPanel;
-    PanelSøndag: TPanel;
-    PanelLørdag: TPanel;
+    PanelSÃ¸ndag: TPanel;
+    PanelLÃ¸rdag: TPanel;
     PanelFredag: TPanel;
     PanelTorsdag: TPanel;
     PanelOnsdag: TPanel;
@@ -208,7 +208,7 @@ type
     procedure BuildCalendar(AYear, AMonth: Integer);
     procedure RefreshCalendar;
     property AccessToken: string read FAccessToken write FAccessToken;
-    function IsDateHoliday(ADate: TDate): Boolean;
+    function IsDateHoliday(ADate: TDate): String;
     function EasterSunday(Year: Integer): TDate;
   end;
 
@@ -279,8 +279,8 @@ begin
   Cols[3] := PanelOnsdag;
   Cols[4] := PanelTorsdag;
   Cols[5] := PanelFredag;
-  Cols[6] := PanelLørdag;
-  Cols[7] := PanelSøndag;
+  Cols[6] := PanelLÃ¸rdag;
+  Cols[7] := PanelSÃ¸ndag;
 
   if FRowCount < 1 then FRowCount := 6;
   HeaderH := PanelMondayName.Height;   // weekday-name header inside each column
@@ -313,8 +313,8 @@ begin
   PanelOnsdag.Width  := ColW;
   PanelTorsdag.Width := ColW;
   PanelFredag.Width  := ColW;
-  PanelLørdag.Width  := ColW;
-  PanelSøndag.Width  := ColW;
+  PanelLÃ¸rdag.Width  := ColW;
+  PanelSÃ¸ndag.Width  := ColW;
 
   PositionDayCells;
 end;
@@ -382,7 +382,7 @@ procedure TForm4.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveWindowPos;
 
-  Form1.Close;
+  Application.Terminate;
 end;
 
 procedure TForm4.FormCreate(Sender: TObject);
@@ -452,7 +452,10 @@ var
   GridIndex: Integer;
   I: Integer;
   LastIndex: Integer;
+  CurrentDate: TDate;
   CheckDate: TDate;
+  HolidayName: String;
+
 
 begin
   LabelMonth.Caption := MonthNames[AMonth] + ' ' + IntToStr(AYear);
@@ -464,7 +467,7 @@ begin
     DayLabels[GridIndex].Caption := '';
     DayMemos[GridIndex].Clear;
     DayDetails[GridIndex] := '';
-    DayPanels[GridIndex].Color := $E5FFE5;
+    DayPanels[GridIndex].Color := $F0FFF0;
   end;
 
   FirstDate := EncodeDate(AYear, AMonth, 1);
@@ -489,24 +492,29 @@ begin
     DayLabels[GridIndex].Caption := IntToStr(DayNum);
 
     DayPanels[GridIndex].Color := clWhite;
+    DayLabels[GridIndex].Font.Style := [];
 
-    // Markér dagens dato
+    // MarkÃ©r dagens dato
     if (AYear = YearOf(Date)) and
      (AMonth = MonthOf(Date)) and
      (DayNum = DayOf(Date)) then
     begin
-      DayPanels[GridIndex].Color := $F0FFF0;
+      DayPanels[GridIndex].Color := clMoneyGreen;
+      DayLabels[GridIndex].Font.Style := [fsBold];
     end;
 
     CheckDate := EncodeDate(AYear, AMonth, DayNum);
 
-    if IsDateHoliday(CheckDate) then
+    DayLabels[GridIndex].Font.Color := clBlack;
+
     begin
-      DayLabels[GridIndex].Font.Color := clRed;
-    end
-    else
-    begin
-      DayLabels[GridIndex].Font.Color := clBlack;
+      CurrentDate := EncodeDate(AYear, AMonth, DayNum);
+
+      HolidayName := IsDateHoliday(CurrentDate);
+
+      if HolidayName <> '' then
+        AddEvent(DayNum, HolidayName);
+        DayLabels[DayNum].Font.Color := clRed;
     end;
 
     Inc(GridIndex);
@@ -588,7 +596,7 @@ begin
   if DayLabels[FHoverCell].Caption = '' then Exit;    // empty cell, skip
    if DayMemos[FHoverCell].Lines.Count = 0 then Exit;
 
-  // Fill Form3 with the hovered day's data — adapt to your controls:
+  // Fill Form3 with the hovered day's data â€” adapt to your controls:
   // e.g. if Form3 has a TMemo called MemoEvents:
   Form3.ShowDetails(DayDetails[FHoverCell]);
   // and maybe a caption/label:
@@ -598,15 +606,15 @@ begin
   Form3.Left := Mouse.CursorPos.X + 12;
   Form3.Top  := Mouse.CursorPos.Y + 12;
 
-  // Tving den ned, hvis den prøver at gå højere op end hovedvinduets top
+  // Tving den ned, hvis den prÃ¸ver at gÃ¥ hÃ¸jere op end hovedvinduets top
   if Form3.Top < Self.Top then
     Form3.Top := Self.Top;
 
-  // Tving den op, hvis dens bund ryger længere ned end hovedvinduets bund
+  // Tving den op, hvis dens bund ryger lÃ¦ngere ned end hovedvinduets bund
   if Form3.Top + Form3.Height > Self.Top + Self.Height then
     Form3.Top := (Self.Top + Self.Height) - Form3.Height;
 
-  // Standard tjek for skærmens bredde
+  // Standard tjek for skÃ¦rmens bredde
   if Form3.Left + Form3.Width > Screen.WorkAreaWidth then
     Form3.Left := Mouse.CursorPos.X - Form3.Width - 12;
 
@@ -656,7 +664,7 @@ begin
     try
       if JsonObj.TryGetValue<TJSONArray>('value', EventsArray) then
       begin
-        // Hvis vi har forbindelse, men kalenderen er tom i denne måned
+        // Hvis vi har forbindelse, men kalenderen er tom i denne mÃ¥ned
         if EventsArray.Count = 0 then
         begin
           Exit;
@@ -673,7 +681,7 @@ begin
           // Konverter sikkert fra ISO8601 til Delphi TDateTime
           StartDate := ISO8601ToDate(RawDateStr);
 
-          // Da vi nu har tvunget lokal tid i GetCalendarEvents, tjekker vi måned og år stabilt
+          // Da vi nu har tvunget lokal tid i GetCalendarEvents, tjekker vi mÃ¥ned og Ã¥r stabilt
          // Start and end date/time
   RawDateStr := EventObj.GetValue<TJSONObject>('start').GetValue<string>('dateTime');
   StartDate  := ISO8601ToDate(RawDateStr);
@@ -729,7 +737,7 @@ begin
     end;
   except
     on E: Exception do
-      ShowMessage('Fejl under indlæsning af Microsoft Graph Events: ' + E.Message);
+      ShowMessage('Fejl under indlÃ¦sning af Microsoft Graph Events: ' + E.Message);
   end;
 end;
 
@@ -775,23 +783,37 @@ begin
     Result := clWhite;
 end;
 
-function TForm4.IsDateHoliday(ADate: TDate): Boolean;
+function TForm4.IsDateHoliday(ADate: TDate): String;
 var
   Easter: TDate;
 begin
+  Result := '';
+
   Easter := EasterSunday(YearOf(ADate));
 
-  Result :=
-    (Trunc(ADate) = Trunc(EncodeDate(YearOf(ADate),1,1))) or      // Nytår
-    (Trunc(ADate) = Trunc(Easter-3)) or                           // Skærtorsdag
-    (Trunc(ADate) = Trunc(Easter-2)) or                           // Langfredag
-    (Trunc(ADate) = Trunc(Easter)) or                             // Påskedag
-    (Trunc(ADate) = Trunc(Easter+1)) or                           // 2. påskedag
-    (Trunc(ADate) = Trunc(Easter+26)) or                          // Store Bededag
-    (Trunc(ADate) = Trunc(Easter+39)) or                          // Kristi Himmelfart
-    (Trunc(ADate) = Trunc(Easter+49)) or                          // Pinsedag
-    (Trunc(ADate) = Trunc(Easter+50)) or                          // 2. Pinsedag
-    (Trunc(ADate) = Trunc(EncodeDate(YearOf(ADate),12,25))) or   // Jul
-    (Trunc(ADate) = Trunc(EncodeDate(YearOf(ADate),12,26)));     // 2. Juledag
+  if Trunc(ADate) = Trunc(EncodeDate(YearOf(ADate),1,1)) then
+    Result := 'NytÃ¥rsdag'
+  else if Trunc(ADate) = Trunc(Easter-3) then
+    Result := 'SkÃ¦rtorsdag'
+  else if Trunc(ADate) = Trunc(Easter-2) then
+    Result := 'Langfredag'
+  else if Trunc(ADate) = Trunc(Easter) then
+    Result := 'PÃ¥skedag'
+  else if Trunc(ADate) = Trunc(Easter+1) then
+    Result := '2. PÃ¥skedag'
+  else if Trunc(ADate) = Trunc(Easter+26) then
+    Result := 'Store Bededag'
+  else if Trunc(ADate) = Trunc(Easter+39) then
+    Result := 'Kristi Himmelfartsdag'
+  else if Trunc(ADate) = Trunc(Easter+49) then
+    Result := 'Pinsedag'
+  else if Trunc(ADate) = Trunc(Easter+50) then
+    Result := '2. Pinsedag'
+  else if Trunc(ADate) = Trunc(EncodeDate(YearOf(ADate),6,5)) then
+    Result := 'Grundlovsdag'
+  else if Trunc(ADate) = Trunc(EncodeDate(YearOf(ADate),12,25)) then
+    Result := 'Juledag'
+  else if Trunc(ADate) = Trunc(EncodeDate(YearOf(ADate),12,26)) then
+    Result := '2. Juledag';
 end;
 end.

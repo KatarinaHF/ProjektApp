@@ -178,7 +178,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
     procedure NextMonthClick(Sender: TObject);
-    procedure AddEvent(ADay: Integer; const AText: string; const ACategory: string);
+    procedure AddEvent(ADay: Integer; const AText: string);
     procedure LoadGraphEvents;
     function FindGridCell(DayNumber: Integer): Integer;
     function GetCalendarEvents(const AccessToken: string): string;
@@ -221,8 +221,8 @@ implementation
 
   type
   TCalendarEvent = record
-    EventDate: TDate;
     Subject: string;
+    EventDate: TDateTime;
     Category: string;
   end;
 
@@ -514,16 +514,8 @@ begin
 
       if HolidayName <> '' then
       begin
+        AddEvent(DayNum, HolidayName);
         DayLabels[GridIndex].Font.Color := clRed;
-
-        if CheckBoxHolidays.Checked then
-        begin
-          AddEvent(DayNum, HolidayName, 'Holiday');
-
-          DayDetails[GridIndex] :=
-          DayDetails[GridIndex] +
-          'Holiday' + #1 + HolidayName + sLineBreak;
-        end;
       end;
     end;
 
@@ -541,16 +533,14 @@ begin
   Form2.Show;
 end;
 
-procedure TForm4.AddEvent(ADay: Integer; const AText: string; const ACategory: string);
+procedure TForm4.AddEvent(ADay: Integer; const AText: string);
 var
   Cell: Integer;
 begin
   Cell := FindGridCell(ADay);
 
   if Cell > 0 then
-  begin
-  DayMemos[Cell].Lines.Add(AText);
-  end;
+    DayMemos[Cell].Lines.Add(AText);
 end;
 
 function TForm4.FindGridCell(DayNumber: Integer): Integer;
@@ -729,7 +719,7 @@ begin
     if (YearOf(D) = FCurrentYear) and (MonthOf(D) = FCurrentMonth) then
     begin
       DayNumber := DayOf(D);
-      AddEvent(DayNumber, TimeStr + ' ' + Subject, '');
+      AddEvent(DayNumber, TimeStr + ' ' + Subject);
 
       Cell := FindGridCell(DayNumber);
       if Cell > 0 then

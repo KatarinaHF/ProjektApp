@@ -514,16 +514,11 @@ begin
 
       if HolidayName <> '' then
       begin
-        DayLabels[GridIndex].Font.Color := clRed;
+        AddEvent(DayNum, HolidayName, 'Holiday');
 
-        if CheckBoxHolidays.Checked then
-        begin
-          AddEvent(DayNum, HolidayName, 'Holiday');
-
-          DayDetails[GridIndex] :=
-          DayDetails[GridIndex] +
-          'Holiday' + #1 + HolidayName + sLineBreak;
-        end;
+        DayDetails[GridIndex] :=
+        DayDetails[GridIndex] +
+        'Holiday' + #1 + HolidayName + sLineBreak;
       end;
     end;
 
@@ -549,7 +544,9 @@ begin
 
   if Cell > 0 then
   begin
-  DayMemos[Cell].Lines.Add(AText);
+    DayMemos[Cell].Lines.Add(AText);
+    if ACategory = 'Holiday' then
+      DayLabels[Cell].Color := clRed;
   end;
 end;
 

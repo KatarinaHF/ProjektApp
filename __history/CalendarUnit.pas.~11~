@@ -381,6 +381,8 @@ end;
 procedure TForm4.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveWindowPos;
+
+  Application.Terminate;
 end;
 
 procedure TForm4.FormCreate(Sender: TObject);
@@ -462,7 +464,7 @@ begin
     DayLabels[GridIndex].Caption := '';
     DayMemos[GridIndex].Clear;
     DayDetails[GridIndex] := '';
-    DayPanels[GridIndex].Color := $E5FFE5;
+    DayPanels[GridIndex].Color := $F0FFF0;
   end;
 
   FirstDate := EncodeDate(AYear, AMonth, 1);
@@ -487,13 +489,15 @@ begin
     DayLabels[GridIndex].Caption := IntToStr(DayNum);
 
     DayPanels[GridIndex].Color := clWhite;
+    DayLabels[GridIndex].Font.Style := [];
 
     // Markér dagens dato
     if (AYear = YearOf(Date)) and
      (AMonth = MonthOf(Date)) and
      (DayNum = DayOf(Date)) then
     begin
-      DayPanels[GridIndex].Color := $F0FFF0;
+      DayPanels[GridIndex].Color := clMoneyGreen;
+      DayLabels[GridIndex].Font.Style := [fsBold];
     end;
 
     CheckDate := EncodeDate(AYear, AMonth, DayNum);
