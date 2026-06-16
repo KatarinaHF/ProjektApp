@@ -215,6 +215,9 @@ type
 var
   Form4: TForm4;
 
+const
+  SYMBOL_PROP_ID = 'String {66f5a359-4659-4830-9070-00047ec6ac6e} Name EventSymbol';
+
 implementation
 
 {$R *.dfm}
@@ -234,6 +237,9 @@ implementation
   );
 
 function TForm4.IniFileName: string;
+var
+  AppIni: TIniFile;
+
 begin
   Result := ChangeFileExt(Application.ExeName, '.ini');
 end;
@@ -247,6 +253,9 @@ begin
     Ini.WriteInteger('Window', 'Left',   Left);
     Ini.WriteInteger('Window', 'Top',    Top);
     Ini.WriteInteger('Window', 'Width',  Width);
+    Ini.WriteBool('Window', 'CheckBoxWork', CheckBoxWork.Checked);
+    Ini.WriteBool('Window', 'CheckBoxPrivate', CheckBoxPrivate.Checked);
+    Ini.WriteBool('Window', 'CheckBoxHolidays', CheckBoxHolidays.Checked);
   finally
     Ini.Free;
   end;
@@ -261,6 +270,9 @@ begin
     Left   := Ini.ReadInteger('Window', 'Left',   Left);
     Top    := Ini.ReadInteger('Window', 'Top',    Top);
     Width  := Ini.ReadInteger('Window', 'Width',  Width);
+    CheckBoxWork.Checked := Ini.ReadBool('Window', 'CheckBoxWork', True);
+    CheckBoxPrivate.Checked := Ini.ReadBool('Window', 'CheckBoxPrivate', True);
+    CheckBoxHolidays.Checked := Ini.ReadBool('Window', 'CheckBoxHolidays', True);
   finally
     Ini.Free;
   end;
@@ -414,6 +426,7 @@ begin
     DayMemos[I].Tag := I;
     DayMemos[I].OnMouseEnter := PanelDayMouseEnter;
     DayMemos[I].OnMouseLeave := PanelDayMouseLeave;
+    DayMemos[I].Font.Name := 'Segoe UI Symbol';
   end;
 
   FRowCount   := 6;
@@ -573,6 +586,7 @@ var
   Response: IHTTPResponse;
   StartISO, EndISO: string;
   DaysCount: Integer;
+  SymFilter: string;
 begin
   Client := THTTPClient.Create;
   try
@@ -587,11 +601,17 @@ begin
     StartISO := Format('%0.4d-%0.2d-01T00:00:00', [FCurrentYear, FCurrentMonth]);
     EndISO := Format('%0.4d-%0.2d-%0.2dT23:59:59', [FCurrentYear, FCurrentMonth, DaysCount]);
 
+    SymFilter := 'id eq ''' + SYMBOL_PROP_ID + '''';
+    SymFilter := StringReplace(SymFilter, ' ',  '%20', [rfReplaceAll]);
+    SymFilter := StringReplace(SymFilter, '{',  '%7B', [rfReplaceAll]);
+    SymFilter := StringReplace(SymFilter, '}',  '%7D', [rfReplaceAll]);
+    SymFilter := StringReplace(SymFilter, '''', '%27', [rfReplaceAll]);
+
     Response := Client.Get(
       'https://graph.microsoft.com/v1.0/me/calendarView' +
       '?startDateTime=' + StartISO +
       '&endDateTime=' + EndISO +
-      '&$top=100'
+      '&$top=100' + '&$expand=singleValueExtendedProperties($filter=' + SymFilter + ')'
     );
 
     Result := Response.ContentAsString;
@@ -653,6 +673,10 @@ var
   EndDate: TDateTime;
   IsAllDay: Boolean;
   FirstDay, LastDay, D: TDateTime;
+  J: Integer;
+  SvepArr: TJSONArray;
+  SvepObj: TJSONObject;
+  Symbol, GridText, DetailText: string;
 begin
   if FAccessToken = '' then Exit;
 
@@ -716,6 +740,28 @@ begin
 
   TimeStr := FormatDateTime('hh:nn', StartDate);
 
+  Symbol := '';
+  if EventObj.TryGetValue<TJSONArray>('singleValueExtendedProperties', SvepArr) then
+    for J := 0 to SvepArr.Count - 1 do
+    begin
+      SvepObj := SvepArr.Items[J] as TJSONObject;
+      if SvepObj.GetValue<string>('id').Contains('EventSymbol') then
+      begin
+        Symbol := SvepObj.GetValue<string>('value');
+        Break;
+      end;
+    end;
+
+  if Symbol <> '' then
+    GridText := TimeStr + ' ' + Symbol
+  else
+    GridText := TimeStr + ' ' + Subject;
+
+  if Symbol <> '' then
+    DetailText := Symbol + '  ' + TimeStr + ' ' + Subject
+  else
+    DetailText := TimeStr + ' ' + Subject;
+
   // Work out the span of whole days the event covers
   FirstDay := DateOf(StartDate);
   LastDay  := DateOf(EndDate);
@@ -729,12 +775,12 @@ begin
     if (YearOf(D) = FCurrentYear) and (MonthOf(D) = FCurrentMonth) then
     begin
       DayNumber := DayOf(D);
-      AddEvent(DayNumber, TimeStr + ' ' + Subject, '');
+      AddEvent(DayNumber, GridText, '');
 
       Cell := FindGridCell(DayNumber);
       if Cell > 0 then
       begin
-        DayDetails[Cell] := DayDetails[Cell] + Category + #1 + TimeStr + ' ' + Subject + sLineBreak;
+        DayDetails[Cell] := DayDetails[Cell] + Category + #1 + DetailText + sLineBreak;
         if Trim(Description) <> '' then
           DayDetails[Cell] := DayDetails[Cell] + Category + #1 + '    ' + Description + sLineBreak;
         DayDetails[Cell] := DayDetails[Cell] + sLineBreak;

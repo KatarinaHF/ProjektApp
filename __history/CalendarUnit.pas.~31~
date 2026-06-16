@@ -215,6 +215,9 @@ type
 var
   Form4: TForm4;
 
+const
+  SYMBOL_PROP_ID = 'String {66f5a359-4659-4830-9070-00047ec6ac6e} Name EventSymbol';
+
 implementation
 
 {$R *.dfm}
@@ -234,6 +237,9 @@ implementation
   );
 
 function TForm4.IniFileName: string;
+var
+  AppIni: TIniFile;
+
 begin
   Result := ChangeFileExt(Application.ExeName, '.ini');
 end;
@@ -247,6 +253,9 @@ begin
     Ini.WriteInteger('Window', 'Left',   Left);
     Ini.WriteInteger('Window', 'Top',    Top);
     Ini.WriteInteger('Window', 'Width',  Width);
+    Ini.WriteBool('Window', 'CheckBoxWork', CheckBoxWork.Checked);
+    Ini.WriteBool('Window', 'CheckBoxPrivate', CheckBoxPrivate.Checked);
+    Ini.WriteBool('Window', 'CheckBoxHolidays', CheckBoxHolidays.Checked);
   finally
     Ini.Free;
   end;
@@ -261,6 +270,9 @@ begin
     Left   := Ini.ReadInteger('Window', 'Left',   Left);
     Top    := Ini.ReadInteger('Window', 'Top',    Top);
     Width  := Ini.ReadInteger('Window', 'Width',  Width);
+    CheckBoxWork.Checked := Ini.ReadBool('Window', 'CheckBoxWork', True);
+    CheckBoxPrivate.Checked := Ini.ReadBool('Window', 'CheckBoxPrivate', True);
+    CheckBoxHolidays.Checked := Ini.ReadBool('Window', 'CheckBoxHolidays', True);
   finally
     Ini.Free;
   end;
@@ -514,11 +526,16 @@ begin
 
       if HolidayName <> '' then
       begin
-        AddEvent(DayNum, HolidayName, 'Holiday');
+        DayLabels[GridIndex].Font.Color := clRed;
 
-        DayDetails[GridIndex] :=
-        DayDetails[GridIndex] +
-        'Holiday' + #1 + HolidayName + sLineBreak;
+        if CheckBoxHolidays.Checked then
+        begin
+          AddEvent(DayNum, HolidayName, 'Holiday');
+
+          DayDetails[GridIndex] :=
+          DayDetails[GridIndex] +
+          'Holiday' + #1 + HolidayName + sLineBreak;
+        end;
       end;
     end;
 
@@ -544,9 +561,7 @@ begin
 
   if Cell > 0 then
   begin
-    DayMemos[Cell].Lines.Add(AText);
-    if ACategory = 'Holiday' then
-      DayLabels[Cell].Color := clRed;
+  DayMemos[Cell].Lines.Add(AText);
   end;
 end;
 
@@ -570,6 +585,7 @@ var
   Response: IHTTPResponse;
   StartISO, EndISO: string;
   DaysCount: Integer;
+  SymFilter: string;
 begin
   Client := THTTPClient.Create;
   try
@@ -584,11 +600,17 @@ begin
     StartISO := Format('%0.4d-%0.2d-01T00:00:00', [FCurrentYear, FCurrentMonth]);
     EndISO := Format('%0.4d-%0.2d-%0.2dT23:59:59', [FCurrentYear, FCurrentMonth, DaysCount]);
 
+    SymFilter := 'id eq ''' + SYMBOL_PROP_ID + '''';
+    SymFilter := StringReplace(SymFilter, ' ',  '%20', [rfReplaceAll]);
+    SymFilter := StringReplace(SymFilter, '{',  '%7B', [rfReplaceAll]);
+    SymFilter := StringReplace(SymFilter, '}',  '%7D', [rfReplaceAll]);
+    SymFilter := StringReplace(SymFilter, '''', '%27', [rfReplaceAll]);
+
     Response := Client.Get(
       'https://graph.microsoft.com/v1.0/me/calendarView' +
       '?startDateTime=' + StartISO +
       '&endDateTime=' + EndISO +
-      '&$top=100'
+      '&$top=100' + '&$expand=singleValueExtendedProperties($filter=' + SymFilter + ')'
     );
 
     Result := Response.ContentAsString;
@@ -650,6 +672,10 @@ var
   EndDate: TDateTime;
   IsAllDay: Boolean;
   FirstDay, LastDay, D: TDateTime;
+  J: Integer;
+  SvepArr: TJSONArray;
+  SvepObj: TJSONObject;
+  Symbol, GridText, DetailText: string;
 begin
   if FAccessToken = '' then Exit;
 

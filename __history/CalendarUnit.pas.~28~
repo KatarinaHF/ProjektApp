@@ -215,6 +215,9 @@ type
 var
   Form4: TForm4;
 
+const
+  SYMBOL_PROP_ID = 'String {66f5a359-4659-4830-9070-00047ec6ac6e} Name EventSymbol';
+
 implementation
 
 {$R *.dfm}
@@ -238,22 +241,7 @@ var
   AppIni: TIniFile;
 
 begin
-  AppIni := TIniFile.Create('c:\temp\appini.ini');
-
   Result := ChangeFileExt(Application.ExeName, '.ini');
-
-  form4.CheckBoxWork.Checked := AppIni.ReadBool('AppInit', 'CheckBoxWork', true);
-  form4.CheckBoxPrivate.Checked := AppIni.ReadBool('AppInit', 'CheckBoxPrivate', true);
-  form4.CheckBoxHolidays.Checked := AppIni.ReadBool('AppInit', 'CheckBoxHolidays', true);
-
-  AppIni.WriteBool('AppInit', 'CheckBoxWork', form4.CheckBoxWork.Checked);
-  AppIni.ReadBool('AppInit', 'CheckBoxPrivate', form4.CheckBoxPrivate.Checked);
-  AppIni.ReadBool('AppInit', 'CheckBoxHolidays', form4.CheckBoxHolidays.Checked);
-
-  AppIni.UpdateFile;
-
-  AppIni.Free;
-
 end;
 
 procedure TForm4.SaveWindowPos;
@@ -265,6 +253,9 @@ begin
     Ini.WriteInteger('Window', 'Left',   Left);
     Ini.WriteInteger('Window', 'Top',    Top);
     Ini.WriteInteger('Window', 'Width',  Width);
+    Ini.WriteBool('Window', 'CheckBoxWork', CheckBoxWork.Checked);
+    Ini.WriteBool('Window', 'CheckBoxPrivate', CheckBoxPrivate.Checked);
+    Ini.WriteBool('Window', 'CheckBoxHolidays', CheckBoxHolidays.Checked);
   finally
     Ini.Free;
   end;
@@ -279,6 +270,9 @@ begin
     Left   := Ini.ReadInteger('Window', 'Left',   Left);
     Top    := Ini.ReadInteger('Window', 'Top',    Top);
     Width  := Ini.ReadInteger('Window', 'Width',  Width);
+    CheckBoxWork.Checked := Ini.ReadBool('Window', 'CheckBoxWork', True);
+    CheckBoxPrivate.Checked := Ini.ReadBool('Window', 'CheckBoxPrivate', True);
+    CheckBoxHolidays.Checked := Ini.ReadBool('Window', 'CheckBoxHolidays', True);
   finally
     Ini.Free;
   end;

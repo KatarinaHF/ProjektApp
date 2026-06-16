@@ -250,9 +250,9 @@ begin
     Ini.WriteInteger('Window', 'Left',   Left);
     Ini.WriteInteger('Window', 'Top',    Top);
     Ini.WriteInteger('Window', 'Width',  Width);
-    Ini.WriteBool('AppInit', 'CheckBoxWork', form4.CheckBoxWork.Checked);
-    Ini.WriteBool('AppInit', 'CheckBoxPrivate', form4.CheckBoxPrivate.Checked);
-    Ini.WriteBool('AppInit', 'CheckBoxHolidays', form4.CheckBoxHolidays.Checked);
+    Ini.WriteBool('Window', 'CheckBoxWork', CheckBoxWork.Checked);
+    Ini.WriteBool('Window', 'CheckBoxPrivate', CheckBoxPrivate.Checked);
+    Ini.WriteBool('Window', 'CheckBoxHolidays', CheckBoxHolidays.Checked);
   finally
     Ini.Free;
   end;
@@ -267,9 +267,9 @@ begin
     Left   := Ini.ReadInteger('Window', 'Left',   Left);
     Top    := Ini.ReadInteger('Window', 'Top',    Top);
     Width  := Ini.ReadInteger('Window', 'Width',  Width);
-    form4.CheckBoxWork.Checked := Ini.ReadBool('AppInit', 'CheckBoxWork', true);
-    form4.CheckBoxPrivate.Checked := Ini.ReadBool('AppInit', 'CheckBoxPrivate', true);
-    form4.CheckBoxHolidays.Checked := Ini.ReadBool('AppInit', 'CheckBoxHolidays', true);
+    CheckBoxWork.Checked := Ini.ReadBool('Window', 'CheckBoxWork', True);
+    CheckBoxPrivate.Checked := Ini.ReadBool('Window', 'CheckBoxPrivate', True);
+    CheckBoxHolidays.Checked := Ini.ReadBool('Window', 'CheckBoxHolidays', True);
   finally
     Ini.Free;
   end;

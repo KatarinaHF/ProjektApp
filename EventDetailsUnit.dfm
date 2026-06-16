@@ -49,7 +49,7 @@ object Form3: TForm3
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -12
-      Font.Name = 'Segoe UI'
+      Font.Name = 'Segoe UI Emoji'
       Font.Style = []
       Lines.Strings = (
         'MemoInfo')

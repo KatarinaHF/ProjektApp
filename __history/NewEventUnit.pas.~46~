@@ -33,11 +33,14 @@ type
     ComboBoxCalendar: TComboBox;
     Panel1: TPanel;
     Panel2: TPanel;
+    ComboBoxSymbol: TComboBox;
     procedure ButtonSaveClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Resize(Sender: TObject);
     procedure MemoDescriptionEnter(Sender: TObject);
     procedure DateTimePickerStartChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure TimePickerStartChange(Sender: TObject);
   private
     FAccessToken: string;
     function CreateGraphEventJson: TJSONObject;
@@ -52,7 +55,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit4;
+uses CalendarUnit;
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin
@@ -63,6 +66,21 @@ begin
   ComboBoxCalendar.Items.Add('Private');
   ComboBoxCalendar.Items.Add('Holiday');
   ComboBoxCalendar.ItemIndex := 0;
+
+  ComboBoxSymbol.Style := csDropDownList;
+  ComboBoxSymbol.Font.Name := 'Segoe UI Symbol';
+  ComboBoxSymbol.Items.Clear;
+  ComboBoxSymbol.Items.Add('(no symbol)');
+  ComboBoxSymbol.Items.Add(#$2600);
+  ComboBoxSymbol.Items.Add(#$E715);
+  ComboBoxSymbol.Items.Add(#$E736);
+  ComboBoxSymbol.Items.Add(#$E7E3);
+  ComboBoxSymbol.Items.Add(#$E7EC);
+  ComboBoxSymbol.Items.Add(#$E7F8);
+  ComboBoxSymbol.Items.Add(#$E821);
+  ComboBoxSymbol.Items.Add(#$E806);
+  ComboBoxSymbol.ItemIndex := 0;
+
 end;
 
 function TForm2.CreateGraphEventJson: TJSONObject;
@@ -74,6 +92,8 @@ var
   StartTime: TTime;
   EndTime: TTime;
   StartDT, EndDT: TDateTime;
+  SvepArr: TJSONArray;
+  SvepObj: TJSONObject;
 begin
   StartDT :=
     Trunc(DateTimePickerStart.Date) +
@@ -115,12 +135,29 @@ begin
     Result.AddPair('body', BodyObj);
   end;
 
+  if ComboBoxSymbol.ItemIndex > 0 then
+  begin
+    SvepArr := TJSONArray.Create;
+    SvepObj := TJSONObject.Create;
+    SvepObj.AddPair('id', SYMBOL_PROP_ID);
+    SvepObj.AddPair('value', ComboBoxSymbol.Text);
+    SvepArr.Add(SvepObj);
+    Result.AddPair('singleValueExtendedProperties', SvepArr);
+  end;
+
 end;
 
 procedure TForm2.DateTimePickerStartChange(Sender: TObject);
 begin
 
   DateTimePickerEnd.Date := DateTimePickerStart.Date;
+
+end;
+
+procedure TForm2.TimePickerStartChange(Sender: TObject);
+begin
+
+  TimePickerEnd.Time := TimePickerStart.Time;
 
 end;
 
@@ -141,6 +178,14 @@ begin
   if (TitleEdit.Text = '') then
   begin
     ShowMessage('Udfyld venligst som minimum: Titel');
+    Exit;
+  end;
+
+  // End must not be before start
+  if (Trunc(DateTimePickerEnd.Date) + Frac(TimePickerEnd.Time)) <
+     (Trunc(DateTimePickerStart.Date) + Frac(TimePickerStart.Time)) then
+  begin
+    ShowMessage('Slutdatoen kan ikke være før startdatoen.');
     Exit;
   end;
 
@@ -190,24 +235,17 @@ begin
 
 end;
 
+
 procedure TForm2.MemoDescriptionEnter(Sender: TObject);
 begin
   if MemoDescription.Text = 'Write description here...' then
     MemoDescription.Clear;
+end;
 
+procedure TForm2.FormShow(Sender: TObject);
 begin
-  MemoDescription.Lines.Text := 'Write description here...';
-
-  ComboBoxCalendar.Items.Clear;
-  ComboBoxCalendar.Items.Add('Work');
-  ComboBoxCalendar.Items.Add('Private');
-  ComboBoxCalendar.Items.Add('Holiday');
-  ComboBoxCalendar.ItemIndex := 0;
-
-  // Default both dates to today
   DateTimePickerStart.Date := Date;
   DateTimePickerEnd.Date   := Date;
-end;
 end;
 
 end.
