@@ -266,6 +266,7 @@ object Form2: TForm2
         Font.Height = -12
         Font.Name = 'Segoe UI'
         Font.Style = []
+        SelectionColor = clDarkseagreen
         TabOrder = 0
         Time = 46186.515702118050000000
         TimeFormat = 'hh:nn'

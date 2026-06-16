@@ -631,9 +631,8 @@ begin
 
   // Fill Form3 with the hovered day's data — adapt to your controls:
   // e.g. if Form3 has a TMemo called MemoEvents:
-  Form3.ShowDetails(DayDetails[FHoverCell]);
-  // and maybe a caption/label:
-  // Form3.LabelDay.Caption := DayLabels[FHoverCell].Caption + '. ' + LabelMonth.Caption;
+  Form3.ShowDetails(DayLabels[FHoverCell].Caption + '. ' + LabelMonth.Caption,
+  DayDetails[FHoverCell]);
 
   // Position next to the mouse (screen coordinates, since Form3 is its own window)
   Form3.Left := Mouse.CursorPos.X + 12;

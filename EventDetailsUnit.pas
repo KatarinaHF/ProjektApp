@@ -15,7 +15,7 @@ type
   private
     { Private declarations }
   public
-    procedure ShowDetails(const AData: string);
+    procedure ShowDetails(const ADate: string; const AData: string);
   end;
 
 var
@@ -38,12 +38,13 @@ begin
     Result := clWindowText;   // no category = normal text
 end;
 
-procedure TForm3.ShowDetails(const AData: string);
+procedure TForm3.ShowDetails(const ADate: string; const AData: string);
 var
   Lines: TStringList;
   I, P: Integer;
   Cat, Txt: string;
 begin
+  PanelDate.Caption := ADate;
   MemoInfo.Lines.BeginUpdate;
   try
     MemoInfo.Clear;
@@ -75,7 +76,6 @@ begin
     MemoInfo.Lines.EndUpdate;
   end;
 end;
-
 
 procedure TForm3.MemoInfoMouseLeave(Sender: TObject);
 var
