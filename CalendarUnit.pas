@@ -668,6 +668,7 @@ var
   Description: string;
   Cell: Integer;
   TimeStr: string;
+  TimeStr2 : string;
   Category: string;
   Cats: TJSONArray;
   EndRawStr: string;
@@ -740,6 +741,7 @@ begin
   EventObj.TryGetValue<string>('bodyPreview', Description);
 
   TimeStr := FormatDateTime('hh:nn', StartDate);
+  TimeStr2 := FormatDateTime('hh:nn', EndDate);
 
   Symbol := '';
   if EventObj.TryGetValue<TJSONArray>('singleValueExtendedProperties', SvepArr) then
@@ -759,9 +761,9 @@ begin
     GridText := TimeStr + ' ' + Subject;
 
   if Symbol <> '' then
-    DetailText := Symbol + '  ' + TimeStr + ' ' + Subject
+    DetailText := Symbol + '  ' + TimeStr + '-' + TimeStr2 + ' ' + Subject
   else
-    DetailText := TimeStr + ' ' + Subject;
+    DetailText := TimeStr + '-' + TimeStr2 + ' ' + Subject;
 
   // Work out the span of whole days the event covers
   FirstDay := DateOf(StartDate);

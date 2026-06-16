@@ -426,6 +426,8 @@ begin
     DayMemos[I].Tag := I;
     DayMemos[I].OnMouseEnter := PanelDayMouseEnter;
     DayMemos[I].OnMouseLeave := PanelDayMouseLeave;
+    DayMemos[I].Font.Name := 'Segoe UI Symbol';
+    DayMemos[I].Font.Size := 11;
   end;
 
   FRowCount   := 6;
@@ -601,10 +603,10 @@ begin
     EndISO := Format('%0.4d-%0.2d-%0.2dT23:59:59', [FCurrentYear, FCurrentMonth, DaysCount]);
 
     SymFilter := 'id eq ''' + SYMBOL_PROP_ID + '''';
-  SymFilter := StringReplace(SymFilter, ' ',  '%20', [rfReplaceAll]);
-  SymFilter := StringReplace(SymFilter, '{',  '%7B', [rfReplaceAll]);
-  SymFilter := StringReplace(SymFilter, '}',  '%7D', [rfReplaceAll]);
-  SymFilter := StringReplace(SymFilter, '''', '%27', [rfReplaceAll]);
+    SymFilter := StringReplace(SymFilter, ' ',  '%20', [rfReplaceAll]);
+    SymFilter := StringReplace(SymFilter, '{',  '%7B', [rfReplaceAll]);
+    SymFilter := StringReplace(SymFilter, '}',  '%7D', [rfReplaceAll]);
+    SymFilter := StringReplace(SymFilter, '''', '%27', [rfReplaceAll]);
 
     Response := Client.Get(
       'https://graph.microsoft.com/v1.0/me/calendarView' +
@@ -666,12 +668,17 @@ var
   Description: string;
   Cell: Integer;
   TimeStr: string;
+  TimeStr2 : string;
   Category: string;
   Cats: TJSONArray;
   EndRawStr: string;
   EndDate: TDateTime;
   IsAllDay: Boolean;
   FirstDay, LastDay, D: TDateTime;
+  J: Integer;
+  SvepArr: TJSONArray;
+  SvepObj: TJSONObject;
+  Symbol, GridText, DetailText: string;
 begin
   if FAccessToken = '' then Exit;
 
@@ -734,6 +741,29 @@ begin
   EventObj.TryGetValue<string>('bodyPreview', Description);
 
   TimeStr := FormatDateTime('hh:nn', StartDate);
+  TimeStr2 := FormatDateTime('hh:nn', EndDate);
+
+  Symbol := '';
+  if EventObj.TryGetValue<TJSONArray>('singleValueExtendedProperties', SvepArr) then
+    for J := 0 to SvepArr.Count - 1 do
+    begin
+      SvepObj := SvepArr.Items[J] as TJSONObject;
+      if SvepObj.GetValue<string>('id').Contains('EventSymbol') then
+      begin
+        Symbol := SvepObj.GetValue<string>('value');
+        Break;
+      end;
+    end;
+
+  if Symbol <> '' then
+    GridText := TimeStr + '-' + TimeStr2 + ' ' + Symbol
+  else
+    GridText := TimeStr + '-' + TimeStr2 + ' ' + Subject;
+
+  if Symbol <> '' then
+    DetailText := Symbol + '  ' + TimeStr + '-' + TimeStr2 + ' ' + Subject
+  else
+    DetailText := TimeStr + '-' + TimeStr2 + ' ' + Subject;
 
   // Work out the span of whole days the event covers
   FirstDay := DateOf(StartDate);
@@ -748,12 +778,12 @@ begin
     if (YearOf(D) = FCurrentYear) and (MonthOf(D) = FCurrentMonth) then
     begin
       DayNumber := DayOf(D);
-      AddEvent(DayNumber, TimeStr + ' ' + Subject, '');
+      AddEvent(DayNumber, GridText, '');
 
       Cell := FindGridCell(DayNumber);
       if Cell > 0 then
       begin
-        DayDetails[Cell] := DayDetails[Cell] + Category + #1 + TimeStr + ' ' + Subject + sLineBreak;
+        DayDetails[Cell] := DayDetails[Cell] + Category + #1 + DetailText + sLineBreak;
         if Trim(Description) <> '' then
           DayDetails[Cell] := DayDetails[Cell] + Category + #1 + '    ' + Description + sLineBreak;
         DayDetails[Cell] := DayDetails[Cell] + sLineBreak;

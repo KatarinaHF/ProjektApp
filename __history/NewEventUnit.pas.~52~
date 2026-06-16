@@ -33,6 +33,7 @@ type
     ComboBoxCalendar: TComboBox;
     Panel1: TPanel;
     Panel2: TPanel;
+    ComboBoxSymbol: TComboBox;
     procedure ButtonSaveClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Resize(Sender: TObject);
@@ -66,6 +67,30 @@ begin
   ComboBoxCalendar.Items.Add('Holiday');
   ComboBoxCalendar.ItemIndex := 0;
 
+  ComboBoxSymbol.Style := csDropDownList;
+  ComboBoxSymbol.Font.Name := 'Segoe UI Symbol';
+  ComboBoxSymbol.Items.Clear;
+  ComboBoxSymbol.Items.Add('(no symbol)');
+  ComboBoxSymbol.Items.Add(#$2600);
+  ComboBoxSymbol.Items.Add(#$2638);
+  ComboBoxSymbol.Items.Add(#$2615);
+  ComboBoxSymbol.Items.Add(#$2656);
+  ComboBoxSymbol.Items.Add(#$26BD);
+  ComboBoxSymbol.Items.Add(#$26F1);
+  ComboBoxSymbol.Items.Add(#$23F0);
+  ComboBoxSymbol.Items.Add(#$260F);
+  ComboBoxSymbol.Items.Add(#$26F3);
+  ComboBoxSymbol.Items.Add(#$E119);
+  ComboBoxSymbol.Items.Add(#$E14D);
+  ComboBoxSymbol.Items.Add(#$E1D0);
+  ComboBoxSymbol.Items.Add(#$E2B1);
+  ComboBoxSymbol.Items.Add(#$2708);
+  ComboBoxSymbol.Items.Add(#$26F8);
+  ComboBoxSymbol.Items.Add(#$E189);
+  ComboBoxSymbol.Items.Add(#$2708);
+  ComboBoxSymbol.Items.Add(#$2690);
+  ComboBoxSymbol.ItemIndex := 0;
+
 end;
 
 function TForm2.CreateGraphEventJson: TJSONObject;
@@ -77,6 +102,8 @@ var
   StartTime: TTime;
   EndTime: TTime;
   StartDT, EndDT: TDateTime;
+  SvepArr: TJSONArray;
+  SvepObj: TJSONObject;
 begin
   StartDT :=
     Trunc(DateTimePickerStart.Date) +
@@ -116,6 +143,16 @@ begin
     BodyObj.AddPair('contentType', 'text');
     BodyObj.AddPair('content', MemoDescription.Text);
     Result.AddPair('body', BodyObj);
+  end;
+
+  if ComboBoxSymbol.ItemIndex > 0 then
+  begin
+    SvepArr := TJSONArray.Create;
+    SvepObj := TJSONObject.Create;
+    SvepObj.AddPair('id', SYMBOL_PROP_ID);
+    SvepObj.AddPair('value', ComboBoxSymbol.Text);
+    SvepArr.Add(SvepObj);
+    Result.AddPair('singleValueExtendedProperties', SvepArr);
   end;
 
 end;
@@ -218,7 +255,9 @@ end;
 procedure TForm2.FormShow(Sender: TObject);
 begin
   DateTimePickerStart.Date := Date;
-  DateTimePickerEnd.Date   := Date;
+  DateTimePickerEnd.Date := Date;
+  TimePickerStart.Time := Time;
+  TimePickerEnd.Time := Time;
 end;
 
 end.

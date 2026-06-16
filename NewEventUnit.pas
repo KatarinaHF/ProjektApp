@@ -85,6 +85,10 @@ begin
   ComboBoxSymbol.Items.Add(#$E1D0);
   ComboBoxSymbol.Items.Add(#$E2B1);
   ComboBoxSymbol.Items.Add(#$2708);
+  ComboBoxSymbol.Items.Add(#$26F8);
+  ComboBoxSymbol.Items.Add(#$E189);
+  ComboBoxSymbol.Items.Add(#$2708);
+  ComboBoxSymbol.Items.Add(#$2690);
   ComboBoxSymbol.ItemIndex := 0;
 
 end;
@@ -248,10 +252,14 @@ begin
     MemoDescription.Clear;
 end;
 
+// Automatically picks current date and time
+
 procedure TForm2.FormShow(Sender: TObject);
 begin
   DateTimePickerStart.Date := Date;
-  DateTimePickerEnd.Date   := Date;
+  DateTimePickerEnd.Date := Date;
+  TimePickerStart.Time := Time;
+  TimePickerEnd.Time := Time;
 end;
 
 end.

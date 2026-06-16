@@ -49,17 +49,39 @@ object Form2: TForm2
       AlignWithMargins = True
       Left = 199
       Top = 20
-      Width = 315
+      Width = 210
       Height = 41
+      Margins.Left = 64
       Margins.Top = 20
-      Margins.Right = 20
+      Margins.Right = 10
       Margins.Bottom = 20
-      Align = alRight
+      Align = alClient
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
       TextHint = 'Write title here...'
-      ExplicitHeight = 23
+      ExplicitWidth = 231
+    end
+    object ComboBoxSymbol: TComboBox
+      AlignWithMargins = True
+      Left = 419
+      Top = 27
+      Width = 95
+      Height = 24
+      Margins.Left = 0
+      Margins.Top = 27
+      Margins.Right = 20
+      Margins.Bottom = 20
+      Align = alRight
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI Emoji'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+      Text = 'ComboBoxSymbol'
+      ExplicitLeft = 424
     end
   end
   object PanelStartDate: TPanel
@@ -382,19 +404,5 @@ object Form2: TForm2
       TabOrder = 1
       OnEnter = MemoDescriptionEnter
     end
-  end
-  object ComboBoxSymbol: TComboBox
-    Left = 416
-    Top = 30
-    Width = 90
-    Height = 24
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Segoe UI Emoji'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 6
-    Text = 'ComboBoxSymbol'
   end
 end

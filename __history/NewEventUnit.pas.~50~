@@ -33,12 +33,14 @@ type
     ComboBoxCalendar: TComboBox;
     Panel1: TPanel;
     Panel2: TPanel;
+    ComboBoxSymbol: TComboBox;
     procedure ButtonSaveClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Resize(Sender: TObject);
     procedure MemoDescriptionEnter(Sender: TObject);
     procedure DateTimePickerStartChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure TimePickerStartChange(Sender: TObject);
   private
     FAccessToken: string;
     function CreateGraphEventJson: TJSONObject;
@@ -53,7 +55,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit4;
+uses CalendarUnit;
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin
@@ -64,6 +66,30 @@ begin
   ComboBoxCalendar.Items.Add('Private');
   ComboBoxCalendar.Items.Add('Holiday');
   ComboBoxCalendar.ItemIndex := 0;
+
+  ComboBoxSymbol.Style := csDropDownList;
+  ComboBoxSymbol.Font.Name := 'Segoe UI Symbol';
+  ComboBoxSymbol.Items.Clear;
+  ComboBoxSymbol.Items.Add('(no symbol)');
+  ComboBoxSymbol.Items.Add(#$2600);
+  ComboBoxSymbol.Items.Add(#$2638);
+  ComboBoxSymbol.Items.Add(#$2615);
+  ComboBoxSymbol.Items.Add(#$2656);
+  ComboBoxSymbol.Items.Add(#$26BD);
+  ComboBoxSymbol.Items.Add(#$26F1);
+  ComboBoxSymbol.Items.Add(#$23F0);
+  ComboBoxSymbol.Items.Add(#$260F);
+  ComboBoxSymbol.Items.Add(#$26F3);
+  ComboBoxSymbol.Items.Add(#$E119);
+  ComboBoxSymbol.Items.Add(#$E14D);
+  ComboBoxSymbol.Items.Add(#$E1D0);
+  ComboBoxSymbol.Items.Add(#$E2B1);
+  ComboBoxSymbol.Items.Add(#$2708);
+  ComboBoxSymbol.Items.Add(#$26F8);
+  ComboBoxSymbol.Items.Add(#$E189);
+  ComboBoxSymbol.Items.Add(#$2708);
+  ComboBoxSymbol.Items.Add(#$2690);
+  ComboBoxSymbol.ItemIndex := 0;
 
 end;
 
@@ -76,6 +102,8 @@ var
   StartTime: TTime;
   EndTime: TTime;
   StartDT, EndDT: TDateTime;
+  SvepArr: TJSONArray;
+  SvepObj: TJSONObject;
 begin
   StartDT :=
     Trunc(DateTimePickerStart.Date) +
@@ -117,12 +145,29 @@ begin
     Result.AddPair('body', BodyObj);
   end;
 
+  if ComboBoxSymbol.ItemIndex > 0 then
+  begin
+    SvepArr := TJSONArray.Create;
+    SvepObj := TJSONObject.Create;
+    SvepObj.AddPair('id', SYMBOL_PROP_ID);
+    SvepObj.AddPair('value', ComboBoxSymbol.Text);
+    SvepArr.Add(SvepObj);
+    Result.AddPair('singleValueExtendedProperties', SvepArr);
+  end;
+
 end;
 
 procedure TForm2.DateTimePickerStartChange(Sender: TObject);
 begin
 
   DateTimePickerEnd.Date := DateTimePickerStart.Date;
+
+end;
+
+procedure TForm2.TimePickerStartChange(Sender: TObject);
+begin
+
+  TimePickerEnd.Time := TimePickerStart.Time;
 
 end;
 
@@ -199,6 +244,7 @@ begin
   MemoDescription.Width := PanelDescription.Width - LabelDescription.Width - 120;
 
 end;
+
 
 procedure TForm2.MemoDescriptionEnter(Sender: TObject);
 begin
