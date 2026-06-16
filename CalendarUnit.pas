@@ -209,6 +209,7 @@ type
     procedure LoadWindowPos;
     procedure ClearSearchHighlight;
     procedure ButtonSearchClick(Sender: TObject);
+    procedure EditSearchKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   public
     procedure BuildCalendar(AYear, AMonth: Integer);
     procedure RefreshCalendar;
@@ -318,6 +319,16 @@ begin
 
   if Hits = 0 then
     ShowMessage('Ingen begivenheder fundet for: ' + Key);
+end;
+
+// Search with enter
+procedure TForm4.EditSearchKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_RETURN then
+  begin
+    ButtonSearchClick(nil);
+    Key := 0;
+  end;
 end;
 
 procedure TForm4.PositionDayCells;
@@ -488,6 +499,7 @@ begin
   FCurrentMonth := Month;
 
   ButtonSearch.OnClick := ButtonSearchClick;
+  EditSearch.OnKeyDown := EditSearchKeyDown;
 
   // Set button captions
   PreviousMonth.Caption := '<';

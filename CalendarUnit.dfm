@@ -2379,12 +2379,20 @@
         OnClick = ButtonNewEventClick
       end
       object EditSearch: TEdit
-        Left = 712
-        Top = 24
-        Width = 121
-        Height = 23
+        AlignWithMargins = True
+        Left = 620
+        Top = 23
+        Width = 231
+        Height = 25
+        Margins.Left = 300
+        Margins.Right = 10
+        Align = alClient
         TabOrder = 3
-        Text = 'EditSearch'
+        TextHint = 'Search events... '
+        ExplicitLeft = 712
+        ExplicitTop = 24
+        ExplicitWidth = 121
+        ExplicitHeight = 23
       end
     end
     object PanelMonth: TPanel
