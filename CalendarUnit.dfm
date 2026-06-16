@@ -2412,7 +2412,7 @@
       object LabelMonth: TLabel
         Left = 95
         Top = 5
-        Width = 831
+        Width = 525
         Height = 60
         Align = alClient
         Alignment = taCenter
@@ -2486,6 +2486,21 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 1
+      end
+      object ListBoxResults: TListBox
+        Left = 620
+        Top = 5
+        Width = 306
+        Height = 60
+        Margins.Left = 0
+        Align = alRight
+        BevelInner = bvNone
+        ItemHeight = 15
+        TabOrder = 2
+        Visible = False
+        ExplicitLeft = -231
+        ExplicitTop = 15
+        ExplicitHeight = 30
       end
     end
   end
