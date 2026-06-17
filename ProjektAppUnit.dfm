@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 501
-  ClientWidth = 704
+  ClientHeight = 761
+  ClientWidth = 1022
   Color = clHoneydew
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,16 +16,17 @@ object Form1: TForm1
   object Image1: TImage
     Left = 0
     Top = 0
-    Width = 704
-    Height = 501
+    Width = 1022
+    Height = 761
     Align = alClient
-    ExplicitLeft = 8
+    ExplicitWidth = 704
+    ExplicitHeight = 505
   end
   object LabelSignIn: TLabel
     AlignWithMargins = True
     Left = 0
-    Top = 110
-    Width = 450
+    Top = 200
+    Width = 1014
     Height = 40
     Alignment = taCenter
     Caption = 'Sign in with your Microsoft account'
@@ -39,8 +40,8 @@ object Form1: TForm1
   end
   object PanelLogIn: TPanel
     Left = 0
-    Top = 208
-    Width = 704
+    Top = 350
+    Width = 1014
     Height = 124
     BevelEdges = []
     BevelOuter = bvNone
@@ -48,20 +49,61 @@ object Form1: TForm1
     ParentColor = True
     ShowCaption = False
     TabOrder = 0
-    object LogInButton: TButton
-      AlignWithMargins = True
+    object PanelLeftFiller: TPanel
       Left = 0
-      Top = 3
-      Width = 704
-      Height = 118
-      Margins.Left = 0
-      Margins.Right = 0
-      Align = alClient
-      Caption = 'Log In'
+      Top = 0
+      Width = 400
+      Height = 124
+      Align = alLeft
+      BevelEdges = []
+      BevelOuter = bvNone
+      Caption = 'PanelLogIn'
+      ParentColor = True
+      ShowCaption = False
       TabOrder = 0
-      OnClick = LogInClick
-      ExplicitLeft = 275
-      ExplicitWidth = 154
+    end
+    object PanelRightFiller: TPanel
+      Left = 614
+      Top = 0
+      Width = 400
+      Height = 124
+      Align = alRight
+      BevelEdges = []
+      BevelOuter = bvNone
+      Caption = 'PanelLogIn'
+      ParentColor = True
+      ShowCaption = False
+      TabOrder = 1
+      ExplicitLeft = 664
+    end
+    object PanelButton: TPanel
+      Left = 400
+      Top = 0
+      Width = 214
+      Height = 124
+      Align = alClient
+      BevelEdges = []
+      BevelOuter = bvNone
+      Caption = 'PanelLogIn'
+      ParentColor = True
+      ShowCaption = False
+      TabOrder = 2
+      ExplicitLeft = 664
+      ExplicitWidth = 400
+      object LogInButton: TButton
+        AlignWithMargins = True
+        Left = 0
+        Top = 3
+        Width = 214
+        Height = 118
+        Margins.Left = 0
+        Margins.Right = 0
+        Align = alClient
+        Caption = 'Log In'
+        TabOrder = 0
+        OnClick = LogInClick
+        ExplicitLeft = 400
+      end
     end
   end
 end

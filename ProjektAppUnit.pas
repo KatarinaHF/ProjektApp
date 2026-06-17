@@ -14,6 +14,9 @@ type
     Image1: TImage;
     LabelSignIn: TLabel;
     PanelLogIn: TPanel;
+    PanelLeftFiller: TPanel;
+    PanelRightFiller: TPanel;
+    PanelButton: TPanel;
     procedure LogInClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure OnResize(Sender: TObject);
@@ -265,9 +268,13 @@ procedure TForm1.OnResize(Sender: TObject);
 begin
   Image1.Width := Form1.Width;
   PanelLogIn.Width := Form1.Width;
-  LogInButton.Width := PanelLogIn.Width div 3;
+  PanelLogIn.Height := Form1.Height div 6;
+  PanelButton.Width := (PanelLogIn.Width div 4);
+  PanelLeftFiller.Width := (PanelLogIn.Width div 8) * 3;
+  PanelRightFiller.Width := (PanelLogIn.Width div 8) * 3;
   LabelSignIn.Width := Form1.Width;
 end;
+
 
 function TForm1.IniFileName: string;
 var

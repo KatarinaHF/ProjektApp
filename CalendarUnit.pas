@@ -773,7 +773,7 @@ begin
          (AMonth = MonthOf(Date)) and
          (DayNum = DayOf(Date)) then
       begin
-        DayPanels[GridIndex].Color := clMoneyGreen;
+        DayPanels[GridIndex].Color := $D3F0D3;
         DayLabels[GridIndex].Font.Style := [fsBold];
       end;
 
