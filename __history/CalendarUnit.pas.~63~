@@ -289,20 +289,23 @@ function TForm4.SearchAllEvents(const Key: string): string;
 var
   Client: THTTPClient;
   Response: IHTTPResponse;
-  EncKey: string;
+  StartISO, EndISO: string;
 begin
   Client := THTTPClient.Create;
   try
     Client.CustomHeaders['Authorization'] := 'Bearer ' + FAccessToken;
     Client.CustomHeaders['Prefer'] := 'outlook.timezone="Romance Standard Time"';
 
-    EncKey := TNetEncoding.URL.Encode(Key);
+    // Window to search across
+    StartISO := FormatDateTime('yyyy-mm-dd"T"00:00:00', IncYear(Date, -2));
+    EndISO   := FormatDateTime('yyyy-mm-dd"T"23:59:59', IncYear(Date,  2));
 
     Response := Client.Get(
-      'https://graph.microsoft.com/v1.0/me/events' +
-      '?$search=%22' + EncKey + '%22' +
-      '&$select=subject,start' +
-      '&$top=50'
+      'https://graph.microsoft.com/v1.0/me/calendarView' +
+      '?startDateTime=' + StartISO +
+      '&endDateTime=' + EndISO +
+      '&$select=subject,bodyPreview,start' +
+      '&$top=1000'
     );
     Result := Response.ContentAsString;
   finally
@@ -318,8 +321,11 @@ var
   EventObj: TJSONObject;
   I: Integer;
   StartDate: TDateTime;
+  Body: String;
+
 begin
   ListBoxResults.Items.Clear;
+  ListBoxResults.Visible := False;
 
   Key := Trim(EditSearch.Text);
   if Key = '' then Exit;
@@ -353,13 +359,22 @@ begin
         begin
           EventObj := EventsArray.Items[I] as TJSONObject;
           Subject := EventObj.GetValue<string>('subject');
+
+          Body := '';
+          EventObj.TryGetValue<string>('bodyPreview', Body);
+
+          // keep only events whose title or description contains the term
+          if not (ContainsText(Subject, Key) or ContainsText(Body, Key)) then
+            Continue;
+
           RawDateStr := EventObj.GetValue<TJSONObject>('start').GetValue<string>('dateTime');
           StartDate := ISO8601ToDate(RawDateStr);
 
           Line := FormatDateTime('yyyy-mm-dd hh:nn', StartDate) + '  ' + Subject;
-          // stash the date in the item so a double-click can jump to it
           ListBoxResults.Items.AddObject(Line, TObject(NativeInt(Trunc(StartDate))));
         end;
+
+        ListBoxResults.Visible := ListBoxResults.Items.Count > 0;
 
         if ListBoxResults.Items.Count = 0 then
           ShowMessage('Ingen begivenheder fundet for: ' + Key);

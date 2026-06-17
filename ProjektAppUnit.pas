@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ShellAPI, System.Net.HttpClient,
   System.NetEncoding, System.JSON, IdHTTPServer,IdCustomHTTPServer, IdContext, NewEventUnit,
-  EventDetailsUnit, CalendarUnit, Vcl.ExtCtrls, Vcl.Imaging.pngimage;
+  EventDetailsUnit, CalendarUnit, Vcl.ExtCtrls, Vcl.Imaging.pngimage, System.IniFiles;
 
 type
   TForm1 = class(TForm)
@@ -17,6 +17,9 @@ type
     procedure LogInClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure OnResize(Sender: TObject);
+    procedure SaveLoginInfo(const AEmail, AAccessToken: string);
+    procedure LoadLoginInfo;
+    function IniFileName: string;
     private
     FAccessToken: string;
     FHttpServer: TIdHTTPServer;
@@ -103,6 +106,8 @@ var
   JsonObj: TJSONObject;
   LocalAccessToken: string; // Midlertidig sikker variabel til tråden
   UserInfo: string;
+  Json: TJSONObject;
+  Email: string;
 begin
   CapturedCode := ARequestInfo.Params.Values['code'];
 
@@ -123,8 +128,18 @@ begin
           FAccessToken := JsonObj.Values['access_token'].Value;
           LocalAccessToken := FAccessToken; // Gemmer den sikkert til vores TThread
 
-          UserInfo := GetMe(FAccessToken); // Valgfrit: Hent brugerinfo
+          UserInfo := GetMe(FAccessToken);
+          Json := TJSONObject.ParseJSONValue(UserInfo) as TJSONObject;
+          try
+            Email := Json.GetValue<string>('mail');
 
+          if Email = '' then
+            Email := Json.GetValue<string>('userPrincipalName');
+
+            SaveLoginInfo(Email, FAccessToken);
+          finally
+            Json.Free;
+          end;
           // Først NU hvor vi har udtrukket alt tekst, og gemt det i LocalAccessToken,
           // kan vi trygt sende opgaven videre til hovedtråden.
           TThread.Queue(nil,
@@ -203,6 +218,34 @@ begin
   Image1.Picture.LoadFromFile(
   ExtractFilePath(Application.ExeName) + 'Loginbackground.png'
 );
+
+  LoadLoginInfo;
+
+  if FAccessToken <> '' then
+  begin
+    Form4 := TForm4.Create(nil);
+    Form4.AccessToken := FAccessToken;
+    Form4.RefreshCalendar;
+    Form4.Show;
+    Form4.BringToFront;
+    Form1.SendToBack;
+
+    //Form1.Height := 1;
+    //Form1.Width := 1;
+  end;
+end;
+
+procedure TForm1.LoadLoginInfo;
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(IniFileName);
+  try
+    FAccessToken :=
+      Ini.ReadString('User', 'AccessToken', '');
+  finally
+    Ini.Free;
+  end;
 end;
 
 procedure TForm1.OnResize(Sender: TObject);
@@ -211,6 +254,26 @@ begin
   PanelLogIn.Width := Form1.Width;
   LogInButton.Width := PanelLogIn.Width div 3;
   LabelSignIn.Width := Form1.Width;
+end;
+
+function TForm1.IniFileName: string;
+var
+  AppIni: TIniFile;
+begin
+  Result := ChangeFileExt(Application.ExeName, '.ini');
+end;
+
+procedure TForm1.SaveLoginInfo(const AEmail, AAccessToken: string);
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(IniFileName);
+  try
+    Ini.WriteString('User', 'Email', AEmail);
+    Ini.WriteString('User', 'AccessToken', AAccessToken);
+  finally
+    Ini.Free;
+  end;
 end;
 
 end.

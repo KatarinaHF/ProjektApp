@@ -177,6 +177,7 @@ type
     PanelFiller: TPanel;
     EditSearch: TEdit;
     ListBoxResults: TListBox;
+    PanelRightFiller: TPanel;
     procedure PanelCalendarResize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
@@ -209,6 +210,8 @@ type
     procedure LoadWindowPos;
     procedure ButtonSearchClick(Sender: TObject);
     procedure EditSearchKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    function SearchAllEvents(const Key: string): string;
+    procedure ListBoxResultsDblClick(Sender: TObject);
   public
     procedure BuildCalendar(AYear, AMonth: Integer);
     procedure RefreshCalendar;
@@ -283,41 +286,107 @@ begin
   end;
 end;
 
-procedure TForm4.ClearSearchHighlight;
+function TForm4.SearchAllEvents(const Key: string): string;
 var
-  I: Integer;
+  Client: THTTPClient;
+  Response: IHTTPResponse;
+  StartISO, EndISO: string;
 begin
-  for I := 1 to 42 do
-    if FSearchHi[I] then
-    begin
-      DayPanels[I].Color := FSearchSaved[I];   // restore the day's normal colour
-      FSearchHi[I] := False;
-    end;
+  Client := THTTPClient.Create;
+  try
+    Client.CustomHeaders['Authorization'] := 'Bearer ' + FAccessToken;
+    Client.CustomHeaders['Prefer'] := 'outlook.timezone="Romance Standard Time"';
+
+    // Window to search across
+    StartISO := FormatDateTime('yyyy-mm-dd"T"00:00:00', IncYear(Date, -2));
+    EndISO   := FormatDateTime('yyyy-mm-dd"T"23:59:59', IncYear(Date,  2));
+
+    Response := Client.Get(
+      'https://graph.microsoft.com/v1.0/me/calendarView' +
+      '?startDateTime=' + StartISO +
+      '&endDateTime=' + EndISO +
+      '&$select=subject,bodyPreview,start' +
+      '&$top=1000'
+    );
+    Result := Response.ContentAsString;
+  finally
+    Client.Free;
+  end;
 end;
 
 procedure TForm4.ButtonSearchClick(Sender: TObject);
 var
-  I, Hits: Integer;
-  Key: string;
+  RawJson, Key, Subject, RawDateStr, Line: string;
+  JsonObj: TJSONObject;
+  EventsArray: TJSONArray;
+  EventObj: TJSONObject;
+  I: Integer;
+  StartDate: TDateTime;
+  Body: String;
+
 begin
-  ClearSearchHighlight;          // remove any highlights from a previous search
+  ListBoxResults.Items.Clear;
+  ListBoxResults.Visible := False;
 
   Key := Trim(EditSearch.Text);
-  if Key = '' then Exit;         // empty search = just clear
+  if Key = '' then Exit;
 
-  Hits := 0;
-  for I := 1 to 42 do
-    if DayPanels[I].Visible and (DayLabels[I].Caption <> '') and
-       ContainsText(DayDetails[I], Key) then
+  if FAccessToken = '' then
+  begin
+    ShowMessage('Du er ikke logget ind.');
+    Exit;
+  end;
+
+  try
+    RawJson := SearchAllEvents(Key);
+
+    if RawJson.Contains('"error"') then
     begin
-      FSearchSaved[I] := DayPanels[I].Color;   // remember the original colour
-      DayPanels[I].Color := clSkyBlue;         // highlight
-      FSearchHi[I] := True;
-      Inc(Hits);
+      ShowMessage('Microsoft Graph fejl:' + #13#10 + RawJson);
+      Exit;
     end;
 
-  if Hits = 0 then
-    ShowMessage('Ingen begivenheder fundet for: ' + Key);
+    JsonObj := TJSONObject.ParseJSONValue(RawJson) as TJSONObject;
+    if not Assigned(JsonObj) then
+    begin
+      ShowMessage('Kunne ikke fortolke svaret fra Microsoft.');
+      Exit;
+    end;
+
+    try
+      if JsonObj.TryGetValue<TJSONArray>('value', EventsArray) then
+      begin
+        for I := 0 to EventsArray.Count - 1 do
+        begin
+          EventObj := EventsArray.Items[I] as TJSONObject;
+          Subject := EventObj.GetValue<string>('subject');
+
+          Body := '';
+          EventObj.TryGetValue<string>('bodyPreview', Body);
+
+          // keep only events whose title or description contains the term
+          if not (ContainsText(Subject, Key) or ContainsText(Body, Key)) then
+            Continue;
+
+          RawDateStr := EventObj.GetValue<TJSONObject>('start').GetValue<string>('dateTime');
+          StartDate := ISO8601ToDate(RawDateStr);
+
+          Line := FormatDateTime('yyyy-mm-dd hh:nn', StartDate) + '  ' + Subject;
+          ListBoxResults.Items.AddObject(Line, TObject(NativeInt(Trunc(StartDate))));
+        end;
+
+        ListBoxResults.Visible := ListBoxResults.Items.Count > 0;
+
+        if ListBoxResults.Items.Count = 0 then
+          ShowMessage('Ingen begivenheder fundet for: ' + Key);
+      end;
+    finally
+      JsonObj.Free;
+    end;
+  except
+    on E: Exception do
+      ShowMessage('Fejl under søgning: ' + E.Message);
+  end;
 end;
 
 // Search with enter
@@ -328,6 +397,25 @@ begin
     ButtonSearchClick(nil);
     Key := 0;
   end;
+end;
+
+procedure TForm4.ListBoxResultsDblClick(Sender: TObject);
+var
+  idx, Cell: Integer;
+  Dt: TDate;
+begin
+  idx := ListBoxResults.ItemIndex;
+  if idx < 0 then Exit;
+
+  Dt := TDate(NativeInt(ListBoxResults.Items.Objects[idx]));  // pull the date back out
+  FCurrentYear  := YearOf(Dt);
+  FCurrentMonth := MonthOf(Dt);
+  BuildCalendar(FCurrentYear, FCurrentMonth);
+
+  // highlight the day we landed on
+  Cell := FindGridCell(DayOf(Dt));
+  if Cell > 0 then
+    DayPanels[Cell].Color := clSkyBlue;
 end;
 
 procedure TForm4.PositionDayCells;
@@ -499,6 +587,7 @@ begin
 
   ButtonSearch.OnClick := ButtonSearchClick;
   EditSearch.OnKeyDown := EditSearchKeyDown;
+  ListBoxResults.OnDblClick := ListBoxResultsDblClick;
 
   // Set button captions
   PreviousMonth.Caption := '<';
@@ -536,7 +625,6 @@ begin
     DayMemos[GridIndex].Clear;
     DayDetails[GridIndex] := '';
     DayPanels[GridIndex].Color := $F0FFF0;
-    FSearchHi[GridIndex] := False;
   end;
 
   FirstDate := EncodeDate(AYear, AMonth, 1);

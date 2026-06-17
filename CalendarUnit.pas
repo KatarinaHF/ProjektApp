@@ -177,6 +177,7 @@ type
     PanelFiller: TPanel;
     EditSearch: TEdit;
     ListBoxResults: TListBox;
+    PanelRightFiller: TPanel;
     procedure PanelCalendarResize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
@@ -543,7 +544,6 @@ var
 begin
   LoadWindowPos;
 
-  WindowState := wsMaximized;
   for I := 1 to 42 do
   begin
     DayPanels[I] := FindComponent('PanelDay' + IntToStr(I)) as TPanel;

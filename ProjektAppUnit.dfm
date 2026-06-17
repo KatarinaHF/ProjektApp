@@ -25,8 +25,8 @@ object Form1: TForm1
     AlignWithMargins = True
     Left = 0
     Top = 110
-    Width = 704
-    Height = 51
+    Width = 450
+    Height = 40
     Alignment = taCenter
     Caption = 'Sign in with your Microsoft account'
     Font.Charset = DEFAULT_CHARSET
@@ -60,10 +60,6 @@ object Form1: TForm1
       Caption = 'Log In'
       TabOrder = 0
       OnClick = LogInClick
-      ExplicitLeft = 244
-      ExplicitTop = 0
-      ExplicitWidth = 213
-      ExplicitHeight = 124
     end
   end
 end

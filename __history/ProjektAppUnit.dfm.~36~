@@ -42,13 +42,20 @@ object Form1: TForm1
     Top = 208
     Width = 704
     Height = 124
+    BevelEdges = []
+    BevelOuter = bvNone
     Caption = 'PanelLogIn'
+    ParentColor = True
+    ShowCaption = False
     TabOrder = 0
     object LogInButton: TButton
-      Left = 1
-      Top = 1
-      Width = 702
-      Height = 122
+      AlignWithMargins = True
+      Left = 275
+      Top = 3
+      Width = 154
+      Height = 118
+      Margins.Left = 275
+      Margins.Right = 275
       Align = alClient
       Caption = 'Log In'
       TabOrder = 0

@@ -25,8 +25,8 @@
     ParentBackground = False
     TabOrder = 0
     OnResize = PanelCalendarResize
-    ExplicitWidth = 918
-    ExplicitHeight = 624
+    ExplicitWidth = 914
+    ExplicitHeight = 609
     object PanelSøndag: TPanel
       Left = 792
       Top = 0
@@ -38,7 +38,7 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 0
-      ExplicitHeight = 624
+      ExplicitHeight = 609
       object PanelSundayName: TPanel
         Left = 0
         Top = 0
@@ -347,7 +347,7 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 1
-      ExplicitHeight = 624
+      ExplicitHeight = 609
       object PanelSaturdayName: TPanel
         Left = 0
         Top = 0
@@ -656,7 +656,7 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 2
-      ExplicitHeight = 624
+      ExplicitHeight = 609
       object PanelFridayName: TPanel
         Left = 0
         Top = 0
@@ -965,7 +965,7 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 3
-      ExplicitHeight = 624
+      ExplicitHeight = 609
       object PanelThursdayName: TPanel
         Left = 0
         Top = 0
@@ -1274,7 +1274,7 @@
       Color = clWhite
       ShowCaption = False
       TabOrder = 4
-      ExplicitHeight = 624
+      ExplicitHeight = 609
       object PanelWednesdayName: TPanel
         Left = 0
         Top = 0
@@ -1587,7 +1587,7 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 5
-      ExplicitHeight = 624
+      ExplicitHeight = 609
       object PanelTuesdayName: TPanel
         Left = 0
         Top = 0
@@ -1900,7 +1900,7 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 6
-      ExplicitHeight = 624
+      ExplicitHeight = 609
       object PanelMondayName: TPanel
         Left = 0
         Top = 0
@@ -2222,7 +2222,7 @@
     ParentFont = False
     ShowCaption = False
     TabOrder = 1
-    ExplicitHeight = 624
+    ExplicitHeight = 609
     object LabelCalendars: TLabel
       Left = 0
       Top = 0
@@ -2320,7 +2320,7 @@
     ParentBackground = False
     ShowCaption = False
     TabOrder = 2
-    ExplicitWidth = 1039
+    ExplicitWidth = 1035
     object PanelTopButtons: TPanel
       Left = 12
       Top = 12
@@ -2334,7 +2334,7 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 0
-      ExplicitWidth = 1015
+      ExplicitWidth = 1011
       object ButtonSearch: TButton
         Left = 861
         Top = 20
@@ -2347,7 +2347,7 @@
         Align = alRight
         Caption = 'Search'
         TabOrder = 0
-        ExplicitLeft = 855
+        ExplicitLeft = 851
       end
       object ButtonChangeView: TButton
         AlignWithMargins = True
@@ -2389,9 +2389,7 @@
         Align = alClient
         TabOrder = 3
         TextHint = 'Search events... '
-        ExplicitLeft = 712
-        ExplicitTop = 24
-        ExplicitWidth = 121
+        ExplicitWidth = 221
         ExplicitHeight = 23
       end
     end
@@ -2408,12 +2406,13 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 1
-      ExplicitWidth = 1015
+      ExplicitWidth = 1011
       object LabelMonth: TLabel
-        Left = 95
-        Top = 5
-        Width = 525
-        Height = 60
+        AlignWithMargins = True
+        Left = 458
+        Top = 8
+        Width = 105
+        Height = 54
         Align = alClient
         Alignment = taCenter
         Caption = 'Month'
@@ -2425,58 +2424,15 @@
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        ExplicitLeft = 95
+        ExplicitTop = 5
         ExplicitWidth = 115
         ExplicitHeight = 52
-      end
-      object PanelArrowButtons: TPanel
-        Left = 926
-        Top = 5
-        Width = 90
-        Height = 60
-        Align = alRight
-        BevelOuter = bvNone
-        BorderWidth = 15
-        Caption = 'Panel1'
-        Color = clWhite
-        ParentBackground = False
-        ShowCaption = False
-        TabOrder = 0
-        ExplicitLeft = 920
-        object NextMonth: TButton
-          AlignWithMargins = True
-          Left = 45
-          Top = 25
-          Width = 25
-          Height = 10
-          Margins.Left = 1
-          Margins.Top = 10
-          Margins.Right = 5
-          Margins.Bottom = 10
-          Align = alRight
-          Caption = '>'
-          TabOrder = 0
-          OnClick = NextMonthClick
-        end
-        object PreviousMonth: TButton
-          AlignWithMargins = True
-          Left = 20
-          Top = 25
-          Width = 25
-          Height = 10
-          Margins.Left = 5
-          Margins.Top = 10
-          Margins.Right = 1
-          Margins.Bottom = 10
-          Align = alLeft
-          Caption = '<'
-          TabOrder = 1
-          OnClick = PreviousMonthClick
-        end
       end
       object PanelFiller: TPanel
         Left = 5
         Top = 5
-        Width = 90
+        Width = 450
         Height = 60
         Align = alLeft
         BevelOuter = bvNone
@@ -2485,17 +2441,94 @@
         Color = clWhite
         ParentBackground = False
         ShowCaption = False
-        TabOrder = 1
+        TabOrder = 0
       end
-      object ListBoxResults: TListBox
-        Left = 620
+      object PanelRightFiller: TPanel
+        Left = 566
         Top = 5
-        Width = 306
+        Width = 450
         Height = 60
         Align = alRight
-        ItemHeight = 15
-        TabOrder = 2
-        Visible = False
+        BevelOuter = bvNone
+        BorderWidth = 15
+        Caption = 'PanelRightFiller'
+        Color = clWhite
+        ParentBackground = False
+        ShowCaption = False
+        TabOrder = 1
+        object PanelArrowButtons: TPanel
+          AlignWithMargins = True
+          Left = 272
+          Top = 15
+          Width = 160
+          Height = 30
+          Margins.Left = 40
+          Margins.Top = 0
+          Margins.Bottom = 0
+          Align = alRight
+          BevelOuter = bvNone
+          BorderWidth = 15
+          Caption = 'Panel1'
+          Color = clWhite
+          ParentBackground = False
+          ShowCaption = False
+          TabOrder = 0
+          object NextMonth: TButton
+            AlignWithMargins = True
+            Left = 90
+            Top = 15
+            Width = 25
+            Height = 0
+            Margins.Left = 5
+            Margins.Top = 0
+            Margins.Right = 30
+            Margins.Bottom = 0
+            Align = alRight
+            Caption = '>'
+            TabOrder = 0
+            OnClick = NextMonthClick
+            ExplicitLeft = 45
+            ExplicitTop = 25
+            ExplicitHeight = 10
+          end
+          object PreviousMonth: TButton
+            AlignWithMargins = True
+            Left = 45
+            Top = 15
+            Width = 25
+            Height = 0
+            Margins.Left = 30
+            Margins.Top = 0
+            Margins.Right = 5
+            Margins.Bottom = 0
+            Align = alLeft
+            Caption = '<'
+            TabOrder = 1
+            OnClick = PreviousMonthClick
+            ExplicitLeft = 20
+            ExplicitTop = 25
+            ExplicitHeight = 10
+          end
+        end
+        object ListBoxResults: TListBox
+          AlignWithMargins = True
+          Left = 15
+          Top = 15
+          Width = 306
+          Height = 30
+          Margins.Left = 0
+          Margins.Top = 0
+          Margins.Right = 10
+          Margins.Bottom = 0
+          Align = alLeft
+          BevelInner = bvNone
+          ItemHeight = 15
+          TabOrder = 1
+          Visible = False
+          ExplicitLeft = 710
+          ExplicitTop = 5
+          ExplicitHeight = 60
+        end
       end
     end
   end
