@@ -21,6 +21,8 @@ type
     procedure LoadLoginInfo;
     function IniFileName: string;
     procedure ShowCalendar;
+    function LoginIniName: string;
+    function CurrentMachineTag: string;
     private
     FAccessToken: string;
     FHttpServer: TIdHTTPServer;
@@ -241,17 +243,22 @@ begin
   end;
 end;
 
-procedure TForm1.LoadLoginInfo;
+function TForm1.LoginIniName: string;
 var
-  Ini: TIniFile;
+  Dir: string;
 begin
-  Ini := TIniFile.Create(IniFileName);
-  try
-    FAccessToken :=
-      Ini.ReadString('User', 'AccessToken', '');
-  finally
-    Ini.Free;
-  end;
+  Dir := GetEnvironmentVariable('LOCALAPPDATA'); // per-user, per-machine
+  if Dir = '' then
+    Dir := ExtractFilePath(Application.ExeName); // fallback, just in case
+  Dir := IncludeTrailingPathDelimiter(Dir) + 'Kalender';
+  ForceDirectories(Dir);
+  Result := IncludeTrailingPathDelimiter(Dir) + 'login.ini';
+end;
+
+function TForm1.CurrentMachineTag: string;
+begin
+  Result := GetEnvironmentVariable('COMPUTERNAME') + '\' +
+            GetEnvironmentVariable('USERNAME');
 end;
 
 procedure TForm1.OnResize(Sender: TObject);
@@ -275,8 +282,25 @@ var
 begin
   Ini := TIniFile.Create(IniFileName);
   try
-    Ini.WriteString('User', 'Email', AEmail);
-    Ini.WriteString('User', 'AccessToken', AAccessToken);
+    Ini.WriteString('Login', 'Token', FAccessToken);
+    Ini.WriteString('Login', 'Machine', CurrentMachineTag);
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TForm1.LoadLoginInfo;
+var
+  Ini: TIniFile;
+  SavedTag: string;
+begin
+FAccessToken := ''; // assume not logged in
+  Ini := TIniFile.Create(IniFileName);
+  try
+    SavedTag := Ini.ReadString('Login', 'Machine', '');
+    if SameText(SavedTag, CurrentMachineTag) then
+    FAccessToken :=
+      Ini.ReadString('Login', 'Token', '');
   finally
     Ini.Free;
   end;

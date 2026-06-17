@@ -20,6 +20,7 @@ type
     procedure SaveLoginInfo(const AEmail, AAccessToken: string);
     procedure LoadLoginInfo;
     function IniFileName: string;
+    procedure ShowCalendar;
     private
     FAccessToken: string;
     FHttpServer: TIdHTTPServer;
@@ -209,6 +210,18 @@ begin
 
   end;
 
+procedure TForm1.ShowCalendar;
+begin
+  if not Assigned(Form4) then
+    Form4 := TForm4.Create(Application);
+
+  Form4.AccessToken := FAccessToken;
+  Form4.RefreshCalendar;
+  Form4.Show;
+
+  Hide;   // hide the login form
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Image1.Align := alClient;
@@ -223,12 +236,8 @@ begin
 
   if FAccessToken <> '' then
   begin
-    Form4 := TForm4.Create(nil);
-    Form4.AccessToken := FAccessToken;
-    Form4.RefreshCalendar;
-    Form4.Show;
-
-    Form1.Hide;
+    Application.ShowMainForm := False;
+    ShowCalendar;
   end;
 end;
 

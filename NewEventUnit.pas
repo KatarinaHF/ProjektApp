@@ -88,7 +88,6 @@ begin
   ComboBoxSymbol.Items.Add(#$E14D);
   ComboBoxSymbol.Items.Add(#$E1D0);
   ComboBoxSymbol.Items.Add(#$E2B1);
-  ComboBoxSymbol.Items.Add(#$2708);
   ComboBoxSymbol.Items.Add(#$26F8);
   ComboBoxSymbol.Items.Add(#$E189);
   ComboBoxSymbol.Items.Add(#$2708);

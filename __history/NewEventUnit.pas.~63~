@@ -41,6 +41,7 @@ type
     procedure DateTimePickerStartChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure TimePickerStartChange(Sender: TObject);
+    procedure MemoDescriptionExit(Sender: TObject);
   private
     FAccessToken: string;
     function CreateGraphEventJson: TJSONObject;
@@ -57,9 +58,12 @@ implementation
 
 uses CalendarUnit;
 
+const DESC_PLACEHOLDER = 'Write description here...';
+
 procedure TForm2.FormCreate(Sender: TObject);
 begin
-  MemoDescription.Lines.Text := 'Write description here...';
+  MemoDescription.Lines.Text := DESC_PLACEHOLDER;
+  MemoDescription.OnExit := MemoDescriptionExit;
 
   ComboBoxCalendar.Items.Clear;
   ComboBoxCalendar.Items.Add('Work');
@@ -137,7 +141,8 @@ begin
   Result.AddPair('end', EndObj);
 
   // Beskrivelse
-  if (MemoDescription <> nil) and (MemoDescription.Text <> '') then
+  if (Trim(MemoDescription.Text) <> '') and
+     (Trim(MemoDescription.Text) <> DESC_PLACEHOLDER) then
   begin
     BodyObj := TJSONObject.Create;
     BodyObj.AddPair('contentType', 'text');
@@ -245,11 +250,16 @@ begin
 
 end;
 
-
 procedure TForm2.MemoDescriptionEnter(Sender: TObject);
 begin
-  if MemoDescription.Text = 'Write description here...' then
+  if Trim(MemoDescription.Text) = DESC_PLACEHOLDER then
     MemoDescription.Clear;
+end;
+
+procedure TForm2.MemoDescriptionExit(Sender: TObject);
+begin
+  if Trim(MemoDescription.Text) = '' then
+    MemoDescription.Lines.Text := DESC_PLACEHOLDER;
 end;
 
 // Automatically picks current date and time
@@ -260,6 +270,10 @@ begin
   DateTimePickerEnd.Date := Date;
   TimePickerStart.Time := Time;
   TimePickerEnd.Time := Time;
+
+  if Trim(MemoDescription.Text) = '' then
+  MemoDescription.Lines.Text := DESC_PLACEHOLDER;
+
 end;
 
 end.

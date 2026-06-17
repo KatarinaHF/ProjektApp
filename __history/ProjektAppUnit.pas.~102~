@@ -20,6 +20,8 @@ type
     procedure SaveLoginInfo(const AEmail, AAccessToken: string);
     procedure LoadLoginInfo;
     function IniFileName: string;
+    procedure ShowCalendar;
+    function LoginIniName: string;
     private
     FAccessToken: string;
     FHttpServer: TIdHTTPServer;
@@ -209,6 +211,18 @@ begin
 
   end;
 
+procedure TForm1.ShowCalendar;
+begin
+  if not Assigned(Form4) then
+    Form4 := TForm4.Create(Application);
+
+  Form4.AccessToken := FAccessToken;
+  Form4.RefreshCalendar;
+  Form4.Show;
+
+  Hide;   // hide the login form
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Image1.Align := alClient;
@@ -223,13 +237,21 @@ begin
 
   if FAccessToken <> '' then
   begin
-    Form4 := TForm4.Create(nil);
-    Form4.AccessToken := FAccessToken;
-    Form4.RefreshCalendar;
-    Form4.Show;
-
-    Hide;
+    Application.ShowMainForm := False;
+    ShowCalendar;
   end;
+end;
+
+function TForm1.LoginIniName: string;
+var
+  Dir: string;
+begin
+  Dir := GetEnvironmentVariable('LOCALAPPDATA'); // per-user, per-machine
+  if Dir = '' then
+    Dir := ExtractFilePath(Application.ExeName); // fallback, just in case
+  Dir := IncludeTrailingPathDelimiter(Dir) + 'Kalender';
+  ForceDirectories(Dir);
+  Result := IncludeTrailingPathDelimiter(Dir) + 'login.ini';
 end;
 
 procedure TForm1.LoadLoginInfo;
