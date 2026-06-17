@@ -352,12 +352,12 @@ end;
 
 procedure TForm4.ButtonSearchClick(Sender: TObject);
 var
-  RawJson, Key, Subject, RawDateStr, Line: string;
+  RawJson, Key, Subject, RawDateStr, Line, HName: string;
   JsonObj: TJSONObject;
   EventsArray: TJSONArray;
   EventObj: TJSONObject;
   I: Integer;
-  StartDate: TDateTime;
+  StartDate, HDate, HStart, HEnd: TDateTime;
   Body: String;
 
 begin
@@ -409,6 +409,21 @@ begin
 
           Line := FormatDateTime('yyyy-mm-dd hh:nn', StartDate) + '  ' + Subject;
           ListBoxResults.Items.AddObject(Line, TObject(NativeInt(Trunc(StartDate))));
+        end;
+
+        // also search the holidays
+        HStart := IncYear(Date, -2);
+        HEnd   := IncYear(Date,  2);
+        HDate  := HStart;
+        while HDate <= HEnd do
+        begin
+          HName := IsDateHoliday(HDate);
+          if (HName <> '') and ContainsText(HName, Key) then
+          begin
+            Line := FormatDateTime('yyyy-mm-dd', HDate) + '  ' + HName + ' (Helligdag)';
+            ListBoxResults.Items.AddObject(Line, TObject(NativeInt(Trunc(HDate))));
+          end;
+          HDate := HDate + 1;
         end;
 
         ListBoxResults.Visible := ListBoxResults.Items.Count > 0;

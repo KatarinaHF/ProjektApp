@@ -177,6 +177,7 @@ type
     EditSearch: TEdit;
     ListBoxResults: TListBox;
     PanelRightFiller: TPanel;
+    ButtonLogOut: TButton;
     procedure PanelCalendarResize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
@@ -191,6 +192,7 @@ type
     procedure HoverTimerTimer(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ButtonChangeViewClick(Sender: TObject);
+    procedure ButtonLogOutClick(Sender: TObject);
   private
     DayPanels: array[1..42] of TPanel;
     DayMemos: array[1..42] of TMemo;
@@ -230,7 +232,7 @@ implementation
 
 {$R *.dfm}
 
-uses NewEventUnit, EventDetailsUnit, ChangeViewUnit;
+uses NewEventUnit, EventDetailsUnit, ChangeViewUnit, ProjektAppUnit;
 
   type
   TCalendarEvent = record
@@ -350,12 +352,12 @@ end;
 
 procedure TForm4.ButtonSearchClick(Sender: TObject);
 var
-  RawJson, Key, Subject, RawDateStr, Line: string;
+  RawJson, Key, Subject, RawDateStr, Line, HName: string;
   JsonObj: TJSONObject;
   EventsArray: TJSONArray;
   EventObj: TJSONObject;
   I: Integer;
-  StartDate: TDateTime;
+  StartDate, HDate, HStart, HEnd: TDateTime;
   Body: String;
 
 begin
@@ -526,10 +528,10 @@ begin
 
   if VisibleCols = 0 then VisibleCols := 1;
 
-  // 2. Beregn bredden
+  // 2. Beregn bredden (kun baseret på dem, der rent faktisk skal ses)
   ColW := PanelCalendar.ClientWidth div VisibleCols;
 
-  // 3. Flyt og juster ugedags-panelerne
+  // 3. Flyt, juster ELLER SKJUL ugedags-panelerne benhårdt
   CurrentLeft := 0;
   for I := 1 to 7 do
   begin
@@ -543,7 +545,32 @@ begin
   end;
 
   // 4. Placer cellerne (denne skjuler nu også de deaktiverede dage)
-  PositionDayCells;
+  // 4. Placer cellerne (denne skjuler nu også de deaktiverede dage)
+  // Vi pakker det ind i et tjek for at undgå Access Violation under opstart
+  if Assigned(DayPanels[1]) then
+    PositionDayCells;
+
+  // --- DEN BOMBESIKRE FIX MED SIKKERHEDSTJEK: ---
+  for I := 1 to 7 do
+  begin
+    if not Cols[I].Visible then
+    begin
+      Cols[I].Width := 0; // Gør hele ugedagskolonnen usynlig i bredden
+
+      var r, idx: Integer;
+      for r := 1 to 6 do
+      begin
+        idx := (r - 1) * 7 + I;
+
+        // SIKKERHEDSTJEK: Vi må KUN ændre på cellen, hvis den rent faktisk ER oprettet!
+        if (idx >= 1) and (idx <= 42) and Assigned(DayPanels[idx]) then
+        begin
+          DayPanels[idx].Width := 0;
+          DayPanels[idx].Left := -9999; // Flyt dem langt uden for skærmområdet
+        end;
+      end;
+    end;
+  end;
 
   // 5. TVING Windows til grafisk at fjerne alt gammelt rod
   PanelCalendar.Invalidate;
@@ -746,7 +773,7 @@ begin
          (AMonth = MonthOf(Date)) and
          (DayNum = DayOf(Date)) then
       begin
-        DayPanels[GridIndex].Color := clMoneyGreen;
+        DayPanels[GridIndex].Color := $D3F0D3;
         DayLabels[GridIndex].Font.Style := [fsBold];
       end;
 
@@ -784,7 +811,7 @@ end;
 
 procedure TForm4.ButtonChangeViewClick(Sender: TObject);
 begin
-  // Synkroniser checkboxes med nuværende visning inden åbning
+  // 1. Vis krydserne i Form5 baseret på, hvordan kalenderen ser ud LIGE NU
   Form5.CheckBoxMonday.Checked    := PanelMandag.Visible;
   Form5.CheckBoxTuesday.Checked   := PanelTirsdag.Visible;
   Form5.CheckBoxWednesday.Checked := PanelOnsdag.Visible;
@@ -793,14 +820,44 @@ begin
   Form5.CheckBoxSaturday.Checked  := PanelLørdag.Visible;
   Form5.CheckBoxSunday.Checked    := PanelSøndag.Visible;
 
-  // Vis vinduet og VENT her indtil de trykker Gem eller lukker
+  // 2. Vis Form5 som et "Modal" vindue, og VENT her i koden til de trykker Gem (mrOk)
   if Form5.ShowModal = mrOk then
   begin
-    // Koden herunder kører FØRST når der er trykket på "Gem" knappen!
-    RefreshCalendar;
+    // DENNE KODE KØRER FØRST, NÅR DER KLIKKES PÅ GEM!
+
+    // 3. Hent de nye indstillinger direkte fra Form5's CheckBoxes ind i Form4
+    PanelMandag.Visible  := Form5.CheckBoxMonday.Checked;
+    PanelTirsdag.Visible := Form5.CheckBoxTuesday.Checked;
+    PanelOnsdag.Visible  := Form5.CheckBoxWednesday.Checked;
+    PanelTorsdag.Visible := Form5.CheckBoxThursday.Checked;
+    PanelFredag.Visible  := Form5.CheckBoxFriday.Checked;
+    PanelLørdag.Visible  := Form5.CheckBoxSaturday.Checked;
+    PanelSøndag.Visible  := Form5.CheckBoxSunday.Checked;
+
+    // 4. Kør din genberegning af kolonner (den med bredde = 0 og -9999)
+    PanelCalendarResize(Self);
+
+    // 5. Genbyg kalenderens tal og felter
+    BuildCalendar(FCurrentYear, FCurrentMonth);
   end;
 end;
 
+
+procedure TForm4.ButtonLogOutClick(Sender: TObject);
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(IniFileName);
+  try
+    Ini.DeleteKey('Login', 'Token');
+
+  finally
+    Ini.Free;
+  end;
+
+  Form4.Hide;
+  Form1.WindowState := wsMaximized;
+end;
 
 procedure TForm4.ButtonNewEventClick(Sender: TObject);
 begin
