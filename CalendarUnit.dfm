@@ -2430,6 +2430,23 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 0
+        object ButtonLogOut: TButton
+          AlignWithMargins = True
+          Left = 0
+          Top = 20
+          Width = 140
+          Height = 30
+          Margins.Left = 0
+          Margins.Top = 20
+          Margins.Right = 10
+          Margins.Bottom = 20
+          Align = alLeft
+          Caption = 'Log Out'
+          TabOrder = 0
+          OnClick = ButtonLogOutClick
+          ExplicitLeft = 8
+          ExplicitTop = 28
+        end
       end
       object PanelRightFiller: TPanel
         Left = 570

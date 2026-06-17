@@ -177,6 +177,7 @@ type
     EditSearch: TEdit;
     ListBoxResults: TListBox;
     PanelRightFiller: TPanel;
+    ButtonLogOut: TButton;
     procedure PanelCalendarResize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
@@ -191,6 +192,7 @@ type
     procedure HoverTimerTimer(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ButtonChangeViewClick(Sender: TObject);
+    procedure ButtonLogOutClick(Sender: TObject);
   private
     DayPanels: array[1..42] of TPanel;
     DayMemos: array[1..42] of TMemo;
@@ -230,7 +232,7 @@ implementation
 
 {$R *.dfm}
 
-uses NewEventUnit, EventDetailsUnit, ChangeViewUnit;
+uses NewEventUnit, EventDetailsUnit, ChangeViewUnit, ProjektAppUnit;
 
   type
   TCalendarEvent = record
@@ -840,6 +842,22 @@ begin
   end;
 end;
 
+
+procedure TForm4.ButtonLogOutClick(Sender: TObject);
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(IniFileName);
+  try
+    Ini.DeleteKey('Login', 'Token');
+
+  finally
+    Ini.Free;
+  end;
+
+  Form4.Hide;
+  Form1.WindowState := wsMaximized;
+end;
 
 procedure TForm4.ButtonNewEventClick(Sender: TObject);
 begin

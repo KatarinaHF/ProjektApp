@@ -50,16 +50,18 @@ object Form1: TForm1
     TabOrder = 0
     object LogInButton: TButton
       AlignWithMargins = True
-      Left = 275
+      Left = 0
       Top = 3
-      Width = 154
+      Width = 704
       Height = 118
-      Margins.Left = 275
-      Margins.Right = 275
+      Margins.Left = 0
+      Margins.Right = 0
       Align = alClient
       Caption = 'Log In'
       TabOrder = 0
       OnClick = LogInClick
+      ExplicitLeft = 275
+      ExplicitWidth = 154
     end
   end
 end

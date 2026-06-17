@@ -22,8 +22,8 @@ object Form5: TForm5
     ParentBackground = False
     ShowCaption = False
     TabOrder = 0
-    ExplicitWidth = 534
-    ExplicitHeight = 450
+    ExplicitWidth = 478
+    ExplicitHeight = 244
     object PanelTitleView: TPanel
       Left = 1
       Top = 1
@@ -40,6 +40,7 @@ object Form5: TForm5
       ParentBackground = False
       ParentFont = False
       TabOrder = 0
+      ExplicitWidth = 476
     end
     object PanelChooseAll: TPanel
       Left = 1
@@ -53,7 +54,7 @@ object Form5: TForm5
       ParentBackground = False
       ShowCaption = False
       TabOrder = 1
-      ExplicitTop = 195
+      ExplicitWidth = 476
       object ButtonChooseAll: TButton
         AlignWithMargins = True
         Left = 30
@@ -65,12 +66,9 @@ object Form5: TForm5
         Margins.Right = 30
         Margins.Bottom = 20
         Align = alLeft
-        Caption = 'Choose all days'
+        Caption = 'Choose All Days'
         TabOrder = 0
         OnClick = ButtonChooseAllClick
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitHeight = 71
       end
       object ButtonCheckWeekdays: TButton
         AlignWithMargins = True
@@ -83,10 +81,10 @@ object Form5: TForm5
         Margins.Right = 30
         Margins.Bottom = 20
         Align = alRight
-        Caption = 'Choose weekdays'
+        Caption = 'Choose Weekdays'
         TabOrder = 1
         OnClick = ButtonCheckWeekdaysClick
-        ExplicitLeft = 332
+        ExplicitLeft = 285
       end
     end
     object PanelChooseDays: TPanel
@@ -104,10 +102,8 @@ object Form5: TForm5
       ParentBackground = False
       ShowCaption = False
       TabOrder = 2
-      ExplicitLeft = 192
-      ExplicitTop = 184
-      ExplicitWidth = 185
-      ExplicitHeight = 41
+      ExplicitWidth = 470
+      ExplicitHeight = 26
       object PanelCheckMonday: TPanel
         Left = 0
         Top = 0
@@ -120,7 +116,7 @@ object Form5: TForm5
         ParentBackground = False
         ShowCaption = False
         TabOrder = 0
-        ExplicitHeight = 139
+        ExplicitHeight = 26
         object LabelCheckMonday: TLabel
           Left = 0
           Top = 0
@@ -142,9 +138,6 @@ object Form5: TForm5
           Color = clWhite
           ParentColor = False
           TabOrder = 0
-          ExplicitLeft = 0
-          ExplicitTop = 15
-          ExplicitWidth = 68
         end
       end
       object PanelCheckTuesday: TPanel
@@ -158,9 +151,7 @@ object Form5: TForm5
         ParentColor = True
         ShowCaption = False
         TabOrder = 1
-        ExplicitLeft = 128
-        ExplicitTop = 6
-        ExplicitHeight = 139
+        ExplicitHeight = 26
         object LabelCheckTuesday: TLabel
           Left = 0
           Top = 0
@@ -193,8 +184,7 @@ object Form5: TForm5
         ParentColor = True
         ShowCaption = False
         TabOrder = 2
-        ExplicitLeft = 236
-        ExplicitHeight = 139
+        ExplicitHeight = 26
         object LabelCheckWednesday: TLabel
           Left = 0
           Top = 0
@@ -227,8 +217,7 @@ object Form5: TForm5
         ParentColor = True
         ShowCaption = False
         TabOrder = 3
-        ExplicitLeft = 278
-        ExplicitHeight = 139
+        ExplicitHeight = 26
         object LabelCheckThursday: TLabel
           Left = 0
           Top = 0
@@ -261,9 +250,7 @@ object Form5: TForm5
         ParentColor = True
         ShowCaption = False
         TabOrder = 4
-        ExplicitLeft = 364
-        ExplicitTop = 6
-        ExplicitHeight = 139
+        ExplicitHeight = 26
         object LabelCheckFriday: TLabel
           Left = 0
           Top = 0
@@ -296,8 +283,7 @@ object Form5: TForm5
         ParentColor = True
         ShowCaption = False
         TabOrder = 5
-        ExplicitLeft = 396
-        ExplicitHeight = 139
+        ExplicitHeight = 26
         object LabelCheckSaturday: TLabel
           Left = 0
           Top = 0
@@ -330,8 +316,7 @@ object Form5: TForm5
         ParentColor = True
         ShowCaption = False
         TabOrder = 6
-        ExplicitLeft = 411
-        ExplicitHeight = 139
+        ExplicitHeight = 26
         object LabelCheckSunday: TLabel
           Left = 0
           Top = 0
@@ -366,7 +351,8 @@ object Form5: TForm5
       ParentBackground = False
       ShowCaption = False
       TabOrder = 3
-      ExplicitTop = 50
+      ExplicitTop = 172
+      ExplicitWidth = 476
       object ButtonCheckSave: TButton
         AlignWithMargins = True
         Left = 343
@@ -378,9 +364,10 @@ object Form5: TForm5
         Margins.Right = 20
         Margins.Bottom = 20
         Align = alRight
-        Caption = 'Save changes'
+        Caption = 'Save Changes'
         TabOrder = 0
         OnClick = ButtonCheckSaveClick
+        ExplicitLeft = 337
       end
     end
   end
