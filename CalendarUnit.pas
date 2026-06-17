@@ -5,8 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, DateUtils, System.JSON, System.Net.HttpClient,
-  System.Net.URLClient, System.IniFiles, NewEventUnit, EventDetailsUnit, System.StrUtils,
-  System.NetEncoding, ChangeViewUnit;
+  System.Net.URLClient, System.IniFiles, System.StrUtils, System.NetEncoding;
 
 type
   TForm4 = class(TForm)
@@ -231,6 +230,8 @@ implementation
 
 {$R *.dfm}
 
+uses NewEventUnit, EventDetailsUnit, ChangeViewUnit;
+
   type
   TCalendarEvent = record
     EventDate: TDate;
@@ -272,6 +273,15 @@ begin
     Ini.WriteBool('Window', 'CheckBoxWork', CheckBoxWork.Checked);
     Ini.WriteBool('Window', 'CheckBoxPrivate', CheckBoxPrivate.Checked);
     Ini.WriteBool('Window', 'CheckBoxHolidays', CheckBoxHolidays.Checked);
+
+    Ini.WriteBool('ViewDays', 'Monday', PanelMandag.Visible);
+    Ini.WriteBool('ViewDays', 'Tuesday', PanelTirsdag.Visible);
+    Ini.WriteBool('ViewDays', 'Wednesday', PanelOnsdag.Visible);
+    Ini.WriteBool('ViewDays', 'Thursday', PanelTorsdag.Visible);
+    Ini.WriteBool('ViewDays', 'Friday', PanelFredag.Visible);
+    Ini.WriteBool('ViewDays', 'Saturday', PanelLørdag.Visible);
+    Ini.WriteBool('ViewDays', 'Sunday', PanelSøndag.Visible);
+
   finally
     Ini.Free;
   end;
@@ -294,6 +304,17 @@ begin
     CheckBoxWork.Checked := Ini.ReadBool('Window', 'CheckBoxWork', True);
     CheckBoxPrivate.Checked := Ini.ReadBool('Window', 'CheckBoxPrivate', True);
     CheckBoxHolidays.Checked := Ini.ReadBool('Window', 'CheckBoxHolidays', True);
+
+    PanelMandag.Visible  := Ini.ReadBool('ViewDays', 'Monday', True);
+    PanelTirsdag.Visible := Ini.ReadBool('ViewDays', 'Tuesday', True);
+    PanelOnsdag.Visible  := Ini.ReadBool('ViewDays', 'Wednesday', True);
+    PanelTorsdag.Visible := Ini.ReadBool('ViewDays', 'Thursday', True);
+    PanelFredag.Visible  := Ini.ReadBool('ViewDays', 'Friday', True);
+    PanelLørdag.Visible  := Ini.ReadBool('ViewDays', 'Saturday', True);
+    PanelSøndag.Visible  := Ini.ReadBool('ViewDays', 'Sunday', True);
+
+    // 3. Tving kalenderen til at rykke kolonnerne sammen baseret på det hentede
+    PanelCalendarResize(Self);
   finally
     Ini.Free;
   end;
@@ -448,40 +469,109 @@ begin
   Cols[7] := PanelSøndag;
 
   if FRowCount < 1 then FRowCount := 6;
-  HeaderH := PanelMondayName.Height;   // weekday-name header inside each column
+  HeaderH := PanelMondayName.Height;
 
   for c := 1 to 7 do
   begin
     Col := Cols[c];
+
+    // HVIS KOLONNEN ER SKJULT, SKAL ALLE DENS CELLER SKJULES OG SPRINGES OVER!
+    if not Col.Visible then
+    begin
+      for r := 1 to 6 do
+      begin
+        idx := (r - 1) * 7 + c;
+        DayPanels[idx].Visible := False;
+      end;
+      Continue; // Hop videre til næste ugedag
+    end;
+
+    // Hvis kolonnen ER synlig, placerer vi cellerne præcis som før
     CellH := (Col.ClientHeight - HeaderH) div FRowCount;
     for r := 1 to 6 do
     begin
       idx := (r - 1) * 7 + c;
-      DayPanels[idx].Align   := alNone;
-      DayPanels[idx].Parent  := Col;
-      DayPanels[idx].Left    := 0;
-      DayPanels[idx].Width   := Col.ClientWidth;
-      DayPanels[idx].Top     := HeaderH + (r - 1) * CellH;
-      DayPanels[idx].Height  := CellH;
-      DayPanels[idx].Visible := (r <= FRowCount);  // hide unused bottom rows
+      DayPanels[idx].Align  := alNone;
+      DayPanels[idx].Parent := Col;
+      DayPanels[idx].Left   := 0;
+      DayPanels[idx].Width  := Col.ClientWidth;
+      DayPanels[idx].Top    := HeaderH + (r - 1) * CellH;
+      DayPanels[idx].Height := CellH;
+      DayPanels[idx].Visible := (r <= FRowCount);
     end;
   end;
 end;
 
 procedure TForm4.PanelCalendarResize(Sender: TObject);
 var
+  Cols: array[1..7] of TPanel;
   ColW: Integer;
+  VisibleCols: Integer;
+  I: Integer;
+  CurrentLeft: Integer;
 begin
-  ColW := PanelCalendar.Width div 7;
-  PanelMandag.Width  := ColW;
-  PanelTirsdag.Width := ColW;
-  PanelOnsdag.Width  := ColW;
-  PanelTorsdag.Width := ColW;
-  PanelFredag.Width  := ColW;
-  PanelLørdag.Width  := ColW;
-  PanelSøndag.Width  := ColW;
+  Cols[1] := PanelMandag;
+  Cols[2] := PanelTirsdag;
+  Cols[3] := PanelOnsdag;
+  Cols[4] := PanelTorsdag;
+  Cols[5] := PanelFredag;
+  Cols[6] := PanelLørdag;
+  Cols[7] := PanelSøndag;
 
-  PositionDayCells;
+  // 1. Tæl de synlige kolonner
+  VisibleCols := 0;
+  for I := 1 to 7 do
+    if Cols[I].Visible then
+      Inc(VisibleCols);
+
+  if VisibleCols = 0 then VisibleCols := 1;
+
+  // 2. Beregn bredden (kun baseret på dem, der rent faktisk skal ses)
+  ColW := PanelCalendar.ClientWidth div VisibleCols;
+
+  // 3. Flyt, juster ELLER SKJUL ugedags-panelerne benhårdt
+  CurrentLeft := 0;
+  for I := 1 to 7 do
+  begin
+    if Cols[I].Visible then
+    begin
+      Cols[I].Left := CurrentLeft;
+      Cols[I].Width := ColW;
+      Cols[I].Height := PanelCalendar.ClientHeight;
+      CurrentLeft := CurrentLeft + ColW;
+    end;
+  end;
+
+  // 4. Placer cellerne (denne skjuler nu også de deaktiverede dage)
+  // 4. Placer cellerne (denne skjuler nu også de deaktiverede dage)
+  // Vi pakker det ind i et tjek for at undgå Access Violation under opstart
+  if Assigned(DayPanels[1]) then
+    PositionDayCells;
+
+  // --- DEN BOMBESIKRE FIX MED SIKKERHEDSTJEK: ---
+  for I := 1 to 7 do
+  begin
+    if not Cols[I].Visible then
+    begin
+      Cols[I].Width := 0; // Gør hele ugedagskolonnen usynlig i bredden
+
+      var r, idx: Integer;
+      for r := 1 to 6 do
+      begin
+        idx := (r - 1) * 7 + I;
+
+        // SIKKERHEDSTJEK: Vi må KUN ændre på cellen, hvis den rent faktisk ER oprettet!
+        if (idx >= 1) and (idx <= 42) and Assigned(DayPanels[idx]) then
+        begin
+          DayPanels[idx].Width := 0;
+          DayPanels[idx].Left := -9999; // Flyt dem langt uden for skærmområdet
+        end;
+      end;
+    end;
+  end;
+
+  // 5. TVING Windows til grafisk at fjerne alt gammelt rod
+  PanelCalendar.Invalidate;
 end;
 
 function TForm4.IsCategoryVisible(const Category: string): Boolean;
@@ -651,34 +741,44 @@ begin
   LastIndex := StartPos + DaysInMonthCount - 1;   // last filled cell (1..42)
   FRowCount := (LastIndex + 6) div 7;
 
-  PositionDayCells;
-
+  // --- LOGIK-LØKKEN KØRER FØRST NU ---
   GridIndex := StartPos;
 
   for DayNum := 1 to DaysInMonthCount do
   begin
-    DayPanels[GridIndex].Visible := True;
-    DayLabels[GridIndex].Caption := IntToStr(DayNum);
-
-    DayPanels[GridIndex].Color := clWhite;
-    DayLabels[GridIndex].Font.Style := [];
-
-    // Markér dagens dato
-    if (AYear = YearOf(Date)) and
-     (AMonth = MonthOf(Date)) and
-     (DayNum = DayOf(Date)) then
-    begin
-      DayPanels[GridIndex].Color := clMoneyGreen;
-      DayLabels[GridIndex].Font.Style := [fsBold];
+    // Find ud af om cellen må vises baseret på ugedags-panelets synlighed
+    case (GridIndex - 1) mod 7 of
+      0: DayPanels[GridIndex].Visible := PanelMandag.Visible;
+      1: DayPanels[GridIndex].Visible := PanelTirsdag.Visible;
+      2: DayPanels[GridIndex].Visible := PanelOnsdag.Visible;
+      3: DayPanels[GridIndex].Visible := PanelTorsdag.Visible;
+      4: DayPanels[GridIndex].Visible := PanelFredag.Visible;
+      5: DayPanels[GridIndex].Visible := PanelLørdag.Visible;
+      6: DayPanels[GridIndex].Visible := PanelSøndag.Visible;
+    else
+      DayPanels[GridIndex].Visible := True;
     end;
 
-    CheckDate := EncodeDate(AYear, AMonth, DayNum);
-
-    DayLabels[GridIndex].Font.Color := clBlack;
-
+    // Hvis ugedagen ER synlig, fylder vi data i den
+    if DayPanels[GridIndex].Visible then
     begin
-      CurrentDate := EncodeDate(AYear, AMonth, DayNum);
+      DayLabels[GridIndex].Caption := IntToStr(DayNum);
+      DayPanels[GridIndex].Color := clWhite;
+      DayLabels[GridIndex].Font.Style := [];
 
+      // Markér dagens dato
+      if (AYear = YearOf(Date)) and
+         (AMonth = MonthOf(Date)) and
+         (DayNum = DayOf(Date)) then
+      begin
+        DayPanels[GridIndex].Color := clMoneyGreen;
+        DayLabels[GridIndex].Font.Style := [fsBold];
+      end;
+
+      CheckDate := EncodeDate(AYear, AMonth, DayNum);
+      DayLabels[GridIndex].Font.Color := clBlack;
+
+      CurrentDate := EncodeDate(AYear, AMonth, DayNum);
       HolidayName := IsDateHoliday(CurrentDate);
 
       if HolidayName <> '' then
@@ -690,14 +790,17 @@ begin
           AddEvent(DayNum, HolidayName, 'Holiday');
 
           DayDetails[GridIndex] :=
-          DayDetails[GridIndex] +
-          'Holiday' + #1 + HolidayName + sLineBreak;
+            DayDetails[GridIndex] +
+            'Holiday' + #1 + HolidayName + sLineBreak;
         end;
       end;
     end;
 
     Inc(GridIndex);
   end;
+
+  // --- FLYTTET HERTIL: NU PLACERER VI DE CELLER, DER SKAL VISES ---
+  PositionDayCells;
 
   // This automatically pulls down fresh API events every time the grid builds
   if FAccessToken <> '' then
@@ -706,7 +809,35 @@ end;
 
 procedure TForm4.ButtonChangeViewClick(Sender: TObject);
 begin
-  Form5.Show;
+  // 1. Vis krydserne i Form5 baseret på, hvordan kalenderen ser ud LIGE NU
+  Form5.CheckBoxMonday.Checked    := PanelMandag.Visible;
+  Form5.CheckBoxTuesday.Checked   := PanelTirsdag.Visible;
+  Form5.CheckBoxWednesday.Checked := PanelOnsdag.Visible;
+  Form5.CheckBoxThursday.Checked  := PanelTorsdag.Visible;
+  Form5.CheckBoxFriday.Checked    := PanelFredag.Visible;
+  Form5.CheckBoxSaturday.Checked  := PanelLørdag.Visible;
+  Form5.CheckBoxSunday.Checked    := PanelSøndag.Visible;
+
+  // 2. Vis Form5 som et "Modal" vindue, og VENT her i koden til de trykker Gem (mrOk)
+  if Form5.ShowModal = mrOk then
+  begin
+    // DENNE KODE KØRER FØRST, NÅR DER KLIKKES PÅ GEM!
+
+    // 3. Hent de nye indstillinger direkte fra Form5's CheckBoxes ind i Form4
+    PanelMandag.Visible  := Form5.CheckBoxMonday.Checked;
+    PanelTirsdag.Visible := Form5.CheckBoxTuesday.Checked;
+    PanelOnsdag.Visible  := Form5.CheckBoxWednesday.Checked;
+    PanelTorsdag.Visible := Form5.CheckBoxThursday.Checked;
+    PanelFredag.Visible  := Form5.CheckBoxFriday.Checked;
+    PanelLørdag.Visible  := Form5.CheckBoxSaturday.Checked;
+    PanelSøndag.Visible  := Form5.CheckBoxSunday.Checked;
+
+    // 4. Kør din genberegning af kolonner (den med bredde = 0 og -9999)
+    PanelCalendarResize(Self);
+
+    // 5. Genbyg kalenderens tal og felter
+    BuildCalendar(FCurrentYear, FCurrentMonth);
+  end;
 end;
 
 

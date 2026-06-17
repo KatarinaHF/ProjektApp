@@ -1,0 +1,104 @@
+unit ChangeViewUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+
+type
+  TForm5 = class(TForm)
+    PanelMain: TPanel;
+    PanelTitleView: TPanel;
+    PanelChooseAll: TPanel;
+    PanelChooseDays: TPanel;
+    ButtonChooseAll: TButton;
+    PanelCheckMonday: TPanel;
+    CheckBoxMonday: TCheckBox;
+    LabelCheckMonday: TLabel;
+    PanelCheckTuesday: TPanel;
+    LabelCheckTuesday: TLabel;
+    CheckBoxTuesday: TCheckBox;
+    PanelCheckWednesday: TPanel;
+    LabelCheckWednesday: TLabel;
+    CheckBoxWednesday: TCheckBox;
+    PanelCheckThursday: TPanel;
+    LabelCheckThursday: TLabel;
+    CheckBoxThursday: TCheckBox;
+    PanelCheckFriday: TPanel;
+    LabelCheckFriday: TLabel;
+    CheckBoxFriday: TCheckBox;
+    PanelCheckSaturday: TPanel;
+    LabelCheckSaturday: TLabel;
+    CheckBoxSaturday: TCheckBox;
+    PanelCheckSunday: TPanel;
+    LabelCheckSunday: TLabel;
+    CheckBoxSunday: TCheckBox;
+    PanelCheckSave: TPanel;
+    ButtonCheckSave: TButton;
+    ButtonCheckWeekdays: TButton;
+    procedure ButtonChooseAllClick(Sender: TObject);
+    procedure ButtonCheckWeekdaysClick(Sender: TObject);
+    procedure ButtonCheckSaveClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form5: TForm5;
+
+implementation
+
+{$R *.dfm}
+
+uses CalendarUnit;
+
+procedure TForm5.ButtonCheckSaveClick(Sender: TObject);
+begin
+  if not Assigned(Form4) then
+  begin
+    ModalResult := mrCancel; // Lukker vinduet, hvis Form4 mangler
+    Exit;
+  end;
+
+  // Sæt synligheden af kolonnerne i Form4 baseret på jeres CheckBoxes
+  Form4.PanelMandag.Visible  := CheckBoxMonday.Checked;
+  Form4.PanelTirsdag.Visible := CheckBoxTuesday.Checked;
+  Form4.PanelOnsdag.Visible  := CheckBoxWednesday.Checked;
+  Form4.PanelTorsdag.Visible := CheckBoxThursday.Checked;
+  Form4.PanelFredag.Visible  := CheckBoxFriday.Checked;
+  Form4.PanelLørdag.Visible  := CheckBoxSaturday.Checked;
+  Form4.PanelSøndag.Visible  := CheckBoxSunday.Checked;
+
+  // Tving Form4 til at genberegne bredden på de synlige kolonner
+  Form4.PanelCalendarResize(Form4);
+
+  // ERSTAT "Hide;" MED DENNE LINJE:
+  ModalResult := mrOk;
+end;
+
+procedure TForm5.ButtonCheckWeekdaysClick(Sender: TObject);
+begin
+  CheckboxMonday.Checked := True;
+  CheckboxTuesday.Checked := True;
+  CheckboxWednesday.Checked := True;
+  CheckboxThursday.Checked := True;
+  CheckboxFriday.Checked := True;
+  CheckboxSaturday.Checked := False;
+  CheckboxSunday.Checked := False;
+end;
+
+procedure TForm5.ButtonChooseAllClick(Sender: TObject);
+begin
+  CheckboxMonday.Checked := True;
+  CheckboxTuesday.Checked := True;
+  CheckboxWednesday.Checked := True;
+  CheckboxThursday.Checked := True;
+  CheckboxFriday.Checked := True;
+  CheckboxSaturday.Checked := True;
+  CheckboxSunday.Checked := True;
+end;
+
+end.

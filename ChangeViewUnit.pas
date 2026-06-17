@@ -37,6 +37,9 @@ type
     PanelCheckSave: TPanel;
     ButtonCheckSave: TButton;
     ButtonCheckWeekdays: TButton;
+    procedure ButtonChooseAllClick(Sender: TObject);
+    procedure ButtonCheckWeekdaysClick(Sender: TObject);
+    procedure ButtonCheckSaveClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -50,5 +53,33 @@ implementation
 
 {$R *.dfm}
 
+uses CalendarUnit;
+
+procedure TForm5.ButtonCheckSaveClick(Sender: TObject);
+begin
+  ModalResult := mrOk;
+end;
+
+procedure TForm5.ButtonCheckWeekdaysClick(Sender: TObject);
+begin
+  CheckboxMonday.Checked := True;
+  CheckboxTuesday.Checked := True;
+  CheckboxWednesday.Checked := True;
+  CheckboxThursday.Checked := True;
+  CheckboxFriday.Checked := True;
+  CheckboxSaturday.Checked := False;
+  CheckboxSunday.Checked := False;
+end;
+
+procedure TForm5.ButtonChooseAllClick(Sender: TObject);
+begin
+  CheckboxMonday.Checked := True;
+  CheckboxTuesday.Checked := True;
+  CheckboxWednesday.Checked := True;
+  CheckboxThursday.Checked := True;
+  CheckboxFriday.Checked := True;
+  CheckboxSaturday.Checked := True;
+  CheckboxSunday.Checked := True;
+end;
 
 end.

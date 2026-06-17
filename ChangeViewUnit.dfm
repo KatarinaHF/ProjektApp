@@ -67,6 +67,7 @@ object Form5: TForm5
         Align = alLeft
         Caption = 'Choose all days'
         TabOrder = 0
+        OnClick = ButtonChooseAllClick
         ExplicitLeft = 0
         ExplicitTop = 0
         ExplicitHeight = 71
@@ -84,6 +85,7 @@ object Form5: TForm5
         Align = alRight
         Caption = 'Choose weekdays'
         TabOrder = 1
+        OnClick = ButtonCheckWeekdaysClick
         ExplicitLeft = 332
       end
     end
@@ -378,6 +380,7 @@ object Form5: TForm5
         Align = alRight
         Caption = 'Save changes'
         TabOrder = 0
+        OnClick = ButtonCheckSaveClick
       end
     end
   end
