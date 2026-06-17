@@ -2328,7 +2328,6 @@
       Height = 71
       Align = alTop
       BevelOuter = bvNone
-      BorderWidth = 20
       Caption = 'PanelTopButtons'
       Color = clWhite
       ParentBackground = False
@@ -2336,14 +2335,15 @@
       TabOrder = 0
       ExplicitWidth = 1011
       object ButtonSearch: TButton
-        Left = 861
+        AlignWithMargins = True
+        Left = 881
         Top = 20
         Width = 140
         Height = 31
         Margins.Left = 0
-        Margins.Top = 0
+        Margins.Top = 20
         Margins.Right = 0
-        Margins.Bottom = 0
+        Margins.Bottom = 20
         Align = alRight
         Caption = 'Search'
         TabOrder = 0
@@ -2351,46 +2351,51 @@
       end
       object ButtonChangeView: TButton
         AlignWithMargins = True
-        Left = 180
+        Left = 160
         Top = 20
         Width = 140
         Height = 31
         Margins.Left = 10
-        Margins.Top = 0
+        Margins.Top = 20
         Margins.Right = 0
-        Margins.Bottom = 0
+        Margins.Bottom = 20
         Align = alLeft
         Caption = 'Change View'
         TabOrder = 1
+        ExplicitLeft = 180
       end
       object ButtonNewEvent: TButton
         AlignWithMargins = True
-        Left = 20
+        Left = 0
         Top = 20
         Width = 140
         Height = 31
         Margins.Left = 0
-        Margins.Top = 0
+        Margins.Top = 20
         Margins.Right = 10
-        Margins.Bottom = 0
+        Margins.Bottom = 20
         Align = alLeft
         Caption = 'New Event'
         TabOrder = 2
         OnClick = ButtonNewEventClick
+        ExplicitLeft = 20
       end
       object EditSearch: TEdit
         AlignWithMargins = True
-        Left = 620
-        Top = 23
-        Width = 231
-        Height = 25
-        Margins.Left = 300
+        Left = 605
+        Top = 20
+        Width = 266
+        Height = 31
+        Margins.Left = 500
+        Margins.Top = 20
         Margins.Right = 10
-        Align = alClient
+        Margins.Bottom = 20
+        Align = alRight
+        Constraints.MaxWidth = 300
+        Constraints.MinWidth = 150
         TabOrder = 3
         TextHint = 'Search events... '
-        ExplicitWidth = 221
-        ExplicitHeight = 23
+        ExplicitLeft = 671
       end
     end
     object PanelMonth: TPanel
@@ -2400,7 +2405,6 @@
       Height = 70
       Align = alTop
       BevelOuter = bvNone
-      BorderWidth = 5
       Caption = 'Panel1'
       Color = clWhite
       ParentBackground = False
@@ -2409,10 +2413,10 @@
       ExplicitWidth = 1011
       object LabelMonth: TLabel
         AlignWithMargins = True
-        Left = 438
-        Top = 8
-        Width = 145
-        Height = 54
+        Left = 453
+        Top = 3
+        Width = 114
+        Height = 64
         Align = alClient
         Alignment = taCenter
         Caption = 'Month'
@@ -2430,103 +2434,107 @@
         ExplicitHeight = 52
       end
       object PanelFiller: TPanel
-        Left = 5
-        Top = 5
-        Width = 430
-        Height = 60
+        Left = 0
+        Top = 0
+        Width = 450
+        Height = 70
         Align = alLeft
         BevelOuter = bvNone
-        BorderWidth = 15
         Caption = 'Panel1'
         Color = clWhite
         ParentBackground = False
         ShowCaption = False
         TabOrder = 0
+        ExplicitLeft = 5
+        ExplicitTop = 5
+        ExplicitHeight = 60
       end
       object PanelRightFiller: TPanel
-        Left = 586
-        Top = 5
-        Width = 430
-        Height = 60
+        Left = 570
+        Top = 0
+        Width = 451
+        Height = 70
         Align = alRight
         BevelOuter = bvNone
-        BorderWidth = 15
         Caption = 'PanelRightFiller'
         Color = clWhite
         ParentBackground = False
         ShowCaption = False
         TabOrder = 1
+        ExplicitLeft = 566
+        ExplicitTop = 5
+        ExplicitHeight = 60
         object PanelArrowButtons: TPanel
-          AlignWithMargins = True
-          Left = 322
-          Top = 15
-          Width = 90
-          Height = 30
-          Margins.Left = 15
+          Left = 311
+          Top = 0
+          Width = 140
+          Height = 70
+          Margins.Left = 0
           Margins.Top = 0
+          Margins.Right = 0
           Margins.Bottom = 0
           Align = alRight
           BevelOuter = bvNone
-          BorderWidth = 15
           Caption = 'Panel1'
           Color = clWhite
           ParentBackground = False
           ShowCaption = False
           TabOrder = 0
-          ExplicitLeft = 926
-          ExplicitTop = 5
-          ExplicitHeight = 60
           object NextMonth: TButton
             AlignWithMargins = True
-            Left = 45
-            Top = 25
+            Left = 75
+            Top = 15
             Width = 25
-            Height = 0
-            Margins.Left = 1
-            Margins.Top = 10
-            Margins.Right = 5
-            Margins.Bottom = 10
+            Height = 40
+            Margins.Top = 15
+            Margins.Right = 40
+            Margins.Bottom = 15
             Align = alRight
             Caption = '>'
             TabOrder = 0
             OnClick = NextMonthClick
+            ExplicitLeft = 45
+            ExplicitTop = 25
             ExplicitHeight = 10
           end
           object PreviousMonth: TButton
             AlignWithMargins = True
-            Left = 20
-            Top = 25
+            Left = 40
+            Top = 15
             Width = 25
-            Height = 0
-            Margins.Left = 5
-            Margins.Top = 10
-            Margins.Right = 1
-            Margins.Bottom = 10
+            Height = 40
+            Margins.Left = 40
+            Margins.Top = 15
+            Margins.Bottom = 15
             Align = alLeft
             Caption = '<'
             TabOrder = 1
             OnClick = PreviousMonthClick
+            ExplicitLeft = 20
+            ExplicitTop = 25
             ExplicitHeight = 10
           end
         end
         object ListBoxResults: TListBox
           AlignWithMargins = True
-          Left = 15
-          Top = 15
-          Width = 306
-          Height = 30
+          Left = 35
+          Top = 0
+          Width = 266
+          Height = 70
           Margins.Left = 0
           Margins.Top = 0
           Margins.Right = 10
           Margins.Bottom = 0
-          Align = alLeft
+          Align = alRight
           BevelInner = bvNone
+          Constraints.MaxWidth = 300
+          Constraints.MinWidth = 150
           ItemHeight = 15
           TabOrder = 1
           Visible = False
-          ExplicitLeft = 710
-          ExplicitTop = 5
-          ExplicitHeight = 60
+          ExplicitLeft = 15
+          ExplicitTop = 15
+          ExplicitHeight = 30
         end
       end
     end

@@ -177,6 +177,7 @@ type
     PanelFiller: TPanel;
     EditSearch: TEdit;
     ListBoxResults: TListBox;
+    PanelRightFiller: TPanel;
     procedure PanelCalendarResize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure PreviousMonthClick(Sender: TObject);
@@ -260,6 +261,7 @@ begin
     Ini.WriteInteger('Window', 'Left',   Left);
     Ini.WriteInteger('Window', 'Top',    Top);
     Ini.WriteInteger('Window', 'Width',  Width);
+    Ini.WriteInteger('Window', 'Height', Height);
     Ini.WriteBool('Window', 'CheckBoxWork', CheckBoxWork.Checked);
     Ini.WriteBool('Window', 'CheckBoxPrivate', CheckBoxPrivate.Checked);
     Ini.WriteBool('Window', 'CheckBoxHolidays', CheckBoxHolidays.Checked);
@@ -277,6 +279,7 @@ begin
     Left   := Ini.ReadInteger('Window', 'Left',   Left);
     Top    := Ini.ReadInteger('Window', 'Top',    Top);
     Width  := Ini.ReadInteger('Window', 'Width',  Width);
+    Height := Ini.ReadInteger('Window', 'Height',  Height);
     CheckBoxWork.Checked := Ini.ReadBool('Window', 'CheckBoxWork', True);
     CheckBoxPrivate.Checked := Ini.ReadBool('Window', 'CheckBoxPrivate', True);
     CheckBoxHolidays.Checked := Ini.ReadBool('Window', 'CheckBoxHolidays', True);
@@ -296,7 +299,7 @@ begin
     Client.CustomHeaders['Authorization'] := 'Bearer ' + FAccessToken;
     Client.CustomHeaders['Prefer'] := 'outlook.timezone="Romance Standard Time"';
 
-    // Window to search across — adjust to taste
+    // Window to search across
     StartISO := FormatDateTime('yyyy-mm-dd"T"00:00:00', IncYear(Date, -2));
     EndISO   := FormatDateTime('yyyy-mm-dd"T"23:59:59', IncYear(Date,  2));
 
@@ -325,6 +328,7 @@ var
 
 begin
   ListBoxResults.Items.Clear;
+  ListBoxResults.Visible := False;
 
   Key := Trim(EditSearch.Text);
   if Key = '' then Exit;
@@ -362,7 +366,7 @@ begin
           Body := '';
           EventObj.TryGetValue<string>('bodyPreview', Body);
 
-          // keep only events whose title OR description contains the term
+          // keep only events whose title or description contains the term
           if not (ContainsText(Subject, Key) or ContainsText(Body, Key)) then
             Continue;
 
@@ -372,6 +376,8 @@ begin
           Line := FormatDateTime('yyyy-mm-dd hh:nn', StartDate) + '  ' + Subject;
           ListBoxResults.Items.AddObject(Line, TObject(NativeInt(Trunc(StartDate))));
         end;
+
+        ListBoxResults.Visible := ListBoxResults.Items.Count > 0;
 
         if ListBoxResults.Items.Count = 0 then
           ShowMessage('Ingen begivenheder fundet for: ' + Key);
@@ -540,7 +546,6 @@ var
 begin
   LoadWindowPos;
 
-  WindowState := wsMaximized;
   for I := 1 to 42 do
   begin
     DayPanels[I] := FindComponent('PanelDay' + IntToStr(I)) as TPanel;

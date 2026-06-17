@@ -258,9 +258,10 @@ var
 begin
   Ini := TIniFile.Create(IniFileName);
   try
-    Ini.WriteInteger('Window', 'Left',   Left);
-    Ini.WriteInteger('Window', 'Top',    Top);
-    Ini.WriteInteger('Window', 'Width',  Width);
+    Ini.WriteInteger('Window', 'Left', Left);
+    Ini.WriteInteger('Window', 'Top', Top);
+    Ini.WriteInteger('Window', 'Width', Width);
+    Ini.WriteInteger('Window', 'Height', Height);
     Ini.WriteBool('Window', 'CheckBoxWork', CheckBoxWork.Checked);
     Ini.WriteBool('Window', 'CheckBoxPrivate', CheckBoxPrivate.Checked);
     Ini.WriteBool('Window', 'CheckBoxHolidays', CheckBoxHolidays.Checked);
@@ -275,9 +276,14 @@ var
 begin
   Ini := TIniFile.Create(IniFileName);
   try
-    Left   := Ini.ReadInteger('Window', 'Left',   Left);
-    Top    := Ini.ReadInteger('Window', 'Top',    Top);
-    Width  := Ini.ReadInteger('Window', 'Width',  Width);
+    Left := Ini.ReadInteger('Window', 'Left', Left);
+    Top := Ini.ReadInteger('Window', 'Top', Top);
+    Width := Ini.ReadInteger('Window', 'Width', Width);
+    Height := Ini.ReadInteger('Window', 'Height', Height);
+    if (Width = Screen.Width) and (Height = Screen.Height) then
+    begin
+      WindowState := wsMaximized;
+    end;
     CheckBoxWork.Checked := Ini.ReadBool('Window', 'CheckBoxWork', True);
     CheckBoxPrivate.Checked := Ini.ReadBool('Window', 'CheckBoxPrivate', True);
     CheckBoxHolidays.Checked := Ini.ReadBool('Window', 'CheckBoxHolidays', True);
