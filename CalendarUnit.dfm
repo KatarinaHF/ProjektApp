@@ -25,8 +25,6 @@
     ParentBackground = False
     TabOrder = 0
     OnResize = PanelCalendarResize
-    ExplicitWidth = 914
-    ExplicitHeight = 609
     object PanelSøndag: TPanel
       Left = 792
       Top = 0
@@ -38,7 +36,6 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 0
-      ExplicitHeight = 609
       object PanelSundayName: TPanel
         Left = 0
         Top = 0
@@ -56,8 +53,8 @@
         object LabelSunday: TLabel
           Left = 1
           Top = 1
-          Width = 73
-          Height = 30
+          Width = 126
+          Height = 35
           Align = alClient
           Alignment = taCenter
           Caption = 'Sunday'
@@ -67,6 +64,8 @@
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitWidth = 73
+          ExplicitHeight = 30
         end
       end
       object PanelDay42: TPanel
@@ -345,7 +344,6 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 1
-      ExplicitHeight = 609
       object PanelSaturdayName: TPanel
         Left = 0
         Top = 0
@@ -363,8 +361,8 @@
         object LabelSaturday: TLabel
           Left = 1
           Top = 1
-          Width = 87
-          Height = 30
+          Width = 126
+          Height = 35
           Align = alClient
           Alignment = taCenter
           Caption = 'Saturday'
@@ -374,6 +372,8 @@
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitWidth = 87
+          ExplicitHeight = 30
         end
       end
       object PanelDay41: TPanel
@@ -652,7 +652,6 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 2
-      ExplicitHeight = 609
       object PanelFridayName: TPanel
         Left = 0
         Top = 0
@@ -670,8 +669,8 @@
         object LabelFriday: TLabel
           Left = 1
           Top = 1
-          Width = 60
-          Height = 30
+          Width = 126
+          Height = 35
           Align = alClient
           Alignment = taCenter
           Caption = 'Friday'
@@ -681,6 +680,8 @@
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitWidth = 60
+          ExplicitHeight = 30
         end
       end
       object PanelDay40: TPanel
@@ -959,7 +960,6 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 3
-      ExplicitHeight = 609
       object PanelThursdayName: TPanel
         Left = 0
         Top = 0
@@ -977,8 +977,8 @@
         object LabelThursday: TLabel
           Left = 1
           Top = 1
-          Width = 90
-          Height = 30
+          Width = 126
+          Height = 35
           Align = alClient
           Alignment = taCenter
           Caption = 'Thursday'
@@ -988,6 +988,8 @@
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitWidth = 90
+          ExplicitHeight = 30
         end
       end
       object PanelDay39: TPanel
@@ -1266,7 +1268,6 @@
       Color = clWhite
       ShowCaption = False
       TabOrder = 4
-      ExplicitHeight = 609
       object PanelWednesdayName: TPanel
         Left = 0
         Top = 0
@@ -1284,8 +1285,8 @@
         object LabelWednesday: TLabel
           Left = 1
           Top = 1
-          Width = 112
-          Height = 30
+          Width = 126
+          Height = 35
           Align = alClient
           Alignment = taCenter
           Caption = 'Wednesday'
@@ -1295,6 +1296,8 @@
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitWidth = 112
+          ExplicitHeight = 30
         end
       end
       object PanelDay38: TPanel
@@ -1577,7 +1580,6 @@
       ParentColor = True
       ShowCaption = False
       TabOrder = 5
-      ExplicitHeight = 609
       object PanelTuesdayName: TPanel
         Left = 0
         Top = 0
@@ -1595,8 +1597,8 @@
         object LabelTuesday: TLabel
           Left = 1
           Top = 1
-          Width = 79
-          Height = 30
+          Width = 126
+          Height = 35
           Align = alClient
           Alignment = taCenter
           Caption = 'Tuesday'
@@ -1608,6 +1610,8 @@
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
+          ExplicitWidth = 79
+          ExplicitHeight = 30
         end
       end
       object PanelDay30: TPanel
@@ -1888,7 +1892,6 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 6
-      ExplicitHeight = 609
       object PanelMondayName: TPanel
         Left = 0
         Top = 0
@@ -1906,8 +1909,8 @@
         object LabelMonday: TLabel
           Left = 1
           Top = 1
-          Width = 81
-          Height = 30
+          Width = 126
+          Height = 35
           Align = alClient
           Alignment = taCenter
           Caption = 'Monday'
@@ -1920,6 +1923,8 @@
           ParentColor = False
           ParentFont = False
           Transparent = False
+          ExplicitWidth = 81
+          ExplicitHeight = 30
         end
       end
       object PanelDay36: TPanel
@@ -2208,11 +2213,10 @@
     ParentFont = False
     ShowCaption = False
     TabOrder = 1
-    ExplicitHeight = 609
     object LabelCalendars: TLabel
       Left = 0
       Top = 0
-      Width = 85
+      Width = 117
       Height = 28
       Align = alTop
       Alignment = taCenter
@@ -2223,6 +2227,7 @@
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
+      ExplicitWidth = 85
     end
     object ShapeCalendarLine: TShape
       AlignWithMargins = True
@@ -2305,7 +2310,6 @@
     ParentBackground = False
     ShowCaption = False
     TabOrder = 2
-    ExplicitWidth = 1035
     object PanelTopButtons: TPanel
       Left = 12
       Top = 12
@@ -2318,7 +2322,6 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 0
-      ExplicitWidth = 1011
       object ButtonSearch: TButton
         AlignWithMargins = True
         Left = 881
@@ -2332,7 +2335,6 @@
         Align = alRight
         Caption = 'Search'
         TabOrder = 0
-        ExplicitLeft = 851
       end
       object ButtonChangeView: TButton
         AlignWithMargins = True
@@ -2347,7 +2349,7 @@
         Align = alLeft
         Caption = 'Change View'
         TabOrder = 1
-        ExplicitLeft = 180
+        OnClick = ButtonChangeViewClick
       end
       object ButtonNewEvent: TButton
         AlignWithMargins = True
@@ -2363,7 +2365,6 @@
         Caption = 'New Event'
         TabOrder = 2
         OnClick = ButtonNewEventClick
-        ExplicitLeft = 20
       end
       object EditSearch: TEdit
         AlignWithMargins = True
@@ -2380,7 +2381,7 @@
         Constraints.MinWidth = 150
         TabOrder = 3
         TextHint = 'Search events... '
-        ExplicitLeft = 671
+        ExplicitHeight = 23
       end
     end
     object PanelMonth: TPanel
@@ -2395,13 +2396,12 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 1
-      ExplicitWidth = 1011
       object LabelMonth: TLabel
         AlignWithMargins = True
         Left = 453
         Top = 3
-        Width = 115
-        Height = 52
+        Width = 114
+        Height = 64
         Align = alClient
         Alignment = taCenter
         Caption = 'Month'
@@ -2413,6 +2413,8 @@
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        ExplicitWidth = 115
+        ExplicitHeight = 52
       end
       object PanelFiller: TPanel
         Left = 0
@@ -2426,9 +2428,6 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 0
-        ExplicitLeft = 5
-        ExplicitTop = 5
-        ExplicitHeight = 60
       end
       object PanelRightFiller: TPanel
         Left = 570
@@ -2442,9 +2441,6 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 1
-        ExplicitLeft = 566
-        ExplicitTop = 5
-        ExplicitHeight = 60
         object PanelArrowButtons: TPanel
           Left = 311
           Top = 0
@@ -2474,9 +2470,6 @@
             Caption = '>'
             TabOrder = 0
             OnClick = NextMonthClick
-            ExplicitLeft = 45
-            ExplicitTop = 25
-            ExplicitHeight = 10
           end
           object PreviousMonth: TButton
             AlignWithMargins = True
@@ -2491,9 +2484,6 @@
             Caption = '<'
             TabOrder = 1
             OnClick = PreviousMonthClick
-            ExplicitLeft = 20
-            ExplicitTop = 25
-            ExplicitHeight = 10
           end
         end
         object ListBoxResults: TListBox

@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, DateUtils, System.JSON, System.Net.HttpClient,
   System.Net.URLClient, System.IniFiles, NewEventUnit, EventDetailsUnit, System.StrUtils,
-  System.NetEncoding;
+  System.NetEncoding, ChangeViewUnit;
 
 type
   TForm4 = class(TForm)
@@ -191,6 +191,7 @@ type
     procedure PanelDayMouseLeave(Sender: TObject);
     procedure HoverTimerTimer(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ButtonChangeViewClick(Sender: TObject);
   private
     DayPanels: array[1..42] of TPanel;
     DayMemos: array[1..42] of TMemo;
@@ -702,6 +703,12 @@ begin
   if FAccessToken <> '' then
     LoadGraphEvents;
 end;
+
+procedure TForm4.ButtonChangeViewClick(Sender: TObject);
+begin
+  Form5.Show;
+end;
+
 
 procedure TForm4.ButtonNewEventClick(Sender: TObject);
 begin
