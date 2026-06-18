@@ -98,11 +98,13 @@ begin
 
 end;
 
-// Creates the new event
+// Collects the inbformation the user wrote in the form and creates the JSON object so
+// Microsoft Graph can make the event
 function TForm2.CreateGraphEventJson: TJSONObject;
 var
   StartObj, EndObj, BodyObj: TJSONObject;
-  FullStartIso, FullEndIso: string;
+  FullStartIso: string;
+  FullEndIso: string;
   StartDT: TDateTime;
   EndDT: TDateTime;
   SvepArr: TJSONArray;
@@ -127,19 +129,16 @@ begin
   TJSONArray.Create.Add(ComboBoxCalendar.Text)
   );
 
-  // Start-objekt
   StartObj := TJSONObject.Create;
   StartObj.AddPair('dateTime', FullStartIso);
   StartObj.AddPair('timeZone', 'Romance Standard Time');
   Result.AddPair('start', StartObj);
 
-  // Slut-objekt
   EndObj := TJSONObject.Create;
   EndObj.AddPair('dateTime', FullEndIso);
   EndObj.AddPair('timeZone', 'Romance Standard Time');
   Result.AddPair('end', EndObj);
 
-  // Beskrivelse
   if (Trim(MemoDescription.Text) <> '') and
      (Trim(MemoDescription.Text) <> DESC_PLACEHOLDER) then
   begin
@@ -161,6 +160,7 @@ begin
 
 end;
 
+// Make event end date the same as the start date, when chosen
 procedure TForm2.DateTimePickerStartChange(Sender: TObject);
 begin
 
@@ -168,6 +168,7 @@ begin
 
 end;
 
+// Make event end time the same as the start time, when chosen
 procedure TForm2.TimePickerStartChange(Sender: TObject);
 begin
 
@@ -175,6 +176,8 @@ begin
 
 end;
 
+// When Save is clicked, then userinput is validated, JSON for the event is created and
+// is sent to Microsoft Graph and refresh the calendar if successful
 procedure TForm2.ButtonSaveClick(Sender: TObject);
 var
   Client: THTTPClient;
@@ -188,14 +191,12 @@ begin
     Exit;
   end;
 
-  // Enkel sikring, så man ikke sender tomme felter afsted
   if (TitleEdit.Text = '') then
   begin
     ShowMessage('Udfyld venligst som minimum: Titel');
     Exit;
   end;
 
-  // End must not be before start
   if (Trunc(DateTimePickerEnd.Date) + Frac(TimePickerEnd.Time)) <
      (Trunc(DateTimePickerStart.Date) + Frac(TimePickerStart.Time)) then
   begin
@@ -211,7 +212,6 @@ begin
     Client.CustomHeaders['Authorization'] := 'Bearer ' + FAccessToken;
     Client.CustomHeaders['Content-Type'] := 'application/json';
 
-    // POST til Microsoft Graph med indholdet fra dine TEdits
     Response := Client.Post('https://graph.microsoft.com/v1.0/me/events', RequestBody);
 
     if (Response.StatusCode = 201) or (Response.StatusCode = 200) then
@@ -219,7 +219,7 @@ begin
       ShowMessage('Succes! Begivenheden blev oprettet hos Microsoft.');
 
       if Assigned(Form4) then
-        Form4.RefreshCalendar; // Opdaterer hovedkalenderen med det samme
+        Form4.RefreshCalendar;
 
       Close;
     end
@@ -235,6 +235,7 @@ begin
   end;
 end;
 
+// Makes resizing of the form look nice
 procedure TForm2.Resize(Sender: TObject);
 begin
   TitleEdit.Width := PanelTitle.Width - LabelTitle.Width - 120;
@@ -243,26 +244,27 @@ begin
   DateTimePickerEnd.Width := PanelEndDate.Width - LabelEndDate.Width - 120;
 
   TimePickerStart.Width := PanelTime.Width - LabelStartTime.Width - 120;
+
   ComboBoxCalendar.Width := PanelCalendarType.Width - LabelCalendar.Width - 120;
 
   MemoDescription.Width := PanelDescription.Width - LabelDescription.Width - 120;
-
 end;
 
+// Removes decription text when Memo is entered
 procedure TForm2.MemoDescriptionEnter(Sender: TObject);
 begin
   if Trim(MemoDescription.Text) = DESC_PLACEHOLDER then
     MemoDescription.Clear;
 end;
 
+// Adds back description text if Memo is exited without writing anything
 procedure TForm2.MemoDescriptionExit(Sender: TObject);
 begin
   if Trim(MemoDescription.Text) = '' then
     MemoDescription.Lines.Text := DESC_PLACEHOLDER;
 end;
 
-// Automatically picks current date and time
-
+// The date and time will be the current date and time
 procedure TForm2.FormShow(Sender: TObject);
 begin
   DateTimePickerStart.Date := Date;
@@ -272,7 +274,6 @@ begin
 
   if Trim(MemoDescription.Text) = '' then
   MemoDescription.Lines.Text := DESC_PLACEHOLDER;
-
 end;
 
 end.
