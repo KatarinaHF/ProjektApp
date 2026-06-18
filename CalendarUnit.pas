@@ -464,7 +464,7 @@ begin
   end;
 end;
 
-// DOuble clicking the result will take you to that day
+// Double clicking the result will take you to that day
 procedure TForm4.ListBoxResultsDblClick(Sender: TObject);
 var
   idx, Cell: Integer;
@@ -553,7 +553,7 @@ begin
   Cols[6] := PanelLørdag;
   Cols[7] := PanelSøndag;
 
-  // 1. Tæl de synlige kolonner
+  // Counting the visible columns
   VisibleCols := 0;
   for I := 1 to 7 do
     if Cols[I].Visible then
@@ -561,10 +561,10 @@ begin
 
   if VisibleCols = 0 then VisibleCols := 1;
 
-  // 2. Beregn bredden (kun baseret på dem, der rent faktisk skal ses)
+  // Counting the width for the ones that should be visible
   ColW := PanelCalendar.ClientWidth div VisibleCols;
 
-  // 3. Flyt, juster ELLER SKJUL ugedags-panelerne benhårdt
+  // 3. Move, adjust or hide the weekday panels
   CurrentLeft := 0;
   for I := 1 to 7 do
   begin
@@ -577,29 +577,27 @@ begin
     end;
   end;
 
-  // 4. Placer cellerne (denne skjuler nu også de deaktiverede dage)
-  // 4. Placer cellerne (denne skjuler nu også de deaktiverede dage)
-  // Vi pakker det ind i et tjek for at undgå Access Violation under opstart
+  // Safety check
   if Assigned(DayPanels[1]) then
     PositionDayCells;
 
-  // --- DEN BOMBESIKRE FIX MED SIKKERHEDSTJEK: ---
+  // Places the cells and hides the deactivated days
   for I := 1 to 7 do
   begin
     if not Cols[I].Visible then
     begin
-      Cols[I].Width := 0; // Gør hele ugedagskolonnen usynlig i bredden
+      Cols[I].Width := 0; // Makes the weekday column invisible in width
 
       var r, idx: Integer;
       for r := 1 to 6 do
       begin
         idx := (r - 1) * 7 + I;
 
-        // SIKKERHEDSTJEK: Vi må KUN ændre på cellen, hvis den rent faktisk ER oprettet!
+        // Safety check, we only change the cell if it is made
         if (idx >= 1) and (idx <= 42) and Assigned(DayPanels[idx]) then
         begin
           DayPanels[idx].Width := 0;
-          DayPanels[idx].Left := -9999; // Flyt dem langt uden for skærmområdet
+          DayPanels[idx].Left := -9999; // Move them far away from the screen
         end;
       end;
     end;

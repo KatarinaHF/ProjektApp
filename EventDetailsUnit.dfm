@@ -60,8 +60,6 @@ object Form3: TForm3
       ReadOnly = True
       TabOrder = 0
       OnMouseLeave = MemoInfoMouseLeave
-      ExplicitWidth = 322
-      ExplicitHeight = 328
     end
   end
 end
