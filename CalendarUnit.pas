@@ -184,8 +184,6 @@ type
     procedure NextMonthClick(Sender: TObject);
     procedure AddEvent(ADay: Integer; const AText: string; const ACategory: string);
     procedure LoadGraphEvents;
-    function FindGridCell(DayNumber: Integer): Integer;
-    function GetCalendarEvents(const AccessToken: string): string;
     procedure ButtonNewEventClick(Sender: TObject);
     procedure PanelDayMouseEnter(Sender: TObject);
     procedure PanelDayMouseLeave(Sender: TObject);
@@ -193,6 +191,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ButtonChangeViewClick(Sender: TObject);
     procedure ButtonLogOutClick(Sender: TObject);
+    function FindGridCell(DayNumber: Integer): Integer;
+    function GetCalendarEvents(const AccessToken: string): string;
   private
     DayPanels: array[1..42] of TPanel;
     DayMemos: array[1..42] of TMemo;
@@ -203,21 +203,21 @@ type
     FAccessToken: string;
     HoverTimer: TTimer;
     FHoverCell: Integer;
-    FRowCount: Integer;     // weeks shown this month (4, 5 or 6)
+    FRowCount: Integer;
     procedure PositionDayCells;
     procedure CategoryFilterClick(Sender: TObject);
-    function IsCategoryVisible(const Category: string): Boolean;
-    function IniFileName: string;
     procedure SaveWindowPos;
     procedure LoadWindowPos;
     procedure ButtonSearchClick(Sender: TObject);
     procedure EditSearchKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    function SearchAllEvents(const Key: string): string;
     procedure ListBoxResultsDblClick(Sender: TObject);
+    function IsCategoryVisible(const Category: string): Boolean;
+    function IniFileName: string;
+    function SearchAllEvents(const Key: string): string;
   public
+    property AccessToken: string read FAccessToken write FAccessToken;
     procedure BuildCalendar(AYear, AMonth: Integer);
     procedure RefreshCalendar;
-    property AccessToken: string read FAccessToken write FAccessToken;
     function IsDateHoliday(ADate: TDate): String;
     function EasterSunday(Year: Integer): TDate;
   end;
@@ -247,7 +247,7 @@ uses NewEventUnit, EventDetailsUnit, ChangeViewUnit, ProjektAppUnit;
     ctPrivate,
     ctHoliday
   );
-
+// Create ini-file
 function TForm4.IniFileName: string;
 var
   AppIni: TIniFile;
@@ -256,11 +256,14 @@ begin
   Result := ChangeFileExt(Application.ExeName, '.ini');
 end;
 
+// Save window size and position and which days are being showed
 procedure TForm4.SaveWindowPos;
 var
   Ini: TIniFile;
+
 begin
   Ini := TIniFile.Create(IniFileName);
+
   try
     if WindowState = wsNormal then
     begin
@@ -289,11 +292,14 @@ begin
   end;
 end;
 
+// Load window size and position and which days are being showed
 procedure TForm4.LoadWindowPos;
 var
   Ini: TIniFile;
+
 begin
   Ini := TIniFile.Create(IniFileName);
+
   try
     Left := Ini.ReadInteger('Window', 'Left', Left);
     Top := Ini.ReadInteger('Window', 'Top', Top);
@@ -315,25 +321,26 @@ begin
     PanelLørdag.Visible  := Ini.ReadBool('ViewDays', 'Saturday', True);
     PanelSøndag.Visible  := Ini.ReadBool('ViewDays', 'Sunday', True);
 
-    // 3. Tving kalenderen til at rykke kolonnerne sammen baseret på det hentede
     PanelCalendarResize(Self);
   finally
     Ini.Free;
   end;
 end;
 
+// Searching through events in the calendar
 function TForm4.SearchAllEvents(const Key: string): string;
 var
   Client: THTTPClient;
   Response: IHTTPResponse;
   StartISO, EndISO: string;
+
 begin
   Client := THTTPClient.Create;
+
   try
     Client.CustomHeaders['Authorization'] := 'Bearer ' + FAccessToken;
     Client.CustomHeaders['Prefer'] := 'outlook.timezone="Romance Standard Time"';
 
-    // Window to search across
     StartISO := FormatDateTime('yyyy-mm-dd"T"00:00:00', IncYear(Date, -2));
     EndISO   := FormatDateTime('yyyy-mm-dd"T"23:59:59', IncYear(Date,  2));
 
@@ -344,12 +351,15 @@ begin
       '&$select=subject,bodyPreview,start' +
       '&$top=1000'
     );
+
     Result := Response.ContentAsString;
+
   finally
     Client.Free;
   end;
 end;
 
+// Searching by clicking the search button
 procedure TForm4.ButtonSearchClick(Sender: TObject);
 var
   RawJson, Key, Subject, RawDateStr, Line, HName: string;
@@ -400,7 +410,6 @@ begin
           Body := '';
           EventObj.TryGetValue<string>('bodyPreview', Body);
 
-          // keep only events whose title or description contains the term
           if not (ContainsText(Subject, Key) or ContainsText(Body, Key)) then
             Continue;
 
@@ -411,18 +420,21 @@ begin
           ListBoxResults.Items.AddObject(Line, TObject(NativeInt(Trunc(StartDate))));
         end;
 
-        // also search the holidays
+        // Include holidays in the search
         HStart := IncYear(Date, -2);
         HEnd   := IncYear(Date,  2);
         HDate  := HStart;
+
         while HDate <= HEnd do
         begin
           HName := IsDateHoliday(HDate);
+
           if (HName <> '') and ContainsText(HName, Key) then
           begin
             Line := FormatDateTime('yyyy-mm-dd', HDate) + '  ' + HName + ' (Helligdag)';
             ListBoxResults.Items.AddObject(Line, TObject(NativeInt(Trunc(HDate))));
           end;
+
           HDate := HDate + 1;
         end;
 
@@ -431,9 +443,11 @@ begin
         if ListBoxResults.Items.Count = 0 then
           ShowMessage('Ingen begivenheder fundet for: ' + Key);
       end;
+
     finally
       JsonObj.Free;
     end;
+
   except
     on E: Exception do
       ShowMessage('Fejl under søgning: ' + E.Message);
@@ -450,30 +464,34 @@ begin
   end;
 end;
 
+// DOuble clicking the result will take you to that day
 procedure TForm4.ListBoxResultsDblClick(Sender: TObject);
 var
   idx, Cell: Integer;
   Dt: TDate;
+
 begin
   idx := ListBoxResults.ItemIndex;
+
   if idx < 0 then Exit;
 
-  Dt := TDate(NativeInt(ListBoxResults.Items.Objects[idx]));  // pull the date back out
+  Dt := TDate(NativeInt(ListBoxResults.Items.Objects[idx]));
   FCurrentYear  := YearOf(Dt);
   FCurrentMonth := MonthOf(Dt);
   BuildCalendar(FCurrentYear, FCurrentMonth);
 
-  // highlight the day we landed on
   Cell := FindGridCell(DayOf(Dt));
   if Cell > 0 then
     DayPanels[Cell].Color := clSkyBlue;
 end;
 
+// Positioning the days correctly
 procedure TForm4.PositionDayCells;
 var
   Cols: array[1..7] of TPanel;
   r, c, idx, HeaderH, CellH: Integer;
   Col: TPanel;
+
 begin
   if DayPanels[1] = nil then Exit;
 
@@ -492,7 +510,6 @@ begin
   begin
     Col := Cols[c];
 
-    // HVIS KOLONNEN ER SKJULT, SKAL ALLE DENS CELLER SKJULES OG SPRINGES OVER!
     if not Col.Visible then
     begin
       for r := 1 to 6 do
@@ -500,11 +517,11 @@ begin
         idx := (r - 1) * 7 + c;
         DayPanels[idx].Visible := False;
       end;
-      Continue; // Hop videre til næste ugedag
+      Continue;
     end;
 
-    // Hvis kolonnen ER synlig, placerer vi cellerne præcis som før
     CellH := (Col.ClientHeight - HeaderH) div FRowCount;
+
     for r := 1 to 6 do
     begin
       idx := (r - 1) * 7 + c;
@@ -519,6 +536,7 @@ begin
   end;
 end;
 
+// Resizing the calendar
 procedure TForm4.PanelCalendarResize(Sender: TObject);
 var
   Cols: array[1..7] of TPanel;
