@@ -120,11 +120,12 @@ object Form5: TForm5
         object LabelCheckMonday: TLabel
           Left = 0
           Top = 0
-          Width = 44
+          Width = 68
           Height = 15
           Align = alTop
           Alignment = taCenter
           Caption = 'Monday'
+          ExplicitWidth = 44
         end
         object CheckBoxMonday: TCheckBox
           AlignWithMargins = True
@@ -154,11 +155,12 @@ object Form5: TForm5
         object LabelCheckTuesday: TLabel
           Left = 0
           Top = 0
-          Width = 44
+          Width = 68
           Height = 15
           Align = alTop
           Alignment = taCenter
           Caption = 'Tuesday'
+          ExplicitWidth = 44
         end
         object CheckBoxTuesday: TCheckBox
           AlignWithMargins = True
@@ -186,11 +188,12 @@ object Form5: TForm5
         object LabelCheckWednesday: TLabel
           Left = 0
           Top = 0
-          Width = 61
+          Width = 68
           Height = 15
           Align = alTop
           Alignment = taCenter
           Caption = 'Wednesday'
+          ExplicitWidth = 61
         end
         object CheckBoxWednesday: TCheckBox
           AlignWithMargins = True
@@ -218,11 +221,12 @@ object Form5: TForm5
         object LabelCheckThursday: TLabel
           Left = 0
           Top = 0
-          Width = 49
+          Width = 68
           Height = 15
           Align = alTop
           Alignment = taCenter
           Caption = 'Thursday'
+          ExplicitWidth = 49
         end
         object CheckBoxThursday: TCheckBox
           AlignWithMargins = True
@@ -250,11 +254,12 @@ object Form5: TForm5
         object LabelCheckFriday: TLabel
           Left = 0
           Top = 0
-          Width = 32
+          Width = 68
           Height = 15
           Align = alTop
           Alignment = taCenter
           Caption = 'Friday'
+          ExplicitWidth = 32
         end
         object CheckBoxFriday: TCheckBox
           AlignWithMargins = True
@@ -282,11 +287,12 @@ object Form5: TForm5
         object LabelCheckSaturday: TLabel
           Left = 0
           Top = 0
-          Width = 46
+          Width = 68
           Height = 15
           Align = alTop
           Alignment = taCenter
           Caption = 'Saturday'
+          ExplicitWidth = 46
         end
         object CheckBoxSaturday: TCheckBox
           AlignWithMargins = True
@@ -314,11 +320,12 @@ object Form5: TForm5
         object LabelCheckSunday: TLabel
           Left = 0
           Top = 0
-          Width = 39
+          Width = 68
           Height = 15
           Align = alTop
           Alignment = taCenter
           Caption = 'Sunday'
+          ExplicitWidth = 39
         end
         object CheckBoxSunday: TCheckBox
           AlignWithMargins = True

@@ -880,7 +880,7 @@ procedure TForm4.ButtonLogOutClick(Sender: TObject);
 var
   Ini: TIniFile;
 begin
-  Ini := TIniFile.Create(IniFileName);
+  Ini := TIniFile.Create(Form1.LoginIniName);
   try
     Ini.DeleteKey('Login', 'Token');
 

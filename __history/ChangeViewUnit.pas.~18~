@@ -39,6 +39,7 @@ type
     ButtonCheckWeekdays: TButton;
     procedure ButtonChooseAllClick(Sender: TObject);
     procedure ButtonCheckWeekdaysClick(Sender: TObject);
+    procedure ButtonCheckSaveClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -52,7 +53,15 @@ implementation
 
 {$R *.dfm}
 
+uses CalendarUnit;
 
+// Procedure which saves the choice of days and closes the window
+procedure TForm5.ButtonCheckSaveClick(Sender: TObject);
+begin
+  ModalResult := mrOk;
+end;
+
+// Procedure which saves the weekdays only
 procedure TForm5.ButtonCheckWeekdaysClick(Sender: TObject);
 begin
   CheckboxMonday.Checked := True;
@@ -60,8 +69,11 @@ begin
   CheckboxWednesday.Checked := True;
   CheckboxThursday.Checked := True;
   CheckboxFriday.Checked := True;
+  CheckboxSaturday.Checked := False;
+  CheckboxSunday.Checked := False;
 end;
 
+// Procedure which saves all days
 procedure TForm5.ButtonChooseAllClick(Sender: TObject);
 begin
   CheckboxMonday.Checked := True;

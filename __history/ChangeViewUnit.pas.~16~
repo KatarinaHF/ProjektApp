@@ -40,7 +40,6 @@ type
     procedure ButtonChooseAllClick(Sender: TObject);
     procedure ButtonCheckWeekdaysClick(Sender: TObject);
     procedure ButtonCheckSaveClick(Sender: TObject);
-    procedure WhenChecked(Sender: TObject);
   private
     { Private declarations }
   public
@@ -54,10 +53,12 @@ implementation
 
 {$R *.dfm}
 
+uses CalendarUnit;
 
+// Procedure which makes the calendar in the chosen days
 procedure TForm5.ButtonCheckSaveClick(Sender: TObject);
 begin
-  Form5.Hide;
+  ModalResult := mrOk;
 end;
 
 procedure TForm5.ButtonCheckWeekdaysClick(Sender: TObject);
@@ -81,8 +82,5 @@ begin
   CheckboxSaturday.Checked := True;
   CheckboxSunday.Checked := True;
 end;
-
-procedure TForm5.WhenChecked(Sender: TObject);
-
 
 end.

@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, CalendarUnit;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
 
 type
   TForm5 = class(TForm)
@@ -53,11 +53,14 @@ implementation
 
 {$R *.dfm}
 
+uses CalendarUnit;
 
+// Procedure which saves the choice of days and closes the window
 procedure TForm5.ButtonCheckSaveClick(Sender: TObject);
 begin
-  Form5.Hide;
+  ModalResult := mrOk;
 end;
+
 
 procedure TForm5.ButtonCheckWeekdaysClick(Sender: TObject);
 begin

@@ -53,12 +53,15 @@ implementation
 
 {$R *.dfm}
 
+uses CalendarUnit;
 
+// Procedure which saves the choice of days and closes the window
 procedure TForm5.ButtonCheckSaveClick(Sender: TObject);
 begin
-  Form5.Hide;
+  ModalResult := mrOk;
 end;
 
+// Procedure which saves the weekdays only and closes the window
 procedure TForm5.ButtonCheckWeekdaysClick(Sender: TObject);
 begin
   CheckboxMonday.Checked := True;
@@ -70,6 +73,7 @@ begin
   CheckboxSunday.Checked := False;
 end;
 
+// Procedure which saves all days and closes the window
 procedure TForm5.ButtonChooseAllClick(Sender: TObject);
 begin
   CheckboxMonday.Checked := True;

@@ -20,13 +20,13 @@ type
     procedure LoadLoginInfo;
     function IniFileName: string;
     procedure ShowCalendar;
-    function LoginIniName: string;
     function CurrentMachineTag: string;
     private
     FAccessToken: string;
     FHttpServer: TIdHTTPServer;
     procedure MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
   public
+    function LoginIniName: string;
   end;
 
 var
@@ -79,7 +79,6 @@ begin
   end;
 end;
 
-
 // Function for decoding JWT, finding and translating the payload from the JWT
 function DecodeJWT(const Token: string): string;
 var
@@ -101,12 +100,15 @@ begin
     Result := 'Invalid Token Format';
 end;
 
+// Procedure which logs the person in
+// Catches the Microsoft login redirect and exchanges the auth code for an access token
+// Runs on a background thread and opens the calendar via TThread.Queue on the main thread
 procedure TForm1.MyGetCommand(AContext: TIdContext; ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
 var
   CapturedCode: string;
   RawResponse: string;
   JsonObj: TJSONObject;
-  LocalAccessToken: string; // Midlertidig sikker variabel til tråden
+  LocalAccessToken: string; // Temporary safe local copy of the token for the queue
   UserInfo: string;
   Json: TJSONObject;
   Email: string;
@@ -124,11 +126,11 @@ begin
       if not Assigned(JsonObj) then Exit;
 
       try
-        // Tjek om vi rent faktisk fik en token fra Microsoft
+        // Check if we got a token from Microsoft
         if JsonObj.Values['access_token'] <> nil then
         begin
           FAccessToken := JsonObj.Values['access_token'].Value;
-          LocalAccessToken := FAccessToken; // Gemmer den sikkert til vores TThread
+          LocalAccessToken := FAccessToken; // Saves the token to the thread
 
           UserInfo := GetMe(FAccessToken);
           Json := TJSONObject.ParseJSONValue(UserInfo) as TJSONObject;
@@ -142,13 +144,13 @@ begin
           finally
             Json.Free;
           end;
-          // Først NU hvor vi har udtrukket alt tekst, og gemt det i LocalAccessToken,
-          // kan vi trygt sende opgaven videre til hovedtråden.
+          // Now that all the text has been extracted and copied into LocalAccessToken,
+          // it's safe to hand the UI work over to the main thread
           TThread.Queue(nil,
             procedure
             begin
               Form4 := TForm4.Create(nil);
-              Form4.AccessToken := LocalAccessToken; // Bruger den sikre lokale variabel
+              Form4.AccessToken := LocalAccessToken; // Uses the safe local copy
               Form4.RefreshCalendar;
               Form4.Show;
               Form1.Width := 1;
@@ -158,7 +160,7 @@ begin
         end
         else
         begin
-          // Hvis Microsoft sendte en fejl i stedet for en token
+          // If Microsoft sent an error instead of a token
           TThread.Queue(nil,
             procedure
             begin
@@ -168,8 +170,8 @@ begin
         end;
 
       finally
-        // Nu kan vi roligt frigøre JsonObj, for tråden er ligeglad;
-        // den har fået sin egen uafhængige tekst-kopi i 'LocalAccessToken'.
+        // Safe to free JsonObj now, the queue doesn't depend on it
+        // it has its own independent copy in 'LocalAccessToken'.
         JsonObj.Free;
       end;
     except
@@ -211,6 +213,7 @@ begin
 
   end;
 
+// Procedure for showing the calendar
 procedure TForm1.ShowCalendar;
 begin
   if not Assigned(Form4) then
@@ -223,6 +226,7 @@ begin
   Hide;   // hide the login form
 end;
 
+// Procedure for creating the logIn background
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Image1.Align := alClient;
@@ -242,6 +246,7 @@ begin
   end;
 end;
 
+// Function which makes the path to the Ini file per user and per machine
 function TForm1.LoginIniName: string;
 var
   Dir: string;
@@ -254,12 +259,14 @@ begin
   Result := IncludeTrailingPathDelimiter(Dir) + 'login.ini';
 end;
 
+// Function that returns a tag for the current machine and user
 function TForm1.CurrentMachineTag: string;
 begin
   Result := GetEnvironmentVariable('COMPUTERNAME') + '\' +
             GetEnvironmentVariable('USERNAME');
 end;
 
+// Procedure with layout for the login screen when it is resized
 procedure TForm1.OnResize(Sender: TObject);
 begin
   Image1.Width := Form1.Width;
@@ -271,7 +278,8 @@ begin
   LogInButton.Margins.Right := (Form1.Width div 8) * 3;
 end;
 
-
+// Function that returns the path to the Ini file that saves settings
+// like where the window was last closed
 function TForm1.IniFileName: string;
 var
   AppIni: TIniFile;
@@ -279,26 +287,30 @@ begin
   Result := ChangeFileExt(Application.ExeName, '.ini');
 end;
 
+// Procedure which saves the login to the Ini file for next time the app is opened
 procedure TForm1.SaveLoginInfo(const AEmail, AAccessToken: string);
 var
   Ini: TIniFile;
 begin
-  Ini := TIniFile.Create(IniFileName);
+  Ini := TIniFile.Create(LoginIniName);
   try
     Ini.WriteString('Login', 'Token', FAccessToken);
+    Ini.WriteString('Login', 'Email', AEmail);
     Ini.WriteString('Login', 'Machine', CurrentMachineTag);
   finally
     Ini.Free;
   end;
 end;
 
+// Procedure that loads the saved login
+// but only accepts it if it was saved on the same machine and user
 procedure TForm1.LoadLoginInfo;
 var
   Ini: TIniFile;
   SavedTag: string;
 begin
-FAccessToken := ''; // assume not logged in
-  Ini := TIniFile.Create(IniFileName);
+FAccessToken := ''; // Start logged out by default
+  Ini := TIniFile.Create(LoginIniName);
   try
     SavedTag := Ini.ReadString('Login', 'Machine', '');
     if SameText(SavedTag, CurrentMachineTag) then

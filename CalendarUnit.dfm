@@ -26,8 +26,6 @@
     ShowCaption = False
     TabOrder = 0
     OnResize = PanelCalendarResize
-    ExplicitWidth = 918
-    ExplicitHeight = 624
     object PanelSøndag: TPanel
       Left = 792
       Top = 0
@@ -2292,7 +2290,6 @@
     ParentBackground = False
     ShowCaption = False
     TabOrder = 2
-    ExplicitWidth = 1039
     object PanelTopButtons: TPanel
       Left = 12
       Top = 12
@@ -2382,13 +2379,12 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 1
-      ExplicitWidth = 1015
       object LabelMonth: TLabel
         AlignWithMargins = True
         Left = 453
         Top = 3
-        Width = 115
-        Height = 52
+        Width = 114
+        Height = 64
         Align = alClient
         Alignment = taCenter
         Caption = 'Month'
@@ -2400,6 +2396,8 @@
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        ExplicitWidth = 115
+        ExplicitHeight = 52
       end
       object PanelFiller: TPanel
         Left = 0
@@ -2443,7 +2441,6 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 1
-        ExplicitLeft = 564
         object PanelArrowButtons: TPanel
           Left = 311
           Top = 0

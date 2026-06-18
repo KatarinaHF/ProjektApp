@@ -55,11 +55,13 @@ implementation
 
 uses CalendarUnit;
 
+// Saves the choice of days and closes the window
 procedure TForm5.ButtonCheckSaveClick(Sender: TObject);
 begin
   ModalResult := mrOk;
 end;
 
+// Saves the weekdays only and closes the window
 procedure TForm5.ButtonCheckWeekdaysClick(Sender: TObject);
 begin
   CheckboxMonday.Checked := True;
@@ -71,6 +73,7 @@ begin
   CheckboxSunday.Checked := False;
 end;
 
+// Saves all days and closes the window
 procedure TForm5.ButtonChooseAllClick(Sender: TObject);
 begin
   CheckboxMonday.Checked := True;
