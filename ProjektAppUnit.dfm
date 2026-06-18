@@ -26,7 +26,7 @@ object Form1: TForm1
     AlignWithMargins = True
     Left = 0
     Top = 200
-    Width = 1014
+    Width = 450
     Height = 40
     Alignment = taCenter
     Caption = 'Sign in with your Microsoft account'
@@ -38,72 +38,19 @@ object Form1: TForm1
     ParentFont = False
     Layout = tlCenter
   end
-  object PanelLogIn: TPanel
+  object LogInButton: TButton
+    AlignWithMargins = True
     Left = 0
-    Top = 350
-    Width = 1014
-    Height = 124
-    BevelEdges = []
-    BevelOuter = bvNone
-    Caption = 'PanelLogIn'
-    ParentColor = True
-    ShowCaption = False
+    Top = 3
+    Width = 1022
+    Height = 755
+    Margins.Left = 0
+    Margins.Right = 0
+    Align = alClient
+    Caption = 'Log In'
     TabOrder = 0
-    object PanelLeftFiller: TPanel
-      Left = 0
-      Top = 0
-      Width = 400
-      Height = 124
-      Align = alLeft
-      BevelEdges = []
-      BevelOuter = bvNone
-      Caption = 'PanelLogIn'
-      ParentColor = True
-      ShowCaption = False
-      TabOrder = 0
-    end
-    object PanelRightFiller: TPanel
-      Left = 614
-      Top = 0
-      Width = 400
-      Height = 124
-      Align = alRight
-      BevelEdges = []
-      BevelOuter = bvNone
-      Caption = 'PanelLogIn'
-      ParentColor = True
-      ShowCaption = False
-      TabOrder = 1
-      ExplicitLeft = 664
-    end
-    object PanelButton: TPanel
-      Left = 400
-      Top = 0
-      Width = 214
-      Height = 124
-      Align = alClient
-      BevelEdges = []
-      BevelOuter = bvNone
-      Caption = 'PanelLogIn'
-      ParentColor = True
-      ShowCaption = False
-      TabOrder = 2
-      ExplicitLeft = 664
-      ExplicitWidth = 400
-      object LogInButton: TButton
-        AlignWithMargins = True
-        Left = 0
-        Top = 3
-        Width = 214
-        Height = 118
-        Margins.Left = 0
-        Margins.Right = 0
-        Align = alClient
-        Caption = 'Log In'
-        TabOrder = 0
-        OnClick = LogInClick
-        ExplicitLeft = 400
-      end
-    end
+    OnClick = LogInClick
+    ExplicitWidth = 214
+    ExplicitHeight = 118
   end
 end

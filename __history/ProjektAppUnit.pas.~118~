@@ -13,7 +13,6 @@ type
     LogInButton: TButton;
     Image1: TImage;
     LabelSignIn: TLabel;
-    PanelLogIn: TPanel;
     procedure LogInClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure OnResize(Sender: TObject);
@@ -264,10 +263,14 @@ end;
 procedure TForm1.OnResize(Sender: TObject);
 begin
   Image1.Width := Form1.Width;
-  PanelLogIn.Width := Form1.Width;
-  LogInButton.Width := PanelLogIn.Width div 3;
+  LogInButton.Margins.Top := Form1.Width div 10;
+  LogInButton.Margins.Bottom := Form1.Height div 10;
+
   LabelSignIn.Width := Form1.Width;
+  LogInButton.Margins.Left := (Form1.Width div 8) * 3;
+  LogInButton.Margins.Right := (Form1.Width div 8) * 3;
 end;
+
 
 function TForm1.IniFileName: string;
 var

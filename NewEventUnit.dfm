@@ -26,7 +26,7 @@ object Form2: TForm2
     ParentBackground = False
     ShowCaption = False
     TabOrder = 0
-    ExplicitWidth = 528
+    ExplicitWidth = 524
     object LabelTitle: TLabel
       AlignWithMargins = True
       Left = 20
@@ -61,7 +61,7 @@ object Form2: TForm2
       ShowHint = True
       TabOrder = 0
       TextHint = 'Write title here...'
-      ExplicitWidth = 204
+      ExplicitWidth = 200
       ExplicitHeight = 23
     end
     object ComboBoxSymbol: TComboBox
@@ -83,7 +83,7 @@ object Form2: TForm2
       ParentFont = False
       TabOrder = 1
       Text = 'ComboBoxSymbol'
-      ExplicitLeft = 413
+      ExplicitLeft = 409
     end
   end
   object PanelStartDate: TPanel
@@ -98,7 +98,7 @@ object Form2: TForm2
     ParentBackground = False
     ShowCaption = False
     TabOrder = 1
-    ExplicitWidth = 528
+    ExplicitWidth = 524
     object LabelStartDate: TLabel
       AlignWithMargins = True
       Left = 20
@@ -132,7 +132,7 @@ object Form2: TForm2
       Time = 0.514253101850044900
       TabOrder = 0
       OnChange = DateTimePickerStartChange
-      ExplicitLeft = 193
+      ExplicitLeft = 189
     end
   end
   object PanelEndDate: TPanel
@@ -147,7 +147,7 @@ object Form2: TForm2
     ParentBackground = False
     ShowCaption = False
     TabOrder = 2
-    ExplicitWidth = 528
+    ExplicitWidth = 524
     object LabelEndDate: TLabel
       AlignWithMargins = True
       Left = 20
@@ -180,7 +180,7 @@ object Form2: TForm2
       Date = 46185.000000000000000000
       Time = 0.514253101850044900
       TabOrder = 0
-      ExplicitLeft = 193
+      ExplicitLeft = 189
     end
   end
   object PanelTime: TPanel
@@ -195,15 +195,15 @@ object Form2: TForm2
     ParentBackground = False
     ShowCaption = False
     TabOrder = 3
-    ExplicitWidth = 528
-    object Panel1: TPanel
+    ExplicitWidth = 524
+    object PanelTimeLabel: TPanel
       Left = 0
       Top = 0
       Width = 193
       Height = 110
       Align = alLeft
       BevelOuter = bvNone
-      Caption = 'Panel1'
+      Caption = 'PanelTimeLabel'
       ParentColor = True
       ShowCaption = False
       TabOrder = 0
@@ -246,7 +246,7 @@ object Form2: TForm2
         ExplicitWidth = 100
       end
     end
-    object Panel2: TPanel
+    object PanelTimePicker: TPanel
       Left = 199
       Top = 0
       Width = 335
@@ -257,7 +257,7 @@ object Form2: TForm2
       ParentColor = True
       ShowCaption = False
       TabOrder = 1
-      ExplicitLeft = 193
+      ExplicitLeft = 189
       object TimePickerEnd: TTimePicker
         AlignWithMargins = True
         Left = 0
@@ -315,7 +315,7 @@ object Form2: TForm2
     ParentBackground = False
     ShowCaption = False
     TabOrder = 4
-    ExplicitWidth = 528
+    ExplicitWidth = 524
     object LabelCalendar: TLabel
       AlignWithMargins = True
       Left = 20
@@ -356,7 +356,7 @@ object Form2: TForm2
       ParentFont = False
       TabOrder = 0
       Text = 'ComboBoxCalendar'
-      ExplicitWidth = 309
+      ExplicitWidth = 305
     end
   end
   object PanelDescription: TPanel
@@ -371,8 +371,8 @@ object Form2: TForm2
     ParentBackground = False
     ShowCaption = False
     TabOrder = 5
-    ExplicitWidth = 528
-    ExplicitHeight = 180
+    ExplicitWidth = 524
+    ExplicitHeight = 165
     object LabelDescription: TLabel
       AlignWithMargins = True
       Left = 20
@@ -416,8 +416,8 @@ object Form2: TForm2
         'MemoDescription')
       TabOrder = 1
       OnEnter = MemoDescriptionEnter
-      ExplicitLeft = 193
-      ExplicitHeight = 140
+      ExplicitLeft = 189
+      ExplicitHeight = 125
     end
   end
 end

@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 501
-  ClientWidth = 704
+  ClientHeight = 761
+  ClientWidth = 1022
   Color = clHoneydew
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,17 +16,18 @@ object Form1: TForm1
   object Image1: TImage
     Left = 0
     Top = 0
-    Width = 704
-    Height = 501
+    Width = 1022
+    Height = 761
     Align = alClient
-    ExplicitLeft = 8
+    ExplicitWidth = 704
+    ExplicitHeight = 505
   end
   object LabelSignIn: TLabel
     AlignWithMargins = True
     Left = 0
-    Top = 110
-    Width = 704
-    Height = 51
+    Top = 200
+    Width = 450
+    Height = 40
     Alignment = taCenter
     Caption = 'Sign in with your Microsoft account'
     Font.Charset = DEFAULT_CHARSET
@@ -37,32 +38,19 @@ object Form1: TForm1
     ParentFont = False
     Layout = tlCenter
   end
-  object PanelLogIn: TPanel
+  object LogInButton: TButton
+    AlignWithMargins = True
     Left = 0
-    Top = 208
-    Width = 704
-    Height = 124
-    BevelEdges = []
-    BevelOuter = bvNone
-    Caption = 'PanelLogIn'
-    ParentColor = True
+    Top = 3
+    Width = 1022
+    Height = 755
+    Margins.Left = 0
+    Margins.Right = 0
+    Align = alClient
+    Caption = 'Log In'
     TabOrder = 0
-    object LogInButton: TButton
-      AlignWithMargins = True
-      Left = 250
-      Top = 3
-      Width = 204
-      Height = 118
-      Margins.Left = 250
-      Margins.Right = 250
-      Align = alClient
-      Caption = 'Log In'
-      TabOrder = 0
-      OnClick = LogInClick
-      ExplicitLeft = 244
-      ExplicitTop = 0
-      ExplicitWidth = 213
-      ExplicitHeight = 124
-    end
+    OnClick = LogInClick
+    ExplicitWidth = 214
+    ExplicitHeight = 118
   end
 end

@@ -31,8 +31,8 @@ type
     TimePickerEnd: TTimePicker;
     LabelCalendar: TLabel;
     ComboBoxCalendar: TComboBox;
-    Panel1: TPanel;
-    Panel2: TPanel;
+    PanelTimeLabel: TPanel;
+    PanelTimePicker: TPanel;
     ComboBoxSymbol: TComboBox;
     procedure ButtonSaveClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -60,21 +60,12 @@ uses CalendarUnit;
 
 const DESC_PLACEHOLDER = 'Write description here...';
 
-procedure TForm2.MemoDescriptionEnter(Sender: TObject);
-begin
-  if Trim(MemoDescription.Text) = DESC_PLACEHOLDER then
-    MemoDescription.Clear;
-end;
-
-procedure TForm2.MemoDescriptionExit(Sender: TObject);
-begin
-  if Trim(MemoDescription.Text) = '' then
-    MemoDescription.Lines.Text := DESC_PLACEHOLDER;
-end;
-
+// Creates MemoDecription text, adds calendar types to ComboBoxCalendar and
+// adds Segoe UI Symbols to ComboBoxSymbals
 procedure TForm2.FormCreate(Sender: TObject);
 begin
   MemoDescription.Lines.Text := DESC_PLACEHOLDER;
+  MemoDescription.OnExit := MemoDescriptionExit;
 
   ComboBoxCalendar.Items.Clear;
   ComboBoxCalendar.Items.Add('Work');
@@ -99,7 +90,6 @@ begin
   ComboBoxSymbol.Items.Add(#$E14D);
   ComboBoxSymbol.Items.Add(#$E1D0);
   ComboBoxSymbol.Items.Add(#$E2B1);
-  ComboBoxSymbol.Items.Add(#$2708);
   ComboBoxSymbol.Items.Add(#$26F8);
   ComboBoxSymbol.Items.Add(#$E189);
   ComboBoxSymbol.Items.Add(#$2708);
@@ -108,6 +98,7 @@ begin
 
 end;
 
+// Creates the new event
 function TForm2.CreateGraphEventJson: TJSONObject;
 var
   StartObj, EndObj, BodyObj: TJSONObject;
@@ -261,6 +252,18 @@ begin
 
 end;
 
+procedure TForm2.MemoDescriptionEnter(Sender: TObject);
+begin
+  if Trim(MemoDescription.Text) = DESC_PLACEHOLDER then
+    MemoDescription.Clear;
+end;
+
+procedure TForm2.MemoDescriptionExit(Sender: TObject);
+begin
+  if Trim(MemoDescription.Text) = '' then
+    MemoDescription.Lines.Text := DESC_PLACEHOLDER;
+end;
+
 // Automatically picks current date and time
 
 procedure TForm2.FormShow(Sender: TObject);
@@ -269,6 +272,10 @@ begin
   DateTimePickerEnd.Date := Date;
   TimePickerStart.Time := Time;
   TimePickerEnd.Time := Time;
+
+  if Trim(MemoDescription.Text) = '' then
+  MemoDescription.Lines.Text := DESC_PLACEHOLDER;
+
 end;
 
 end.

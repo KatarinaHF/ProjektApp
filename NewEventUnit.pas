@@ -31,8 +31,8 @@ type
     TimePickerEnd: TTimePicker;
     LabelCalendar: TLabel;
     ComboBoxCalendar: TComboBox;
-    Panel1: TPanel;
-    Panel2: TPanel;
+    PanelTimeLabel: TPanel;
+    PanelTimePicker: TPanel;
     ComboBoxSymbol: TComboBox;
     procedure ButtonSaveClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -60,6 +60,8 @@ uses CalendarUnit;
 
 const DESC_PLACEHOLDER = 'Write description here...';
 
+// Creates MemoDecription text, adds calendar types to ComboBoxCalendar and
+// adds Segoe UI Symbols to ComboBoxSymbals
 procedure TForm2.FormCreate(Sender: TObject);
 begin
   MemoDescription.Lines.Text := DESC_PLACEHOLDER;
@@ -96,15 +98,13 @@ begin
 
 end;
 
+// Creates the new event
 function TForm2.CreateGraphEventJson: TJSONObject;
 var
   StartObj, EndObj, BodyObj: TJSONObject;
   FullStartIso, FullEndIso: string;
-  StartDate: TDate;
-  EndDate: TDate;
-  StartTime: TTime;
-  EndTime: TTime;
-  StartDT, EndDT: TDateTime;
+  StartDT: TDateTime;
+  EndDT: TDateTime;
   SvepArr: TJSONArray;
   SvepObj: TJSONObject;
 begin

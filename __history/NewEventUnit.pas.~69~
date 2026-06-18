@@ -3,8 +3,8 @@ unit NewEventUnit;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
+  System.SysUtils, System.Classes, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  Vcl.ExtCtrls,
   System.JSON, System.Net.HttpClient, System.Net.URLClient, Vcl.ComCtrls,
   Vcl.WinXPickers;
 
@@ -31,8 +31,8 @@ type
     TimePickerEnd: TTimePicker;
     LabelCalendar: TLabel;
     ComboBoxCalendar: TComboBox;
-    Panel1: TPanel;
-    Panel2: TPanel;
+    PanelTimeLabel: TPanel;
+    PanelTimePicker: TPanel;
     ComboBoxSymbol: TComboBox;
     procedure ButtonSaveClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -41,6 +41,7 @@ type
     procedure DateTimePickerStartChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure TimePickerStartChange(Sender: TObject);
+    procedure MemoDescriptionExit(Sender: TObject);
   private
     FAccessToken: string;
     function CreateGraphEventJson: TJSONObject;
@@ -59,15 +60,12 @@ uses CalendarUnit;
 
 const DESC_PLACEHOLDER = 'Write description here...';
 
-procedure TForm2.MemoDescriptionEnter(Sender: TObject);
-begin
-  if Trim(MemoDescription.Text) = DESC_PLACEHOLDER then
-    MemoDescription.Clear;
-end;
-
+// Creates MemoDecription text, adds calendar types to ComboBoxCalendar and
+// adds Segoe UI Symbols to ComboBoxSymbals
 procedure TForm2.FormCreate(Sender: TObject);
 begin
-  MemoDescription.Lines.Text := 'Write description here...';
+  MemoDescription.Lines.Text := DESC_PLACEHOLDER;
+  MemoDescription.OnExit := MemoDescriptionExit;
 
   ComboBoxCalendar.Items.Clear;
   ComboBoxCalendar.Items.Add('Work');
@@ -92,7 +90,6 @@ begin
   ComboBoxSymbol.Items.Add(#$E14D);
   ComboBoxSymbol.Items.Add(#$E1D0);
   ComboBoxSymbol.Items.Add(#$E2B1);
-  ComboBoxSymbol.Items.Add(#$2708);
   ComboBoxSymbol.Items.Add(#$26F8);
   ComboBoxSymbol.Items.Add(#$E189);
   ComboBoxSymbol.Items.Add(#$2708);
@@ -101,15 +98,13 @@ begin
 
 end;
 
+// Creates the new event
 function TForm2.CreateGraphEventJson: TJSONObject;
 var
   StartObj, EndObj, BodyObj: TJSONObject;
   FullStartIso, FullEndIso: string;
-  StartDate: TDate;
-  EndDate: TDate;
-  StartTime: TTime;
-  EndTime: TTime;
-  StartDT, EndDT: TDateTime;
+  StartDT: TDateTime;
+  EndDT: TDateTime;
   SvepArr: TJSONArray;
   SvepObj: TJSONObject;
 begin
@@ -254,11 +249,16 @@ begin
 
 end;
 
-
 procedure TForm2.MemoDescriptionEnter(Sender: TObject);
 begin
-  if MemoDescription.Text = 'Write description here...' then
+  if Trim(MemoDescription.Text) = DESC_PLACEHOLDER then
     MemoDescription.Clear;
+end;
+
+procedure TForm2.MemoDescriptionExit(Sender: TObject);
+begin
+  if Trim(MemoDescription.Text) = '' then
+    MemoDescription.Lines.Text := DESC_PLACEHOLDER;
 end;
 
 // Automatically picks current date and time
@@ -269,6 +269,10 @@ begin
   DateTimePickerEnd.Date := Date;
   TimePickerStart.Time := Time;
   TimePickerEnd.Time := Time;
+
+  if Trim(MemoDescription.Text) = '' then
+  MemoDescription.Lines.Text := DESC_PLACEHOLDER;
+
 end;
 
 end.
