@@ -28,6 +28,7 @@ object Form3: TForm3
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
+    ExplicitWidth = 324
   end
   object PanelInfo: TPanel
     Left = 0
@@ -40,6 +41,8 @@ object Form3: TForm3
     ParentBackground = False
     ShowCaption = False
     TabOrder = 1
+    ExplicitWidth = 324
+    ExplicitHeight = 330
     object MemoInfo: TRichEdit
       Left = 1
       Top = 1
@@ -57,10 +60,8 @@ object Form3: TForm3
       ReadOnly = True
       TabOrder = 0
       OnMouseLeave = MemoInfoMouseLeave
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 334
-      ExplicitHeight = 361
+      ExplicitWidth = 322
+      ExplicitHeight = 328
     end
   end
 end
