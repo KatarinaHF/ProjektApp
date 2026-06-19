@@ -152,7 +152,7 @@ begin
   begin
     SvepArr := TJSONArray.Create;
     SvepObj := TJSONObject.Create;
-    SvepObj.AddPair('id', SYMBOL_PROP_ID);
+    SvepObj.AddPair('id', SymbolId);
     SvepObj.AddPair('value', ComboBoxSymbol.Text);
     SvepArr.Add(SvepObj);
     Result.AddPair('singleValueExtendedProperties', SvepArr);

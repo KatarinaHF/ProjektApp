@@ -926,6 +926,8 @@ begin
   end;
 
   Form4.Hide;
+  Form1.Height := Screen.Height;
+  Form1.Width := Screen.Width;
   Form1.WindowState := wsMaximized;
 
 end;
@@ -1173,7 +1175,7 @@ begin
 
               if Cell > 0 then
               begin
-                DayDetails[Cell] := DayDetails[Cell] + Category + #1 + DetailText + #1 + EventId + sLineBreak;
+                DayDetails[Cell] := DayDetails[Cell] + Category + #1 + DetailText + sLineBreak;
 
                 if Trim(Description) <> '' then
                   DayDetails[Cell] := DayDetails[Cell] + Category + #1 + '    ' + Description + sLineBreak;
