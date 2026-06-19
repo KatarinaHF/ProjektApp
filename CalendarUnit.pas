@@ -226,7 +226,7 @@ var
   Form4: TForm4;
 
 const
-  SYMBOL_PROP_ID = 'String {66f5a359-4659-4830-9070-00047ec6ac6e} Name EventSymbol';
+  SymbolId = 'String {66f5a359-4659-4830-9070-00047ec6ac6e} Name EventSymbol';
 
 implementation
 
@@ -988,7 +988,7 @@ begin
     StartISO := Format('%0.4d-%0.2d-01T00:00:00', [FCurrentYear, FCurrentMonth]);
     EndISO := Format('%0.4d-%0.2d-%0.2dT23:59:59', [FCurrentYear, FCurrentMonth, DaysCount]);
 
-    SymFilter := 'id eq ''' + SYMBOL_PROP_ID + '''';
+    SymFilter := 'id eq ''' + SymbolId+ '''';
     SymFilter := StringReplace(SymFilter, ' ',  '%20', [rfReplaceAll]);
     SymFilter := StringReplace(SymFilter, '{',  '%7B', [rfReplaceAll]);
     SymFilter := StringReplace(SymFilter, '}',  '%7D', [rfReplaceAll]);
@@ -1064,6 +1064,7 @@ var
   SvepArr: TJSONArray;
   SvepObj: TJSONObject;
   Symbol, GridText, DetailText: string;
+  EventId: string;
 
 begin
   if FAccessToken = '' then Exit;
@@ -1168,13 +1169,15 @@ begin
               AddEvent(DayNumber, GridText, '');
 
               Cell := FindGridCell(DayNumber);
+              EventId := EventObj.GetValue<string>('id');
 
               if Cell > 0 then
               begin
-                DayDetails[Cell] := DayDetails[Cell] + Category + #1 + DetailText + sLineBreak;
+                DayDetails[Cell] := DayDetails[Cell] + Category + #1 + DetailText + #1 + EventId + sLineBreak;
 
                 if Trim(Description) <> '' then
                   DayDetails[Cell] := DayDetails[Cell] + Category + #1 + '    ' + Description + sLineBreak;
+
                 DayDetails[Cell] := DayDetails[Cell] + sLineBreak;
 
               end;
