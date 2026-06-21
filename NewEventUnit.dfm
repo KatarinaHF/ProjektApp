@@ -32,7 +32,7 @@ object Form2: TForm2
       Left = 20
       Top = 3
       Width = 112
-      Height = 75
+      Height = 32
       Margins.Left = 20
       Align = alLeft
       Alignment = taCenter
@@ -44,7 +44,6 @@ object Form2: TForm2
       Font.Style = []
       ParentFont = False
       Layout = tlCenter
-      ExplicitHeight = 32
     end
     object TitleEdit: TEdit
       AlignWithMargins = True
@@ -83,7 +82,6 @@ object Form2: TForm2
       ParentFont = False
       TabOrder = 1
       Text = 'ComboBoxSymbol'
-      ExplicitLeft = 413
     end
   end
   object PanelStartDate: TPanel
@@ -104,7 +102,7 @@ object Form2: TForm2
       Left = 20
       Top = 3
       Width = 105
-      Height = 75
+      Height = 32
       Margins.Left = 20
       Align = alLeft
       Alignment = taCenter
@@ -116,7 +114,6 @@ object Form2: TForm2
       Font.Style = []
       ParentFont = False
       Layout = tlCenter
-      ExplicitHeight = 32
     end
     object DateTimePickerStart: TDateTimePicker
       AlignWithMargins = True
@@ -153,7 +150,7 @@ object Form2: TForm2
       Left = 20
       Top = 3
       Width = 97
-      Height = 75
+      Height = 32
       Margins.Left = 20
       Align = alLeft
       Alignment = taCenter
@@ -165,7 +162,6 @@ object Form2: TForm2
       Font.Style = []
       ParentFont = False
       Layout = tlCenter
-      ExplicitHeight = 32
     end
     object DateTimePickerEnd: TDateTimePicker
       AlignWithMargins = True
@@ -211,7 +207,7 @@ object Form2: TForm2
         AlignWithMargins = True
         Left = 20
         Top = 10
-        Width = 170
+        Width = 108
         Height = 32
         Margins.Left = 20
         Margins.Top = 10
@@ -224,13 +220,12 @@ object Form2: TForm2
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
-        ExplicitWidth = 108
       end
       object LabelEndTime: TLabel
         AlignWithMargins = True
         Left = 20
         Top = 63
-        Width = 170
+        Width = 100
         Height = 32
         Margins.Left = 20
         Margins.Bottom = 15
@@ -243,7 +238,6 @@ object Form2: TForm2
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
-        ExplicitWidth = 100
       end
     end
     object PanelTimePicker: TPanel
@@ -321,7 +315,7 @@ object Form2: TForm2
       Left = 20
       Top = 3
       Width = 152
-      Height = 55
+      Height = 32
       Margins.Left = 20
       Align = alLeft
       Alignment = taCenter
@@ -333,7 +327,6 @@ object Form2: TForm2
       Font.Style = []
       ParentFont = False
       Layout = tlCenter
-      ExplicitHeight = 32
     end
     object ComboBoxCalendar: TComboBox
       AlignWithMargins = True
@@ -356,7 +349,6 @@ object Form2: TForm2
       ParentFont = False
       TabOrder = 0
       Text = 'ComboBoxCalendar'
-      ExplicitWidth = 309
     end
   end
   object PanelDescription: TPanel
@@ -416,8 +408,6 @@ object Form2: TForm2
         'MemoDescription')
       TabOrder = 1
       OnEnter = MemoDescriptionEnter
-      ExplicitLeft = 193
-      ExplicitHeight = 140
     end
   end
 end

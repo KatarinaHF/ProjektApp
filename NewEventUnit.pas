@@ -44,9 +44,11 @@ type
     procedure MemoDescriptionExit(Sender: TObject);
   private
     FAccessToken: string;
+    FEditEventID: string;
     function CreateGraphEventJson: TJSONObject;
   public
     property AccessToken: string read FAccessToken write FAccessToken;
+    property EditEventID: string read FEditEventID write FEditEventID;
   end;
 
 var
@@ -212,16 +214,33 @@ begin
     Client.CustomHeaders['Authorization'] := 'Bearer ' + FAccessToken;
     Client.CustomHeaders['Content-Type'] := 'application/json';
 
-    Response := Client.Post('https://graph.microsoft.com/v1.0/me/events', RequestBody);
+    // Check if we are in Edit Mode or Create Mode
+    if FEditEventID = '' then
+    begin
+      // Create Mode (Normal behavior)
+      Response := Client.Post('https://graph.microsoft.com/v1.0/me/events', RequestBody);
+    end
+    else
+    begin
+      // Edit Mode: Send an HTTP PATCH request to update the existing asset resource
+      Response := Client.Patch('https://graph.microsoft.com/v1.0/me/events/' + FEditEventID, RequestBody);
+    end;
 
+    // Check for success responses (200 OK for patch edits, 201 Created for new entries)
     if (Response.StatusCode = 201) or (Response.StatusCode = 200) then
     begin
-      ShowMessage('Succes! Begivenheden blev oprettet hos Microsoft.');
+      if FEditEventID = '' then
+        ShowMessage('Succes! Begivenheden blev oprettet hos Microsoft.')
+      else
+        ShowMessage('Succes! Begivenheden blev opdateret hos Microsoft.');
+
+      FEditEventID := ''; // Clear the edit mode state token container
 
       if Assigned(Form4) then
         Form4.RefreshCalendar;
 
       Close;
+
     end
     else
     begin
@@ -232,6 +251,7 @@ begin
     Client.Free;
     JsonPayload.Free;
     RequestBody.Free;
+
   end;
 end;
 

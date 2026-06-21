@@ -1,0 +1,148 @@
+unit EventDetailsUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls;
+
+type
+  TForm3 = class(TForm)
+    PanelDate: TPanel;
+    PanelInfo: TPanel;
+    ListBoxInfo: TListBox;
+    PanelButtons: TPanel;
+    ButtonDelete: TButton;
+    ButtonEdit: TButton;
+    procedure MemoInfoMouseLeave(Sender: TObject);
+    procedure ListBoxInfoClick(Sender: TObject);
+    procedure ListBoxInfoDrawItem(Control: TWinControl; Index: Integer; Rect: TRect; State: TOwnerDrawState);
+  private
+    FSelectedEventID: string;
+  public
+    procedure ShowDetails(const ADate: string; const AData: string);
+  end;
+
+var
+  Form3: TForm3;
+
+implementation
+
+{$R *.dfm}
+
+// Changes color of the event text depending on the calendar type
+function CategoryColor(const Category: string): TColor;
+begin
+  if Category = 'Work' then
+    Result := clBlue
+  else if Category = 'Private' then
+    Result := clGreen
+  else if Category = 'Holiday' then
+    Result := clRed
+  else
+    Result := clWindowText;
+end;
+
+procedure TForm3.ListBoxInfoDrawItem(Control: TWinControl; Index: Integer; Rect: TRect; State: TOwnerDrawState);
+var
+  FullLine, DisplayText, Cat: string;
+  P1, P2: Integer;
+begin
+  ListBoxInfo.Canvas.FillRect(Rect);
+  FullLine := ListBoxInfo.Items[Index];
+
+  P1 := Pos(#1, FullLine);
+  P2 := Pos(#2, FullLine);
+
+  if (P1 > 0) and (P2 > 0) then
+  begin
+    Cat := Copy(FullLine, 1, P1 - 1);
+    DisplayText := Copy(FullLine, P1 + 1, P2 - P1 - 1);
+
+    // Set the brush text colors using the CategoryColor function
+    ListBoxInfo.Canvas.Font.Color := CategoryColor(Cat);
+  end;
+
+  ListBoxInfo.Canvas.TextOut(Rect.Left + 4, Rect.Top + 2, DisplayText);
+end;
+
+// Show the chosen days date and event details
+procedure TForm3.ShowDetails(const ADate: string; const AData: string);
+var
+  Lines: TStringList;
+  I, P2: Integer;
+  DisplayLine: string;
+begin
+  PanelDate.Caption := ADate;
+  ListBoxInfo.Items.BeginUpdate;
+  try
+    ListBoxInfo.Items.Clear;
+    FSelectedEventID := ''; // Clear previous selection state
+
+    Lines := TStringList.Create;
+    try
+      Lines.Text := AData;
+      for I := 0 to Lines.Count - 1 do
+      begin
+        if Lines[I] = '' then Continue;
+
+        // Sift out the tracking data from the ID data using our #2 delimiter
+        P2 := Pos(#2, Lines[I]);
+        if P2 > 0 then
+        begin
+          // For the listbox visible items text, strip out the category codes and raw IDs
+          DisplayLine := Copy(Lines[I], 1, P2 - 1);
+
+          // If there's a category delimiter (#1), pull just the display text
+          if Pos(#1, DisplayLine) > 0 then
+            DisplayLine := Copy(DisplayLine, Pos(#1, DisplayLine) + 1, MaxInt);
+
+          // Add the user-facing text, but preserve the original raw raw payload line structure
+          // inside the ListBox strings array items mapping index
+          ListBoxInfo.Items.Add(Lines[I]);
+        end;
+      end;
+    finally
+      Lines.Free;
+    end;
+  finally
+    ListBoxInfo.Items.EndUpdate;
+  end;
+end;
+
+// Hides the form when the mouse leaves it
+procedure TForm3.ListBoxInfoClick(Sender: TObject);
+var
+  Idx: Integer;
+  FullLine: string;
+  P2: Integer;
+begin
+  Idx := ListBoxInfo.ItemIndex;
+  if Idx < 0 then Exit;
+
+  // Retrieve the hidden raw metadata block line
+  FullLine := ListBoxInfo.Items[Idx];
+
+  // Extract the Microsoft Graph ID out from behind the #2 delimiter
+  P2 := Pos(#2, FullLine);
+  if P2 > 0 then
+  begin
+    FSelectedEventID := Copy(FullLine, P2 + 1, MaxInt);
+    // Enable your modification buttons now that a valid target state is bound
+    ButtonEdit.Enabled := True;
+    ButtonDelete.Enabled := True;
+  end;
+end;
+
+
+procedure TForm3.MemoInfoMouseLeave(Sender: TObject);
+var
+  Pt: TPoint;
+begin
+  Pt := ScreenToClient(Mouse.CursorPos);
+
+  if not PtInRect(ClientRect, Pt) then
+    Hide;
+end;
+
+end.

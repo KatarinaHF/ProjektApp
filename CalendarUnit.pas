@@ -936,7 +936,13 @@ end;
 procedure TForm4.ButtonNewEventClick(Sender: TObject);
 begin
   Form2.AccessToken := FAccessToken;
+
+  Form2.EditEventID := ''; // Force clear to ensure it defaults to "Create Mode"
+
+  Form2.TitleEdit.Text := ''; // Clear previous prefilled title fields
+
   Form2.Show;
+
 end;
 
 // Add a new event
@@ -1175,13 +1181,12 @@ begin
 
               if Cell > 0 then
               begin
-                DayDetails[Cell] := DayDetails[Cell] + Category + #1 + DetailText + sLineBreak;
+                // Fix: Pack the Event ID safely using the #2 delimiter at the end of the line
+                DayDetails[Cell] := DayDetails[Cell] + Category + #1 + DetailText + #2 + EventId + sLineBreak;
 
+                // Append description preview lines if available
                 if Trim(Description) <> '' then
-                  DayDetails[Cell] := DayDetails[Cell] + Category + #1 + '    ' + Description + sLineBreak;
-
-                DayDetails[Cell] := DayDetails[Cell] + sLineBreak;
-
+                  DayDetails[Cell] := DayDetails[Cell] + 'Description' + #1 + '   ' + Trim(Description) + sLineBreak;
               end;
             end;
 

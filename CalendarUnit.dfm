@@ -26,8 +26,6 @@
     ShowCaption = False
     TabOrder = 0
     OnResize = PanelCalendarResize
-    ExplicitWidth = 918
-    ExplicitHeight = 624
     object PanelSøndag: TPanel
       Left = 792
       Top = 0
@@ -2209,7 +2207,6 @@
     ParentFont = False
     ShowCaption = False
     TabOrder = 1
-    ExplicitHeight = 624
     object LabelCalendars: TLabel
       Left = 0
       Top = 0
@@ -2307,7 +2304,6 @@
     ParentBackground = False
     ShowCaption = False
     TabOrder = 2
-    ExplicitWidth = 1039
     object PanelTopButtons: TPanel
       Left = 12
       Top = 12
@@ -2320,7 +2316,6 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 0
-      ExplicitWidth = 1015
       object ButtonSearch: TButton
         AlignWithMargins = True
         Left = 881
@@ -2334,7 +2329,6 @@
         Align = alRight
         Caption = 'Search'
         TabOrder = 0
-        ExplicitLeft = 875
       end
       object ButtonChangeView: TButton
         AlignWithMargins = True
@@ -2381,7 +2375,6 @@
         Constraints.MinWidth = 150
         TabOrder = 3
         TextHint = 'Search events... '
-        ExplicitLeft = 599
         ExplicitHeight = 23
       end
     end
@@ -2397,7 +2390,6 @@
       ParentBackground = False
       ShowCaption = False
       TabOrder = 1
-      ExplicitWidth = 1015
       object LabelMonth: TLabel
         AlignWithMargins = True
         Left = 453
@@ -2458,7 +2450,6 @@
         ParentBackground = False
         ShowCaption = False
         TabOrder = 1
-        ExplicitLeft = 564
         object PanelArrowButtons: TPanel
           Left = 311
           Top = 0

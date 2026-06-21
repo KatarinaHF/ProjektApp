@@ -36,6 +36,7 @@ object Form3: TForm3
     Width = 334
     Height = 362
     Align = alClient
+    BevelOuter = bvNone
     Caption = 'PanelInfo'
     Color = clWhite
     ParentBackground = False
@@ -43,23 +44,67 @@ object Form3: TForm3
     TabOrder = 1
     ExplicitWidth = 324
     ExplicitHeight = 330
-    object MemoInfo: TRichEdit
-      Left = 1
-      Top = 1
-      Width = 332
-      Height = 360
-      Align = alClient
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Segoe UI Emoji'
-      Font.Style = []
-      Lines.Strings = (
-        'MemoInfo')
-      ParentFont = False
-      ReadOnly = True
+    object ListBoxInfo: TListBox
+      Left = 0
+      Top = 0
+      Width = 334
+      Height = 330
+      Align = alTop
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      ItemHeight = 15
       TabOrder = 0
-      OnMouseLeave = MemoInfoMouseLeave
+      OnClick = ListBoxInfoClick
+    end
+    object PanelButtons: TPanel
+      Left = 0
+      Top = 337
+      Width = 334
+      Height = 25
+      Align = alBottom
+      BevelOuter = bvNone
+      Caption = 'PanelInfo'
+      Color = clWhite
+      ParentBackground = False
+      ShowCaption = False
+      TabOrder = 1
+      ExplicitLeft = 1
+      ExplicitTop = 336
+      ExplicitWidth = 332
+      object ButtonDelete: TButton
+        AlignWithMargins = True
+        Left = 214
+        Top = 0
+        Width = 120
+        Height = 22
+        Margins.Left = 20
+        Margins.Top = 0
+        Margins.Right = 0
+        Align = alRight
+        Caption = 'Delete Event'
+        TabOrder = 0
+        OnClick = ButtonDeleteClick
+        ExplicitLeft = 306
+        ExplicitTop = 1
+        ExplicitHeight = 20
+      end
+      object ButtonEdit: TButton
+        AlignWithMargins = True
+        Left = 10
+        Top = 0
+        Width = 120
+        Height = 22
+        Margins.Left = 10
+        Margins.Top = 0
+        Margins.Right = 0
+        Align = alLeft
+        Caption = 'Edit Event'
+        TabOrder = 1
+        OnClick = ButtonEditClick
+        ExplicitLeft = 11
+        ExplicitTop = 1
+        ExplicitHeight = 20
+      end
     end
   end
 end
