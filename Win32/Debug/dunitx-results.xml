@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<test-results name="C:\Users\carol\OneDrive\Dokumenter\GitHub\ProjektApp\Win32\Debug\ProjectTest.exe" total="1" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2026-06-23" time="0.227">
+  <culture-info current-culture="en" current-uiculture="en" />
+  <test-suite type="Assembly" name="ProjectTest.exe" executed="true" result="Success" success="True" time="0.227" asserts="0">
+    <results>
+        <test-suite type="Namespace" name="TestUnit" executed="true" result="Success" success="True" time="0.226" asserts="0" >
+          <results>
+              <test-suite type="Fixture" name="TestUnitTest" executed="True" result="Success" success="True" time="0.226" >
+                <results>
+                  <test-case name="FindGridCell_ReturnCorrectCell" executed="True" result="Success" success="True" time="0.223" asserts="0" />
+                </results>
+              </test-suite>
+          </results>
+        </test-suite>
+    </results>
+  </test-suite>
+</test-results>

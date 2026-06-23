@@ -6,7 +6,7 @@
         <Projects Include="ProjektAppProject.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="..\..\Embarcadero\Studio\Projects\Project1.dproj">
+        <Projects Include="Project1.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -27,13 +27,13 @@
         <MSBuild Projects="ProjektAppProject.dproj" Targets="Make"/>
     </Target>
     <Target Name="Project1">
-        <MSBuild Projects="..\..\Embarcadero\Studio\Projects\Project1.dproj"/>
+        <MSBuild Projects="Project1.dproj"/>
     </Target>
     <Target Name="Project1:Clean">
-        <MSBuild Projects="..\..\Embarcadero\Studio\Projects\Project1.dproj" Targets="Clean"/>
+        <MSBuild Projects="Project1.dproj" Targets="Clean"/>
     </Target>
     <Target Name="Project1:Make">
-        <MSBuild Projects="..\..\Embarcadero\Studio\Projects\Project1.dproj" Targets="Make"/>
+        <MSBuild Projects="Project1.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
         <CallTarget Targets="ProjektAppProject;Project1"/>
