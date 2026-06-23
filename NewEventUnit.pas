@@ -45,10 +45,10 @@ type
   private
     FAccessToken: string;
     FEditEventID: string;
-    function CreateGraphEventJson: TJSONObject;
   public
     property AccessToken: string read FAccessToken write FAccessToken;
     property EditEventID: string read FEditEventID write FEditEventID;
+    function CreateGraphEventJson: TJSONObject;
   end;
 
 var

@@ -1,0 +1,37 @@
+unit TestUnit;
+
+interface
+
+uses
+  DUnitX.TestFramework, System.SysUtils, CalendarUnit;
+
+type
+  [TestFixture]
+  TestUnitTest = class
+  public
+    [Test]
+    procedure NewYearsDayIsHoliday;
+    procedure NormalDayIsNotHoliday;
+  end;
+
+implementation
+
+[Test]
+procedure TestUnitTest.NewYearsDayIsHoliday;
+begin
+  Assert.AreEqual('Nytårsdag',
+    Form4.IsDateHoliday(EncodeDate(2025,1,1)));
+end;
+
+[Test]
+procedure TestUnitTest.NormalDayIsNotHoliday;
+begin
+  Assert.AreEqual('',
+    Form4.IsDateHoliday(EncodeDate(2025,1,2)));
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TestUnitTest);
+
+end.
+

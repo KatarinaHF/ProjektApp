@@ -1,0 +1,109 @@
+unit TestUnit;
+
+interface
+
+uses
+  DUnitX.TestFramework, System.SysUtils, System.JSON, CalendarUnit, NewEventUnit;
+
+type
+  [TestFixture]
+  TestUnitTest = class
+  public
+    [Test]
+    procedure NewYearsDayIsHoliday;
+    [Test]
+    procedure NormalDayIsNotHoliday;
+    [Test]
+    procedure Easter2025;
+    [Test]
+    procedure FindGridCellReturnCorrectCell;
+    [Test]
+    procedure CheckCreateEvent;
+  end;
+
+implementation
+
+// Checks New Years day is classified as a holiday
+[Test]
+procedure TestUnitTest.NewYearsDayIsHoliday;
+begin
+  Assert.AreEqual('Nytårsdag',
+    Form4.IsDateHoliday(EncodeDate(2025,1,1)));
+end;
+
+// Checks a normal day is not classified as a holiday
+[Test]
+procedure TestUnitTest.NormalDayIsNotHoliday;
+begin
+  Assert.AreEqual('',
+    Form4.IsDateHoliday(EncodeDate(2025,1,2)));
+end;
+
+// Checks Easter is added on the correct date
+[Test]
+procedure TestUnitTest.Easter2025;
+begin
+  Assert.AreEqual(
+    EncodeDate(2025,4,20),
+    Form4.EasterSunday(2025));
+end;
+
+// Checks day one is in grid cell 4 as it should be
+[Test]
+procedure TestUnitTest.FindGridCellReturnCorrectCell;
+var
+Form: TForm4;
+
+begin
+  Form := TForm4.Create(nil);
+
+  try
+    Form.BuildCalendar(2025,5);
+    Assert.AreEqual(4, Form.FindGridCell(1));
+
+  finally
+  Form.Free;
+
+  end;
+end;
+
+[Test]
+procedure TestUnitTest.CheckCreateEvent;
+var
+  Form: TForm2;
+  Json: TJSONObject;
+begin
+  Form := TForm2.Create(nil);
+
+  try
+    Form.TitleEdit.Text := 'Meeting';
+
+    Form.DateTimePickerStart.Date := EncodeDate(2025,5,20);
+    Form.TimePickerStart.Time := EncodeTime(10,0,0,0);
+
+    Form.DateTimePickerEnd.Date := EncodeDate(2025,5,20);
+    Form.TimePickerEnd.Time := EncodeTime(11,0,0,0);
+
+    Form.ComboBoxCalendar.ItemIndex := 0; // Work
+
+    Json := Form.CreateGraphEventJson;
+
+    try
+      Assert.AreEqual(
+        'Meeting',
+        Json.GetValue<string>('subject')
+      );
+    finally
+      Json.Free;
+    end;
+  finally
+    Form.Free;
+  end;
+
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TestUnitTest);
+
+end.
+

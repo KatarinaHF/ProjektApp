@@ -1,0 +1,70 @@
+unit TestUnit;
+
+interface
+
+uses
+  DUnitX.TestFramework, System.SysUtils, CalendarUnit;
+
+type
+  [TestFixture]
+  TestUnitTest = class
+  public
+    [Test]
+    procedure NewYearsDayIsHoliday;
+    [Test]
+    procedure NormalDayIsNotHoliday;
+    [Test]
+    procedure Easter2025;
+    [Test]
+    procedure FindGridCell_ReturnCorrectCell;
+  end;
+
+implementation
+
+// Checks New Years day is classified as a holiday
+[Test]
+procedure TestUnitTest.NewYearsDayIsHoliday;
+begin
+  Assert.AreEqual('Nytårsdag',
+    Form4.IsDateHoliday(EncodeDate(2025,1,1)));
+end;
+
+// Checks a normal day is not classified as a holiday
+[Test]
+procedure TestUnitTest.NormalDayIsNotHoliday;
+begin
+  Assert.AreEqual('',
+    Form4.IsDateHoliday(EncodeDate(2025,1,2)));
+end;
+
+// Checks Easter is added on the correct date
+[Test]
+procedure TestUnitTest.Easter2025;
+begin
+  Assert.AreEqual(
+    EncodeDate(2025,4,20),
+    Form4.EasterSunday(2025));
+end;
+
+// Checks day one is in grid cell 4 as it should be
+[Test]
+procedure TestUnitTest.FindGridCell_ReturnCorrectCell;
+var Form: TForm4;
+
+begin Form := TForm4.Create(nil);
+
+  try
+    Form.BuildCalendar(2025,5);
+    Assert.AreEqual(4, Form.FindGridCell(1));
+
+  finally
+  Form.Free;
+
+  end;
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TestUnitTest);
+
+end.
+
