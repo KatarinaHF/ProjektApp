@@ -235,6 +235,12 @@ implementation
 uses NewEventUnit, EventDetailsUnit, ChangeViewUnit, ProjektAppUnit;
 
   type
+  TEventRange = class
+    StartDate: TDate;
+    EndDate: TDate;
+  end;
+
+  type
   TCalendarEvent = record
     EventDate: TDate;
     Subject: string;
@@ -352,7 +358,7 @@ begin
       'https://graph.microsoft.com/v1.0/me/calendarView' +
       '?startDateTime=' + StartISO +
       '&endDateTime=' + EndISO +
-      '&$select=subject,bodyPreview,start' +
+      '&$select=subject,bodyPreview,start,end' +
       '&$top=1000'
     );
 
@@ -367,16 +373,20 @@ end;
 // Searching when the search button is clicked
 procedure TForm4.ButtonSearchClick(Sender: TObject);
 var
-  RawJson, Key, Subject, RawDateStr, Line, HName: string;
+  RawJson, Key, Subject, RawDateStr, EndRawStr, DateText, Line, HName: string;
   JsonObj: TJSONObject;
   EventsArray: TJSONArray;
   EventObj: TJSONObject;
   I: Integer;
-  StartDate, HDate, HStart, HEnd: TDateTime;
-  Body: String;
+  StartDate, EndDate, HDate, HStart, HEnd, LastDay, FirstDay: TDateTime;
+  Body: string;
 
 begin
+  for var K := 0 to ListBoxResults.Items.Count - 1 do
+    ListBoxResults.Items.Objects[K].Free;
+
   ListBoxResults.Items.Clear;
+
   ListBoxResults.Visible := False;
 
   Key := Trim(EditSearch.Text);
@@ -411,6 +421,7 @@ begin
       begin
         for I := 0 to EventsArray.Count - 1 do
         begin
+
           EventObj := EventsArray.Items[I] as TJSONObject;
           Subject := EventObj.GetValue<string>('subject');
 
@@ -423,8 +434,27 @@ begin
           RawDateStr := EventObj.GetValue<TJSONObject>('start').GetValue<string>('dateTime');
           StartDate := ISO8601ToDate(RawDateStr);
 
-          Line := FormatDateTime('yyyy-mm-dd hh:nn', StartDate) + '  ' + Subject;
-          ListBoxResults.Items.AddObject(Line, TObject(NativeInt(Trunc(StartDate))));
+          EndRawStr := EventObj.GetValue<TJSONObject>('end').GetValue<string>('dateTime');
+          EndDate := ISO8601ToDate(EndRawStr);
+
+          FirstDay := DateOf(StartDate);
+          LastDay  := DateOf(EndDate);
+
+          if LastDay > FirstDay then
+            LastDay := LastDay - 1;
+
+          if FirstDay = LastDay then
+            DateText := FormatDateTime('yyyy-mm-dd', FirstDay)
+          else
+            DateText := FormatDateTime('yyyy-mm-dd', FirstDay) + ' - ' +
+                        FormatDateTime('yyyy-mm-dd', LastDay);
+
+          Line := DateText + '  ' + Subject;
+
+          var Rng := TEventRange.Create;
+          Rng.StartDate := FirstDay;
+          Rng.EndDate   := LastDay;
+          ListBoxResults.Items.AddObject(Line, Rng);
         end;
 
         // Include holidays in the search
@@ -439,7 +469,10 @@ begin
           if (HName <> '') and ContainsText(HName, Key) then
           begin
             Line := FormatDateTime('yyyy-mm-dd', HDate) + '  ' + HName + ' (Helligdag)';
-            ListBoxResults.Items.AddObject(Line, TObject(NativeInt(Trunc(HDate))));
+            var Rng := TEventRange.Create;
+            Rng.StartDate := DateOf(HDate);
+            Rng.EndDate   := DateOf(HDate);
+            ListBoxResults.Items.AddObject(Line, Rng);
           end;
 
           HDate := HDate + 1;
@@ -476,21 +509,33 @@ end;
 procedure TForm4.ListBoxResultsDblClick(Sender: TObject);
 var
   idx, Cell: Integer;
+  Rng: TEventRange;
   Dt: TDate;
 
 begin
-  idx := ListBoxResults.ItemIndex;
-
+    idx := ListBoxResults.ItemIndex;
   if idx < 0 then Exit;
+  if not Assigned(ListBoxResults.Items.Objects[idx]) then Exit;
 
-  Dt := TDate(NativeInt(ListBoxResults.Items.Objects[idx]));
-  FCurrentYear  := YearOf(Dt);
-  FCurrentMonth := MonthOf(Dt);
+  Rng := TEventRange(ListBoxResults.Items.Objects[idx]);
+
+  // Jump to the month the event starts in
+  FCurrentYear  := YearOf(Rng.StartDate);
+  FCurrentMonth := MonthOf(Rng.StartDate);
   BuildCalendar(FCurrentYear, FCurrentMonth);
 
-  Cell := FindGridCell(DayOf(Dt));
-  if Cell > 0 then
-    DayPanels[Cell].Color := clSkyBlue;
+  // Highlight every day of the event that falls in the shown month
+  Dt := Rng.StartDate;
+  while Dt <= Rng.EndDate do
+  begin
+    if (YearOf(Dt) = FCurrentYear) and (MonthOf(Dt) = FCurrentMonth) then
+    begin
+      Cell := FindGridCell(DayOf(Dt));
+      if Cell > 0 then
+        DayPanels[Cell].Color := clGradientInactiveCaption;
+    end;
+    Dt := Dt + 1;
+  end;
 end;
 
 // Positioning and sizing the days correctly
